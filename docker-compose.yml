@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  web:
+    container_name: movie-film
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_FOLDER_NAME: app
+    volumes:
+      - ./app/src:/app/src
+    ports:
+      - "3000:3000"
+    networks:
+      - movie-network
+    tty: true
+    
+networks:
+  movie-network:
+    driver: bridge
