@@ -2,14 +2,16 @@ import axios from 'axios';
 import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom/client';
 
+import RouterPages from 'routes';
+
 axios.defaults.baseURL = 'enter api link here';
 
 const Styling = lazy(() => import('./styling'));
-function App() {
+const App = () => {
   return (
     <Suspense>
       <Styling>
-        <div>hello world i'm reactjs</div>
+        <RouterPages />
       </Styling>
     </Suspense>
   )

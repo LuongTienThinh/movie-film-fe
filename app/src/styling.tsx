@@ -1,10 +1,9 @@
-import React, { ReactNode } from "react";
+import React from "react";
+import { IComponentProps } from "interfaces";
+
 import('./assets/styles/index.less');
 
-interface ComponentProps {
-  children: ReactNode;
-}
 
-const Component: React.FC<ComponentProps> = ({ children }) => <>{ children }</>
+const Component: React.FC<IComponentProps> = ({ children }) => <>{ children }</>
 
 export default Component;
