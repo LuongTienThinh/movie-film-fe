@@ -13,8 +13,26 @@ interface IComponentProps {
   children: ReactNode;
 }
 
+interface IIcon {
+  themeMode: string,
+  iconName: string,
+  className?: string;
+}
+
+interface IThemeIcon {
+  iconName: string
+}
+
+interface IThemeContext {
+  theme: string,
+  toggleTheme: (newTheme: string) => void,
+}
+
 export type {
   ILazyComponent,
   IRouterLink,
-  IComponentProps
+  IComponentProps,
+  IThemeIcon,
+  IIcon,
+  IThemeContext,
 }

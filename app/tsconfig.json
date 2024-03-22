@@ -19,10 +19,12 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "types": [
+      "webpack-env",
+    ],
   },
   "include": [
     "src",
-    "externals.d.ts"
   ]
 }

@@ -1,8 +1,11 @@
-
+import { Header } from "layouts";
 
 const HomePage = () => {
   return (
-    <div>This is home page</div>
+    <>
+      <Header />
+      <div>This is home page</div>
+    </>
   );
 }
 
