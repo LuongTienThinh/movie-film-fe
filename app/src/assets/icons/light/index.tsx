@@ -1,0 +1,91 @@
+import { IThemeIcon } from "interfaces";
+
+const Notify = ({ ...props }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <path d="M12.02 2.90997C8.71 2.90997 6.02 5.59997 6.02 8.90997V11.8C6.02 12.41 5.76 13.34 5.45 13.86L4.3 15.77C3.59 16.95 4.08 18.26 5.38 18.7C9.69 20.14 14.34 20.14 18.65 18.7C19.86 18.3 20.39 16.87 19.73 15.77L18.58 13.86C18.28 13.34 18.02 12.41 18.02 11.8V8.90997C18.02 5.60997 15.32 2.90997 12.02 2.90997Z" stroke="#212529" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" />
+  <path d="M13.87 3.2C13.56 3.11 13.24 3.04 12.91 3C11.95 2.88 11.03 2.95 10.17 3.2C10.46 2.46 11.18 1.94 12.02 1.94C12.86 1.94 13.58 2.46 13.87 3.2Z" stroke="#212529" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M15.02 19.06C15.02 20.71 13.67 22.06 12.02 22.06C11.2 22.06 10.44 21.72 9.9 21.18C9.36 20.64 9.02 19.88 9.02 19.06" stroke="#212529" strokeWidth="1.5" strokeMiterlimit="10" />
+</svg>
+
+const ThemeMode = ({ ...props }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <path d="M21.53 15.93C21.37 15.66 20.92 15.24 19.8 15.44C19.18 15.55 18.55 15.6 17.92 15.57C15.59 15.47 13.48 14.4 12.01 12.75C10.71 11.3 9.91 9.40999 9.9 7.36999C9.9 6.22999 10.12 5.12999 10.57 4.08999C11.01 3.07999 10.7 2.54999 10.48 2.32999C10.25 2.09999 9.71 1.77999 8.65 2.21999C4.56 3.93999 2.03 8.03999 2.33 12.43C2.63 16.56 5.53 20.09 9.37 21.42C10.29 21.74 11.26 21.93 12.26 21.97C12.42 21.98 12.58 21.99 12.74 21.99C16.09 21.99 19.23 20.41 21.21 17.72C21.88 16.79 21.7 16.2 21.53 15.93Z" fill="#212529" />
+</svg>
+
+const Search = ({ ...props }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <path d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z" stroke="#212529" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M22 22L20 20" stroke="#212529" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
+
+const Account = ({ ...props }) => <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <path d="M10 9.99999C12.3012 9.99999 14.1667 8.13451 14.1667 5.83332C14.1667 3.53214 12.3012 1.66666 10 1.66666C7.69882 1.66666 5.83334 3.53214 5.83334 5.83332C5.83334 8.13451 7.69882 9.99999 10 9.99999Z" stroke="#212529" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M16.0083 13.1167L13.0583 16.0667C12.9416 16.1834 12.8333 16.4 12.8083 16.5584L12.65 17.6833C12.5916 18.0917 12.875 18.375 13.2833 18.3167L14.4083 18.1583C14.5666 18.1333 14.7917 18.025 14.9 17.9084L17.85 14.9584C18.3583 14.45 18.6 13.8583 17.85 13.1083C17.1083 12.3667 16.5167 12.6083 16.0083 13.1167Z" stroke="#212529" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M15.5833 13.5417C15.8333 14.4417 16.5333 15.1416 17.4333 15.3916" stroke="#212529" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M2.84164 18.3333C2.84164 15.1083 6.05 12.5 10 12.5C10.8667 12.5 11.7 12.625 12.475 12.8583" stroke="#212529" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
+
+const Collection = ({ ...props }) => <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <path d="M18.3333 12.5V7.49999C18.3333 3.33332 16.6667 1.66666 12.5 1.66666H7.49999C3.33332 1.66666 1.66666 3.33332 1.66666 7.49999V12.5C1.66666 16.6667 3.33332 18.3333 7.49999 18.3333H12.5C16.6667 18.3333 18.3333 16.6667 18.3333 12.5Z" stroke="#212529" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M2.10001 14.2583H17.9" stroke="#212529" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M2.10001 5.92499H17.9" stroke="#212529" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M5.80832 14.2583V17.8833" stroke="#212529" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M10 14.2583V18.3083" stroke="#212529" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M14.1417 14.2583V17.9333" stroke="#212529" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M5.80832 1.75833V5.38333" stroke="#212529" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M10 1.75833V5.80833" stroke="#212529" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M10 5.85834V15.025" stroke="#212529" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M14.1417 1.75833V5.43333" stroke="#212529" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
+
+const Logout = ({ ...props }) => <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <path d="M15.4863 12.1833L17.7596 10.05L15.4863 7.91666" stroke="#212529" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M8.66666 10.05H17.6974" stroke="#212529" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M10.4426 16.6667C6.51777 16.6667 3.33881 14.1667 3.33881 10C3.33881 5.83334 6.51777 3.33334 10.4426 3.33334" stroke="#212529" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
+
+const Instagram = ({ ...props }) => <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <path d="M26.9833 3.33331H13.0166C6.94998 3.33331 3.33331 6.94998 3.33331 13.0166V26.9666C3.33331 33.05 6.94998 36.6666 13.0166 36.6666H26.9666C33.0333 36.6666 36.65 33.05 36.65 26.9833V13.0166C36.6666 6.94998 33.05 3.33331 26.9833 3.33331ZM20 26.4666C16.4333 26.4666 13.5333 23.5666 13.5333 20C13.5333 16.4333 16.4333 13.5333 20 13.5333C23.5666 13.5333 26.4666 16.4333 26.4666 20C26.4666 23.5666 23.5666 26.4666 20 26.4666ZM29.8666 11.4666C29.7833 11.6666 29.6666 11.85 29.5166 12.0166C29.35 12.1666 29.1666 12.2833 28.9666 12.3666C28.7666 12.45 28.55 12.5 28.3333 12.5C27.8833 12.5 27.4666 12.3333 27.15 12.0166C27 11.85 26.8833 11.6666 26.8 11.4666C26.7166 11.2666 26.6666 11.05 26.6666 10.8333C26.6666 10.6166 26.7166 10.4 26.8 10.2C26.8833 9.98331 27 9.81665 27.15 9.64998C27.5333 9.26665 28.1166 9.08331 28.65 9.19998C28.7666 9.21665 28.8666 9.24998 28.9666 9.29998C29.0666 9.33331 29.1666 9.38331 29.2666 9.44998C29.35 9.49998 29.4333 9.58331 29.5166 9.64998C29.6666 9.81665 29.7833 9.98331 29.8666 10.2C29.95 10.4 30 10.6166 30 10.8333C30 11.05 29.95 11.2666 29.8666 11.4666Z" fill="#0A0B0B" />
+</svg>
+
+const DropdownFirstDown = ({ ...props }) => <svg width="10" height="7" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <path d="M8.87256 0.5H1.12744C0.188675 0.5 -0.337583 1.40494 0.242426 2.02183L4.11499 6.14085C4.56499 6.61972 5.43376 6.61972 5.88501 6.14085L9.75757 2.02063C10.3376 1.40494 9.81132 0.5 8.87256 0.5Z" fill="#212529" />
+</svg>
+
+const DropdownFirstUp = ({ ...props }) => <svg width="10" height="7" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <path d="M1.12744 6.5L8.87256 6.5C9.81132 6.5 10.3376 5.59506 9.75757 4.97817L5.88501 0.859154C5.43501 0.380282 4.56624 0.380282 4.11499 0.859154L0.242426 4.97937C-0.337583 5.59506 0.188676 6.5 1.12744 6.5Z" fill="#212529" />
+</svg>
+
+
+const LightIcons = ({ iconName, ...props }: IThemeIcon) => {
+  switch (iconName) {
+    case 'account':
+      return <Account {...props} />;
+
+    case 'collection':
+      return <Collection {...props} />;
+
+    case 'dropdownfirst-down':
+      return <DropdownFirstDown {...props} />;
+
+    case 'dropdownfirst-up':
+      return <DropdownFirstUp {...props} />;
+
+    case 'instagram':
+      return <Instagram {...props} />;
+
+    case 'logout':
+      return <Logout {...props} />;
+
+    case 'notify':
+      return <Notify {...props} />;
+
+    case 'search':
+      return <Search {...props} />;
+
+    case 'thememode':
+      return <ThemeMode {...props} />;
+
+    default:
+      return null;
+  }
+}
+
+export default LightIcons;
