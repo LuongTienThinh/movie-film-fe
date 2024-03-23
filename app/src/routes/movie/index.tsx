@@ -1,8 +1,12 @@
+import { Header } from "layouts"
 
 
 const MoviePage = () => {
   return (
-    <div>This is movies page</div>
+    <>
+      <Header />
+      <div>This is movies page</div>
+    </>
   );
 }
 

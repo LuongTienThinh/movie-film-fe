@@ -1,10 +1,11 @@
 import { images } from "images";
 import Icons from 'assets/icons';
-import { useEffect, useState, Fragment, useRef, useContext } from "react";
+import { Fragment, useContext } from "react";
 import { Menu, Transition } from "@headlessui/react";
 
 import { ThemeContext } from "contexts/themeContext";
 import './index.scss';
+import { Link } from "react-router-dom";
 
 
 const Header = () => {
@@ -18,7 +19,9 @@ const Header = () => {
     <header className={themeMode.theme + "-header py-[5px]"}>
       <div className="container">
         <div className="common-flex-box">
-          <img className="h-[50px]" src={images['./logo-temp.png']} alt="Logo" />
+          <Link className="logo" to="/">
+            <img className="h-[50px]" src={images['./logo-temp.png']} alt="Logo" />
+          </Link>
           <div>
             <ul className="header-nav-mid common-flex-box">
               <li>
@@ -42,7 +45,6 @@ const Header = () => {
                         className="h-[6px]" />
                     </>
                   )}
-
                 </Menu.Button>
                 <Transition
                   as={Fragment}
@@ -52,7 +54,6 @@ const Header = () => {
                   leave="transition ease-in duration-75"
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
-
                 >
                   <Menu.Items className="header-nav-dropdown dropdown-genre absolute left-1/2 translate-x-[-50%]">
                     <ul className="common-flex-box flex-wrap w-full p-3 py-1 overflow-hidden">
@@ -101,7 +102,6 @@ const Header = () => {
                         className="h-[6px]" />
                     </>
                   )}
-
                 </Menu.Button>
                 <Transition
                   as={Fragment}
@@ -111,7 +111,6 @@ const Header = () => {
                   leave="transition ease-in duration-75"
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
-
                 >
                   <Menu.Items className="header-nav-dropdown dropdown-country absolute left-1/2 translate-x-[-50%]">
                     <ul className="common-flex-box flex-wrap w-full p-3 py-1 overflow-hidden">
@@ -155,57 +154,53 @@ const Header = () => {
               <button>
                 <Icons themeMode={themeMode.theme} iconName="notify" className="header-icon" />
               </button>
-              <button>
-                <Menu as="div" className="relative">
-                  <Menu.Button className="common-flex-box">
-                    {({ open }) => (
-                      <>
-                        <img className="w-9" src={images['./avatar.png']} alt="" />
-                      </>
-                    )}
-
-                  </Menu.Button>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-
-                  >
-                    <Menu.Items className="header-nav-dropdown dropdown-user absolute right-0">
-                      <ul className="w-full py-[5px] overflow-hidden">
-                        <Menu.Item as="li">
-                          {({ active }) => (
-                            <a href="#" className="common-flex-box">
-                              <Icons themeMode={themeMode.theme} iconName="account" className="header-icon" />
-                              <span>Tài khoản</span>
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item as="li">
-                          {({ active }) => (
-                            <a href="#" className="common-flex-box">
-                              <Icons themeMode={themeMode.theme} iconName="collection" className="header-icon" />
-                              <span>Bộ sưu tập</span>
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item as="li">
-                          {({ active }) => (
-                            <a href="#" className="common-flex-box">
-                              <Icons themeMode={themeMode.theme} iconName="logout" className="header-icon" />
-                              <span>Đăng xuất</span>
-                            </a>
-                          )}
-                        </Menu.Item>
-                      </ul>
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
-              </button>
+              <Menu as="div" className="relative">
+                <Menu.Button className="common-flex-box">
+                  {({ open }) => (
+                    <>
+                      <img className="w-9" src={images['./avatar.png']} alt="" />
+                    </>
+                  )}
+                </Menu.Button>
+                <Transition
+                  as={Fragment}
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95"
+                >
+                  <Menu.Items className="header-nav-dropdown dropdown-user absolute right-0">
+                    <ul className="w-full py-[5px] overflow-hidden">
+                      <Menu.Item as="li">
+                        {({ active }) => (
+                          <a href="#" className="common-flex-box">
+                            <Icons themeMode={themeMode.theme} iconName="account" className="header-icon" />
+                            <span>Tài khoản</span>
+                          </a>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item as="li">
+                        {({ active }) => (
+                          <a href="#" className="common-flex-box">
+                            <Icons themeMode={themeMode.theme} iconName="collection" className="header-icon" />
+                            <span>Bộ sưu tập</span>
+                          </a>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item as="li">
+                        {({ active }) => (
+                          <a href="#" className="common-flex-box">
+                            <Icons themeMode={themeMode.theme} iconName="logout" className="header-icon" />
+                            <span>Đăng xuất</span>
+                          </a>
+                        )}
+                      </Menu.Item>
+                    </ul>
+                  </Menu.Items>
+                </Transition>
+              </Menu>
             </div>
           </div>
         </div>

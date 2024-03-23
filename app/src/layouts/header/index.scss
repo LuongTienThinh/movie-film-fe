@@ -1,6 +1,11 @@
 @import 'assets/styles/variables.scss';
 
 header {
+  .logo {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
   ul.header-nav-mid {
     font-size: 18px;
   
@@ -100,21 +105,21 @@ header {
 
 // Light mode
 header.light-header {
-  background-color: map-get($map: $colors, $key: light-400);
-  color: map-get($map: $colors, $key: dark-900);
+  background-color: map-get($map: $colors, $key: neutral-400);
+  color: map-get($map: $colors, $key: neutral-900);
 
   ul.header-nav-mid {
     li {
       button {
         &:hover span {
-          border-bottom: 2px solid map-get($map: $colors, $key: dark-900);
+          border-bottom: 2px solid map-get($map: $colors, $key: neutral-900);
         }
       }
     }
   }
 
   .nav-search {
-    background-color: map-get($map: $colors, $key: light-200);
+    background-color: map-get($map: $colors, $key: neutral-200);
 
     input {
       background-color: transparent;
@@ -122,16 +127,16 @@ header.light-header {
   }
 
   .header-nav-dropdown {
-    background-color: map-get($map: $colors, $key: light-300);
+    background-color: map-get($map: $colors, $key: neutral-300);
 
     &.dropdown-genre {
       li {
         &:hover a {
-          border-bottom: 1px solid map-get($map: $colors, $key: dark-900);
+          border-bottom: 1px solid map-get($map: $colors, $key: neutral-900);
           font-weight: 700;
         }
         &:hover::before {
-          background-color: map-get($map: $colors, $key: dark-900);
+          background-color: map-get($map: $colors, $key: neutral-900);
         }
       }
     }
@@ -139,7 +144,7 @@ header.light-header {
     &.dropdown-country {
       li {
         &:hover a {
-          border-bottom: 1px solid map-get($map: $colors, $key: dark-900);
+          border-bottom: 1px solid map-get($map: $colors, $key: neutral-900);
           font-weight: 700;
         }
 
@@ -147,7 +152,7 @@ header.light-header {
           font-weight: 700;
         }
         &:hover::before {
-          background-color: map-get($map: $colors, $key: dark-900);
+          background-color: map-get($map: $colors, $key: neutral-900);
         }
       }
     }
@@ -156,7 +161,7 @@ header.light-header {
       li {
 
         &:hover {
-          background-color: map-get($map: $colors, $key: light-400);
+          background-color: map-get($map: $colors, $key: neutral-400);
         }
       }
     }
@@ -167,21 +172,21 @@ header.light-header {
 
 // Dark mode
 header.dark-header {
-  background-color: map-get($map: $colors, $key: dark-800);
-  color: map-get($map: $colors, $key: light-100);
+  background-color: map-get($map: $colors, $key: neutral-800);
+  color: map-get($map: $colors, $key: neutral-100);
 
   ul.header-nav-mid {
     li {
       button {
         &:hover span {
-          border-bottom: 2px solid map-get($map: $colors, $key: light-100);
+          border-bottom: 2px solid map-get($map: $colors, $key: neutral-100);
         }
       }
     }
   }
   
   .nav-search {
-    background-color: map-get($map: $colors, $key: dark-600);
+    background-color: map-get($map: $colors, $key: neutral-600);
     
     input {
       background-color: transparent;
@@ -189,17 +194,17 @@ header.dark-header {
   }
 
   .header-nav-dropdown {
-    background-color: map-get($map: $colors, $key: dark-800);
+    background-color: map-get($map: $colors, $key: neutral-800);
 
     &.dropdown-genre {
       li {
         &:hover a {
-          border-bottom: 1px solid map-get($map: $colors, $key: light-100);
+          border-bottom: 1px solid map-get($map: $colors, $key: neutral-100);
           font-weight: 700;
         }
 
         &:hover::before {
-          background-color: map-get($map: $colors, $key: light-100);
+          background-color: map-get($map: $colors, $key: neutral-100);
         }
       }
     }
@@ -207,7 +212,7 @@ header.dark-header {
     &.dropdown-country {
       li {
         &:hover a {
-          border-bottom: 1px solid map-get($map: $colors, $key: light-100);
+          border-bottom: 1px solid map-get($map: $colors, $key: neutral-100);
           font-weight: 700;
         }
 
@@ -216,7 +221,7 @@ header.dark-header {
         }
 
         &:hover::before {
-          background-color: map-get($map: $colors, $key: light-100);
+          background-color: map-get($map: $colors, $key: neutral-100);
         }
       }
     }
@@ -225,7 +230,7 @@ header.dark-header {
       li {
 
         &:hover {
-          background-color: map-get($map: $colors, $key: dark-700);
+          background-color: map-get($map: $colors, $key: neutral-700);
         }
       }
     }

@@ -1,0 +1,105 @@
+@import 'assets/styles/variables.scss';
+
+footer {
+  .logo {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .footer-left {
+    .btn-footer {
+      button {
+        border-radius: 10px;
+        font-size: 18px;
+        padding: 6px 8px;
+      }
+    }
+  }
+
+  .footer-center {
+    .title {
+      font-size: 20px;
+    }
+
+    .social-contact {
+      margin-top: 15px;
+
+      li {
+        &:not(:first-child) {
+          margin-left: 8px;
+        }
+      }
+    }
+  }
+
+  .footer-end {
+    align-self: flex-start !important;
+
+    input {
+      font-size: 14px;
+      padding: 10px 30px;
+      margin-top: 15px;
+      border-radius: 20px;
+
+      &::placeholder {
+        font-style: italic;
+      }
+    }
+
+    .by {
+      font-size: 8px;
+      font-style: italic;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  }
+}
+
+footer.light-footer {
+  background-color: map-get($map: $colors, $key: neutral-200);
+  color: map-get($map: $colors, $key: neutral-1000);
+
+  .footer-left {
+    .btn-footer {
+      button {
+        background-color: map-get($map: $colors, $key: neutral-1000);
+        color: map-get($map: $colors, $key: neutral-200);
+      }
+    }
+  }
+
+  .footer-end {
+    input {
+      background-color: map-get($map: $colors, $key: neutral-400);
+      
+      &::placeholder {
+        color: map-get($map: $colors, $key: neutral-1000);
+      }
+    }
+  }
+}
+
+footer.dark-footer {
+  background-color: map-get($map: $colors, $key: neutral-900);
+  color: map-get($map: $colors, $key: neutral-100);
+
+  .footer-left {
+    .btn-footer {
+      button {
+        background-color: map-get($map: $colors, $key: neutral-100);
+        color: map-get($map: $colors, $key: neutral-900);
+      }
+    }
+  }
+
+  .footer-end {
+    input {
+      background-color: map-get($map: $colors, $key: neutral-700);
+      
+      &::placeholder {
+        color: map-get($map: $colors, $key: neutral-100);
+      }
+    }
+  }
+}
