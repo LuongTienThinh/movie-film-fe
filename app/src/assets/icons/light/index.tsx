@@ -67,6 +67,16 @@ const Youtube = ({ ...props }) => <svg width="41" height="40" viewBox="0 0 41 40
   <path d="M29 6.66675H12.3333C7.33333 6.66675 4 10.0001 4 15.0001V25.0001C4 30.0001 7.33333 33.3334 12.3333 33.3334H29C34 33.3334 37.3333 30.0001 37.3333 25.0001V15.0001C37.3333 10.0001 34 6.66675 29 6.66675ZM23.8167 21.7167L19.7 24.1834C18.0333 25.1834 16.6666 24.4168 16.6666 22.4668V17.5168C16.6666 15.5668 18.0333 14.8001 19.7 15.8001L23.8167 18.2667C25.4 19.2334 25.4 20.7667 23.8167 21.7167Z" fill="#0A0A0A" />
 </svg>
 
+const BtnPrev = ({ ...props }) => <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <path d="M14.9999 36.6667H24.9999C33.3333 36.6667 36.6666 33.3333 36.6666 25V15C36.6666 6.66668 33.3333 3.33334 24.9999 3.33334H14.9999C6.66659 3.33334 3.33325 6.66668 3.33325 15V25C3.33325 33.3333 6.66659 36.6667 14.9999 36.6667Z" stroke="#F9FAFB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M22.1001 25.8833L16.2334 20L22.1001 14.1167" stroke="#F9FAFB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
+
+const BtnNext = ({ ...props }) => <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <path d="M14.9999 36.6667H24.9999C33.3333 36.6667 36.6666 33.3333 36.6666 25V15C36.6666 6.66668 33.3333 3.33334 24.9999 3.33334H14.9999C6.66659 3.33334 3.33325 6.66668 3.33325 15V25C3.33325 33.3333 6.66659 36.6667 14.9999 36.6667Z" stroke="#F9FAFB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M17.8999 25.8833L23.7666 20L17.8999 14.1167" stroke="#F9FAFB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
+
 
 
 
@@ -107,6 +117,12 @@ const LightIcons = ({ iconName, ...props }: IThemeIcon) => {
 
     case 'direct-notification':
       return <DirectNotification {...props} />;
+
+    case 'btn-prev':
+      return <BtnPrev {...props} />;
+
+    case 'btn-next':
+      return <BtnNext {...props} />;
 
     default:
       return null;

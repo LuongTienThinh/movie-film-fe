@@ -1,0 +1,129 @@
+@import 'assets/styles/variables.scss';
+
+@property --gradient {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.slick-wrapper {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translate(-50%);
+  width: 100%;
+
+  .slick-prev,
+  .slick-next {
+    position: relative;
+    display: block;
+    width: fit-content;
+    height: fit-content;
+    z-index: 50;
+    top: 0;
+    transform: none;
+    left: auto;
+    right: auto;
+
+    &::before {
+      color: black !important;
+      content: none;
+    }
+  }
+
+  .slick-track {
+    display: flex;
+    align-items: center;
+
+    .slick-slide {
+      display: flex !important;
+      justify-content: center;
+      margin: 80px 0;
+      align-items: center;
+      pointer-events: none;
+      position: relative;
+
+      * {
+        outline: none;
+      }
+
+      .img-wrapper {
+        position: relative;
+
+        img {
+          width: 130px;
+          border-radius: 10px !important;
+          height: 180px;
+          margin: auto;
+          cursor: pointer;
+          pointer-events: all;
+        }
+
+        .movie-detail {
+          position: absolute;
+          left: 50%;
+          top: 90%;
+          background-color: red;
+          transform: translate(-50%);
+          border-radius: 10px;
+          font-size: 12px;
+          padding: 5px 15px;
+          opacity: 0;
+          min-width: 116px;
+        }
+      }
+
+      &.slick-center {
+        margin-top: 60px;
+
+        .img-wrapper {
+          border-radius: 6px;
+
+          &::before {
+            content: "";
+            width: 104%;
+            height: 103%;
+            border-radius: 12px;
+            background-image:
+              linear-gradient(var(--gradient),
+                map-get($border-gradient, 'cl-1'),
+                map-get($border-gradient, 'cl-2'),
+                map-get($border-gradient, 'cl-3'));
+            position: absolute;
+            z-index: -1;
+            top: -1.5%;
+            left: -2%;
+            animation: rotation 4s linear infinite;
+            transform: scale(1.6);
+          }
+
+          img {
+            transform: scale(1.6);
+          }
+
+          .movie-detail {
+            top: calc(90% + 56px);
+            transform: translate(-50%);
+            opacity: 1;
+            color: #FFFFFF;
+            font-size: 18px;
+            font-weight: 700;
+            background-image: linear-gradient(to right, #8AB9EF, #5789DB, #3F8FED);
+            pointer-events: all;
+            transition: all linear .5s;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes rotation {
+  0% {
+    --gradient: 0deg;
+  }
+
+  100% {
+    --gradient: 360deg;
+  }
+}
