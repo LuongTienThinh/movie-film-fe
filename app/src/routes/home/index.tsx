@@ -1,22 +1,23 @@
 import Slider from 'react-slick';
-import React, { useEffect } from 'react';
-import $ from "jquery";
+import React, { useContext } from 'react';
 
 import './index.scss';
 import { images } from "images";
 import { Header, Footer } from "layouts";
 import Icons from 'assets/icons';
+import { ThemeContext } from 'contexts/themeContext';
 
 type SliderType = typeof Slider
 
 const HomePage = () => {
   const slider = React.useRef<SliderType>(null);
+  const themeMode = useContext(ThemeContext);
 
   const PrevArrow = (props: any) => {
     const { className, style, onClick } = props;
     return (
       <button style={{ ...style }} className={className} onClick={onClick}>
-        <Icons themeMode={'light'} iconName='btn-prev' />
+        <Icons themeMode={themeMode.theme} iconName='btn-prev' />
       </button>
     );
   }
@@ -25,22 +26,10 @@ const HomePage = () => {
     const { className, style, onClick } = props;
     return (
       <button style={{ ...style }} className={className} onClick={onClick}>
-        <Icons themeMode={'light'} iconName='btn-next' />
+        <Icons themeMode={themeMode.theme} iconName='btn-next' />
       </button>
     );
   }
-
-  // useEffect(() => {
-  //   $('.slick-slider').on('click', '.slick-slide', function (e) {
-  //     e.stopPropagation();
-  //     const index = $(this).data("index");
-  //     const currentSlide = $('.slick-current');
-
-  //     if (currentSlide.data("index") !== index) {
-  //       slider.current.slickGoTo(index);
-  //     }
-  //   });
-  // }, []);
 
   const settings = {
     infinite: true,
@@ -54,15 +43,15 @@ const HomePage = () => {
     nextArrow: <NextArrow />,
     draggable: false,
     arrows: false,
-    // autoplay: true,
-    // autoplaySpeed: 4000,
+    autoplay: true,
+    autoplaySpeed: 4000,
     pauseOnHover: false,
   };
 
   return (
     <>
       <Header />
-      <section>
+      <section className='mt-[60px]'>
         <div className="banner relative">
           <img src={images['./magic-and-muscles-thumbnail.jpg']} alt="" />
           <div className="slick-wrapper">
