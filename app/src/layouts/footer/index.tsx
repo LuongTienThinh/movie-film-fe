@@ -1,28 +1,24 @@
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+
+import './index.scss';
+import { ThemeContext } from "contexts/themeContext";
 import { images } from "images";
 import Icons from 'assets/icons';
-import { useContext } from "react";
-
-import { ThemeContext } from "contexts/themeContext";
-import './index.scss';
-import { Link } from "react-router-dom";
 
 
 const Footer = () => {
   const themeMode = useContext(ThemeContext);
-
-  const handleToggleTheme = () => {
-    themeMode.toggleTheme(themeMode.theme === 'dark' ? 'light' : 'dark');
-  }
-
+  
   return (
     <footer className={themeMode.theme + "-footer py-[30px]"}>
       <div className="container">
         <div className="common-flex-box relative">
           <div className="footer-left common-flex-box h-[82px]">
             <Link className="logo me-10 h-full" to="#">
-              <img className="h-full w-[170px] object-cover" src={images['./logo-temp.png']} alt="Logo" />
+              <img className="h-full object-cover" src={images[`./logo-${themeMode.theme}.png`]} alt="Logo" />
             </Link>
-            <div className="btn-footer flex flex-col justify-between items-start h-full">
+            <div className="btn-footer flex flex-col justify-between items-center h-full">
               <button>Yêu cầu phim</button>
               <button>Group bàn tán</button>
             </div>

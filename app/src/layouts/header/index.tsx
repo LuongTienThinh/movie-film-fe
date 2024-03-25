@@ -1,11 +1,11 @@
-import { images } from "images";
-import Icons from 'assets/icons';
 import { Fragment, useContext } from "react";
 import { Menu, Transition } from "@headlessui/react";
-
-import { ThemeContext } from "contexts/themeContext";
-import './index.scss';
 import { Link } from "react-router-dom";
+
+import './index.scss';
+import Icons from 'assets/icons';
+import { images } from "images";
+import { ThemeContext } from "contexts/themeContext";
 
 
 const Header = () => {
@@ -20,7 +20,7 @@ const Header = () => {
       <div className="container">
         <div className="common-flex-box">
           <Link className="logo" to="/">
-            <img className="h-[50px]" src={images['./logo-temp.png']} alt="Logo" />
+            <img className="h-[50px]" src={images[`./logo-${themeMode.theme}.png`]} alt="Logo" />
           </Link>
           <div>
             <ul className="header-nav-mid common-flex-box">
