@@ -22,9 +22,11 @@
     "baseUrl": "src",
     "types": [
       "webpack-env",
+      "jquery"
     ],
   },
   "include": [
     "src",
+    "global.d.ts"
   ]
 }
