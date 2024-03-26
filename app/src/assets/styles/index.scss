@@ -1,5 +1,5 @@
-@import 'tailwindcss/base'; 
-@import 'tailwindcss/components'; 
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
 @import "~slick-carousel/slick/slick.css";
@@ -36,4 +36,23 @@ input {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
+}
+
+.custom-scroll {
+  overflow-y: scroll;
+
+  // &::-webkit-scrollbar-track {
+  //   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  //   border-radius: 9999px;
+  // }
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 8px;
+    border-radius: 9999px;
+    background-color: #A7A7A7;
+  }
 }
