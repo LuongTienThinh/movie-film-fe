@@ -14,7 +14,7 @@ header {
 
   ul.header-nav-mid {
     font-size: 18px;
-  
+
     li {
       button {
         span {
@@ -31,8 +31,8 @@ header {
           margin-top: -2px;
         }
       }
-    } 
-  
+    }
+
     &>li:not(:first-child) {
       margin-left: 16px;
     }
@@ -52,7 +52,7 @@ header {
     }
 
     &.dropdown-genre {
-      width: 410px; 
+      width: 410px;
 
       li {
         width: 30%;
@@ -71,7 +71,7 @@ header {
 
     &.dropdown-country {
       width: 300px;
-      
+
       li {
         width: 45%;
 
@@ -87,6 +87,57 @@ header {
       }
     }
 
+    &.dropdown-search {
+      width: 100%;
+      top: 106%;
+      max-height: 360px;
+      padding: 5px;
+
+      ul {
+        max-height: calc(360px - 10px);
+
+        li {
+          margin: 0 5px 5px 0;
+          border-radius: 10px;
+          padding: 0;
+          font-size: 14px;
+
+          a {
+            width: 100%;
+            height: 100%;
+            display: block;
+            padding: 5px 8px;
+          }
+        }
+      }
+    }
+
+    &.dropdown-notify {
+      width: 285px;
+      max-height: 360px;
+      top: calc(100% + 20px);
+      right: -5px;
+      padding: 5px;
+
+      ul {
+        max-height: 350px;
+
+        li {
+          margin: 0 5px 5px 0;
+          border-radius: 10px;
+          padding: 0;
+          font-size: 14px;
+
+          a {
+            width: 100%;
+            height: 100%;
+            display: block;
+            padding: 5px 8px;
+          }
+        }
+      }
+    }
+
     &.dropdown-user {
       width: 150px;
       top: calc(100% + 14px);
@@ -97,15 +148,16 @@ header {
       }
     }
   }
-  
+
   .header-nav-end {
     >*:not(:first-child) {
       margin-left: 10px;
     }
   }
-  
+
   .header-icon {
     width: 24px;
+    transition: all linear .5s;
   }
 }
 
@@ -142,6 +194,7 @@ header.light-header {
           border-bottom: 1px solid map-get($map: $colors, $key: neutral-900);
           font-weight: 700;
         }
+
         &:hover::before {
           background-color: map-get($map: $colors, $key: neutral-900);
         }
@@ -158,6 +211,7 @@ header.light-header {
         &:focus a {
           font-weight: 700;
         }
+
         &:hover::before {
           background-color: map-get($map: $colors, $key: neutral-900);
         }
@@ -172,8 +226,45 @@ header.light-header {
         }
       }
     }
+
+    &.dropdown-search {
+      background-color: map-get($map: $colors, $key: neutral-200);
+
+      ul {
+        li {
+          background-color: map-get($map: $colors, $key: neutral-300);
+
+          &:hover {
+            background-color: map-get($map: $colors, $key: neutral-500);
+          }
+        }
+      }
+    }
+
+    &.dropdown-notify {
+      background-color: map-get($map: $colors, $key: neutral-200);
+
+      ul {
+        li {
+          &.unseen {
+            background-color: map-get($map: $colors, $key: neutral-300);
+          }
+
+          &:hover {
+            background-color: map-get($map: $colors, $key: neutral-500);
+          }
+        }
+      }
+    }
+  }
+
+  .header-icon {
+    &.notify-icon:hover {
+      fill: map-get($map: $colors, $key: neutral-900);
+    }
   }
 }
+
 // End light mode
 
 
@@ -191,10 +282,10 @@ header.dark-header {
       }
     }
   }
-  
+
   .nav-search {
     background-color: map-get($map: $colors, $key: neutral-600);
-    
+
     input {
       background-color: transparent;
     }
@@ -241,6 +332,43 @@ header.dark-header {
         }
       }
     }
+
+    &.dropdown-search {
+      background-color: map-get($map: $colors, $key: neutral-900);
+
+      ul {
+        li {
+          background-color: map-get($map: $colors, $key: neutral-800);
+
+          &:hover {
+            background-color: map-get($map: $colors, $key: neutral-600);
+          }
+        }
+      }
+    }
+
+    &.dropdown-notify {
+      background-color: map-get($map: $colors, $key: neutral-900);
+
+      ul {
+        li {
+          &.unseen {
+            background-color: map-get($map: $colors, $key: neutral-800);
+          }
+
+          &:hover {
+            background-color: map-get($map: $colors, $key: neutral-600);
+          }
+        }
+      }
+    }
+  }
+
+  .header-icon {
+    &.notify-icon:hover {
+      fill: map-get($map: $colors, $key: neutral-100);
+    }
   }
 }
+
 // End dark mode

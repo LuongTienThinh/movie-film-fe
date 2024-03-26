@@ -51,6 +51,8 @@ const HomePage = () => {
   return (
     <>
       <Header />
+
+      {/* Banner */}
       <section className='mt-[60px]'>
         <div className="banner relative">
           <img src={images['./magic-and-muscles-thumbnail.jpg']} alt="" />
@@ -149,6 +151,8 @@ const HomePage = () => {
 
         </div>
       </section>
+      {/* End banner */}
+      
       <Footer />
     </>
   );
