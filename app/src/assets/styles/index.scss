@@ -32,6 +32,13 @@ input {
   outline: none;
 }
 
+select {
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
 .common-flex-box {
   display: flex !important;
   justify-content: space-between !important;

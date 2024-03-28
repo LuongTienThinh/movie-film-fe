@@ -118,6 +118,42 @@
   }
 }
 
+.sub-content {
+  padding: 40px 0;
+
+  &.sub-content-light {
+    color: map-get($map: $colors, $key: neutral-1000);
+
+    &.anime-latest {
+      background-color: map-get($map: $colors, $key: neutral-300);
+    }
+
+    &.anime-series {
+      background-color: map-get($map: $colors, $key: neutral-200);
+    }
+    
+    &.anime-movies {
+      background-color: map-get($map: $colors, $key: neutral-300);
+    }
+  }
+
+  &.sub-content-dark {
+    color: map-get($map: $colors, $key: neutral-100);
+
+    &.anime-latest {
+      background-color: map-get($map: $colors, $key: neutral-800);
+    }
+
+    &.anime-series {
+      background-color: map-get($map: $colors, $key: neutral-900);
+    }
+
+    &.anime-movies {
+      background-color: map-get($map: $colors, $key: neutral-800);
+    }
+  }
+}
+
 @keyframes rotation {
   0% {
     --gradient: 0deg;

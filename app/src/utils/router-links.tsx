@@ -3,7 +3,7 @@ import { IRouterLink } from "interfaces";
 const RouterLinks = (name: string): string | undefined => {
   const links: IRouterLink = {
     Home: '/',
-    Movies: '/movies'
+    AnimeSeries: '/series'
   };
 
   return links[name];

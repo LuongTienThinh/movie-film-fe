@@ -6,11 +6,7 @@ import './index.scss';
 import Icons from 'assets/icons';
 import { images } from "images";
 import { ThemeContext } from "contexts/themeContext";
-
-interface IFilm {
-  label: string;
-  [key: string]: string | number,
-}
+import { IFilm } from "interfaces";
 
 const top100Films = [
   { label: 'The Shawshank Redemption', year: 1994 },

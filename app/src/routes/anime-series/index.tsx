@@ -1,7 +1,7 @@
 import { Header } from "layouts"
 
 
-const MoviePage = () => {
+const SeriesPage = () => {
   return (
     <>
       <Header />
@@ -10,4 +10,4 @@ const MoviePage = () => {
   );
 }
 
-export default MoviePage;
+export default SeriesPage;
