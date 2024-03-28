@@ -9,7 +9,7 @@ export const pages = [
   },
   {
     path: routerLink('Movies'),
-    component: React.lazy(() => import('./movie')),
+    component: React.lazy(() => import('./anime-series')),
     title: 'Movie page',
   }
 ]

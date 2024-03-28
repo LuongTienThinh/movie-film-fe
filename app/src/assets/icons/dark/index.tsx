@@ -79,11 +79,26 @@ const BtnNext = ({ ...props }) => <svg width="40" height="40" viewBox="0 0 40 40
 </svg>
 
 const NotifySeen = ({ ...props }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-  <path d="M12.02 2.90997C8.71003 2.90997 6.02003 5.59997 6.02003 8.90997V11.8C6.02003 12.41 5.76003 13.34 5.45003 13.86L4.30003 15.77C3.59003 16.95 4.08003 18.26 5.38003 18.7C9.69003 20.14 14.34 20.14 18.65 18.7C19.86 18.3 20.39 16.87 19.73 15.77L18.58 13.86C18.28 13.34 18.02 12.41 18.02 11.8V8.90997C18.02 5.60997 15.32 2.90997 12.02 2.90997Z" stroke="#F9FAFB" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" />
-  <path d="M13.87 3.2C13.56 3.11 13.24 3.04 12.91 3C11.95 2.88 11.03 2.95 10.17 3.2C10.46 2.46 11.18 1.94 12.02 1.94C12.86 1.94 13.58 2.46 13.87 3.2Z" stroke="#F9FAFB" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-  <path d="M15.02 19.06C15.02 20.71 13.67 22.06 12.02 22.06C11.2 22.06 10.44 21.72 9.90002 21.18C9.36002 20.64 9.02002 19.88 9.02002 19.06" stroke="#F9FAFB" stroke-width="1.5" stroke-miterlimit="10" />
+  <path d="M12.02 2.90997C8.71003 2.90997 6.02003 5.59997 6.02003 8.90997V11.8C6.02003 12.41 5.76003 13.34 5.45003 13.86L4.30003 15.77C3.59003 16.95 4.08003 18.26 5.38003 18.7C9.69003 20.14 14.34 20.14 18.65 18.7C19.86 18.3 20.39 16.87 19.73 15.77L18.58 13.86C18.28 13.34 18.02 12.41 18.02 11.8V8.90997C18.02 5.60997 15.32 2.90997 12.02 2.90997Z" stroke="#F9FAFB" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" />
+  <path d="M13.87 3.2C13.56 3.11 13.24 3.04 12.91 3C11.95 2.88 11.03 2.95 10.17 3.2C10.46 2.46 11.18 1.94 12.02 1.94C12.86 1.94 13.58 2.46 13.87 3.2Z" stroke="#F9FAFB" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M15.02 19.06C15.02 20.71 13.67 22.06 12.02 22.06C11.2 22.06 10.44 21.72 9.90002 21.18C9.36002 20.64 9.02002 19.88 9.02002 19.06" stroke="#F9FAFB" strokeWidth="1.5" strokeMiterlimit="10" />
   <circle cx="17" cy="6" r="3" fill="#FF0000" />
 </svg>
+
+const ChevronUp = ({ ...props }) => <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <path d="M2.38012 8.77917L6.18345 4.97584C6.63262 4.52667 7.36762 4.52667 7.81678 4.97584L11.6201 8.77917" stroke="#DFE3E7" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
+
+const ChevronDown = ({ ...props }) => <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <path d="M11.6199 5.22083L7.81655 9.02416C7.36738 9.47333 6.63238 9.47333 6.18322 9.02416L2.37988 5.22083" stroke="#DFE3E7" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
+
+const View = ({ ...props }) => <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <path d="M8.85409 3.81247C7.89159 2.29997 6.48325 1.42914 4.99992 1.42914C4.25825 1.42914 3.53742 1.6458 2.87909 2.04997C2.22075 2.4583 1.62909 3.05414 1.14575 3.81247C0.729085 4.46664 0.729085 5.52914 1.14575 6.1833C2.10825 7.69997 3.51659 8.56664 4.99992 8.56664C5.74159 8.56664 6.46242 8.34997 7.12075 7.94581C7.77909 7.53747 8.37075 6.94164 8.85409 6.1833C9.27075 5.53331 9.27075 4.46664 8.85409 3.81247ZM4.99992 6.68331C4.06659 6.68331 3.31659 5.92914 3.31659 4.99997C3.31659 4.0708 4.06659 3.31664 4.99992 3.31664C5.93325 3.31664 6.68325 4.0708 6.68325 4.99997C6.68325 5.92914 5.93325 6.68331 4.99992 6.68331Z" fill="#EAEDF0" />
+  <path d="M5 3.80835C4.34583 3.80835 3.8125 4.34168 3.8125 5.00002C3.8125 5.65418 4.34583 6.18752 5 6.18752C5.65417 6.18752 6.19167 5.65418 6.19167 5.00002C6.19167 4.34585 5.65417 3.80835 5 3.80835Z" fill="#EAEDF0" />
+</svg>
+
+
 
 
 const DarkIcons = ({ iconName, ...props }: IThemeIcon) => {
@@ -132,6 +147,15 @@ const DarkIcons = ({ iconName, ...props }: IThemeIcon) => {
 
     case 'notify-seen':
       return <NotifySeen {...props} />;
+
+    case 'chevron-down':
+      return <ChevronDown {...props} />;
+
+    case 'chevron-up':
+      return <ChevronUp {...props} />;
+
+    case 'view':
+      return <View {...props} />;
 
     default:
       return null;
