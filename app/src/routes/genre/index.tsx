@@ -1,12 +1,10 @@
 import { useContext, useEffect, useRef, useState } from "react";
 
-import { Film } from "components";
+import { Film, Pagination } from "components";
 import { ThemeContext } from "contexts/themeContext";
 import { DataHook } from "hooks";
-import { images } from "images";
 import { IDataHook, IFilm, IPage, ITopFilm } from "interfaces";
 import { Footer, Header } from "layouts";
-import { Pagination } from "hooks/data";
 
 
 const latestFilms: Array<IFilm> = [
