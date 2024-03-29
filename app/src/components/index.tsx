@@ -4,6 +4,7 @@ import Film from "./film";
 import TopFilm from "./top-film";
 import Ranking from "./ranking";
 import SideBar from "./side-bar";
+import Pagination from "./pagination";
 
 export {
   ListFilter,
@@ -12,4 +13,5 @@ export {
   TopFilm,
   Ranking,
   SideBar,
+  Pagination,
 }
