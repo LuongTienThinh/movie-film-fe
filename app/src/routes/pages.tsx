@@ -3,13 +3,18 @@ import { routerLink } from "utils";
 
 export const pages = [
   {
-    path: routerLink('Home'),
+    path: routerLink('HomePage'),
     component: React.lazy(() => import('./home')),
     title: 'Home page',
   },
   {
-    path: routerLink('Movies'),
+    path: routerLink('SeriesPage'),
     component: React.lazy(() => import('./anime-series')),
-    title: 'Movie page',
-  }
+    title: 'Series page',
+  },
+  {
+    path: routerLink('GenresPage'),
+    component: React.lazy(() => import('./genre')),
+    title: 'Genres page',
+  },
 ]

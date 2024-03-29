@@ -12,7 +12,8 @@ const Filter = ({ title, options, data, ...props }: IFilter) => {
     <>
       {options &&
         <>
-          <div className="title">{title}:</div>
+
+          {title && <div className="title">{title}:</div>}
           <div className="filter-wrapper">
             <select onChange={() => setNewData(prev => prev.filter(e => e.label === title))} {...props}>
               {options.map((filterItem, index) => (
@@ -33,7 +34,7 @@ const ListFilter = ({ data, listFilter, ...props }: IListFilter) => {
   return (
     <>
       {listFilter &&
-        <ul className={`list-filter common-flex-box`} {...props}>
+        <ul className={`list-filter flex items-end justify-center`} {...props}>
           {listFilter.map((filter, index) => (
             <li key={index} className="filter-item w-1/5">
               <Filter title={filter.title} data={data} options={filter.options} />

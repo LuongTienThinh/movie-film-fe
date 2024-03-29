@@ -65,7 +65,7 @@ const HomePage = () => {
     },
     data: latestFilms,
     setData: () => { },
-    pagination: () => { },
+    
   };
 
   const seriesHook: IDataHook = {
@@ -90,14 +90,14 @@ const HomePage = () => {
         width: 4,
         content: (
           <div className="content flex flex-wrap justify-center gap-9">
-            <Ranking listFilm={latestFilms}></Ranking>
+            <Ranking listFilm={latestFilms.concat(latestFilms.slice(0, 2))}></Ranking>
           </div>
         )
       },
     },
     data: latestFilms,
     setData: () => { },
-    pagination: () => { },
+    
   };
 
   const moviesHook: IDataHook = {
@@ -111,8 +111,8 @@ const HomePage = () => {
       leftSide: {
         width: 4,
         content: (
-          <div className="content">
-            <img className='rounded-[10px]' src={images[`./${latestFilms[0].slug}.jpg`]} alt="" />
+          <div className="content h-full">
+            <img className='rounded-[10px] h-full' src={images[`./${latestFilms[0].slug}.jpg`]} alt="" />
           </div>
         )
       },
@@ -129,7 +129,7 @@ const HomePage = () => {
     },
     data: latestFilms,
     setData: () => { },
-    pagination: () => { },
+    
   };
 
   const latestFilmData = DataHook(latestHooks);
