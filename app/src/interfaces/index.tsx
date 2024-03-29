@@ -35,7 +35,7 @@ interface IFilm {
 }
 
 interface ITopFilm extends IFilm {
-  rank: number | undefined,
+  rank: number | undefined;
 }
 
 interface IListFilter {
@@ -46,7 +46,7 @@ interface IListFilter {
 interface IFilter {
   data: Array<IFilm>;
   options: Array<IFilterItem>;
-  title: string;
+  title?: string;
   [key: string]: any;
 }
 
@@ -56,21 +56,38 @@ interface IFilterItem {
 }
 
 interface ISideBar {
-  leftSide: ISideBarItem | undefined;
-  rightSide: ISideBarItem | undefined;
+  leftSide?: ISideBarItem | undefined;
+  rightSide?: ISideBarItem | undefined;
 }
 
 interface ISideBarItem {
   header?: IHeader | undefined;
-  width?: number | undefined,
+  width?: number | undefined;
   content?: ReactElement<any, any> | undefined
 }
 
 interface IHeader {
-  title?: string | undefined,
-  btnMore?: boolean | undefined,
-  titleWidth?: number | undefined,
-  btnMoreWidth?: number | undefined,
+  title?: string | undefined;
+  btnMore?: boolean | undefined;
+  titleWidth?: number | undefined;
+  btnMoreWidth?: number | undefined;
+}
+
+interface IPage {
+  page: number | 1;
+  perPage?: number | 0;
+}
+
+interface IPagination {
+  perPage?: number | undefined;
+  pageIndex?: number | undefined;
+  showGoToFirst?: boolean | undefined;
+  showGoToLast?: boolean | undefined;
+  showPrev?: boolean | undefined;
+  showNext?: boolean | undefined;
+  totalItem?: number | undefined;
+  sibling?: number | undefined;
+  onChange?: (page: number) => void;
 }
 
 interface IDataHook {
@@ -80,7 +97,7 @@ interface IDataHook {
   sideBar?: ISideBar | undefined;
   data: Array<IFilm>;
   setData: () => void | undefined;
-  pagination?: () => void | undefined;
+  pagination?: ReactElement<any, any> | undefined;
 }
 
 export type {
@@ -98,4 +115,6 @@ export type {
   IDataHook,
   IFilterItem,
   IListFilter,
+  IPagination,
+  IPage,
 }

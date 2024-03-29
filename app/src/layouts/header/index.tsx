@@ -146,6 +146,22 @@ const notifications = [
   { film: 'The world ends with you', slug: 'the-world-ends-with-you', seen: true },
 ]
 
+const genres = [
+  'Hành động',
+  'Thể thao',
+  'Thần thoại',
+  'Tình cảm',
+  'Võ thuật',
+];
+
+const countries = [
+  'Việt Nam',
+  'Nhật Bản',
+  'Hàn Quốc',
+  'Trung Quốc',
+  'Mỹ',
+]
+
 const Header = () => {
   const themeMode = useContext(ThemeContext);
   const [searchFilmText, setSearchFilmText] = useState('');
@@ -177,14 +193,14 @@ const Header = () => {
           <div>
             <ul className="header-nav-mid common-flex-box">
               <li>
-                <button className="common-flex-box">
+                <Link to={'/series'} className="common-flex-box">
                   <span>Anime bộ</span>
-                </button>
+                </Link>
               </li>
               <li>
-                <button className="common-flex-box">
+                <Link to={''} className="common-flex-box">
                   <span>Movie (OVA)</span>
-                </button>
+                </Link>
               </li>
               <Menu as="li" className="relative">
                 <Menu.Button className="common-flex-box">
@@ -209,36 +225,13 @@ const Header = () => {
                 >
                   <Menu.Items className="header-nav-dropdown dropdown-genre absolute left-1/2 translate-x-[-50%]">
                     <ul className="common-flex-box flex-wrap w-full p-3 py-1 overflow-hidden">
-                      <Menu.Item as="li">
-                        {({ active }) => (
-                          <a href="#" className={active ? '' : ''}>Hành động</a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item as="li">
-                        {({ active }) => (
-                          <a href="#" className={active ? '' : ''}>Thể thao</a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item as="li">
-                        {({ active }) => (
-                          <a href="#" className={active ? '' : ''}>Thần thoại</a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item as="li">
-                        {({ active }) => (
-                          <a href="#" className={active ? '' : ''}>Tình cảm</a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item as="li">
-                        {({ active }) => (
-                          <a href="#" className={active ? '' : ''}>Võ thuật</a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item as="li">
-                        {({ active }) => (
-                          <a href="#" className={active ? '' : ''}>Tài liệu</a>
-                        )}
-                      </Menu.Item>
+                      {genres && genres.length > 0 && genres.map((genre) => (
+                        <Menu.Item as="li" key={genre}>
+                          {({ active }) => (
+                            <Link to={'/genres'} className={active ? '' : ''}>{genre}</Link>
+                          )}
+                        </Menu.Item>
+                      ))}
                     </ul>
                   </Menu.Items>
                 </Transition>
@@ -266,26 +259,13 @@ const Header = () => {
                 >
                   <Menu.Items className="header-nav-dropdown dropdown-country absolute left-1/2 translate-x-[-50%]">
                     <ul className="common-flex-box flex-wrap w-full p-3 py-1 overflow-hidden">
-                      <Menu.Item as="li">
-                        {({ active }) => (
-                          <a href="#" className={active ? '' : ''}>Việt nam</a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item as="li">
-                        {({ active }) => (
-                          <a href="#" className={active ? '' : ''}>Nhật bản</a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item as="li">
-                        {({ active }) => (
-                          <a href="#" className={active ? '' : ''}>Hàn quốc</a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item as="li">
-                        {({ active }) => (
-                          <a href="#" className={active ? '' : ''}>Trung quốc</a>
-                        )}
-                      </Menu.Item>
+                      {countries && countries.length > 0 && countries.map((country) => (
+                        <Menu.Item as="li" key={country}>
+                          {({ active }) => (
+                            <a href="#" className={active ? '' : ''}>{country}</a>
+                          )}
+                        </Menu.Item>
+                      ))}
                     </ul>
                   </Menu.Items>
                 </Transition>
