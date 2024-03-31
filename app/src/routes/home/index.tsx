@@ -177,7 +177,7 @@ const HomePage = () => {
       <Header />
 
       {/* Banner */}
-      <section className='mt-[60px] max-w-[1440px] m-auto'>
+      <section className='mt-[60px] m-auto'>
         <div className="banner relative">
           <img className='w-full h-[800px] object-cover' src={images[`./${filmActived.slug}-thumbnail.jpg`]} alt="" />
           <div className="slick-wrapper">

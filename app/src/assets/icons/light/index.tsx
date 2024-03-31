@@ -85,11 +85,11 @@ const NotifySeen = ({ ...props }) => <svg width="24" height="24" viewBox="0 0 24
 </svg>
 
 const ChevronUp = ({ ...props }) => <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-  <path d="M2.38012 8.77917L6.18345 4.97584C6.63262 4.52667 7.36762 4.52667 7.81678 4.97584L11.6201 8.77917" stroke="#353B41" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M2.38012 8.77917L6.18345 4.97584C6.63262 4.52667 7.36762 4.52667 7.81678 4.97584L11.6201 8.77917" stroke="#353B41" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
 </svg>
 
 const ChevronDown = ({ ...props }) => <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-  <path d="M11.6199 5.22083L7.81655 9.02416C7.36738 9.47333 6.63238 9.47333 6.18322 9.02416L2.37988 5.22083" stroke="#353B41" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M11.6199 5.22083L7.81655 9.02416C7.36738 9.47333 6.63238 9.47333 6.18322 9.02416L2.37988 5.22083" stroke="#353B41" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
 </svg>
 
 const View = ({ ...props }) => <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>

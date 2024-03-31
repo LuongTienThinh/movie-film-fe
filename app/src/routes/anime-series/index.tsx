@@ -402,7 +402,7 @@ const SeriesPage = () => {
         onChange={(page) => paginationChange({ page: page })}
         totalItem={latestFilms.length}
         showPrev
-        sibling={3}
+        sibling={1}
         showNext
         {...pageManage}
       />

@@ -1,5 +1,5 @@
 import { IPagination } from "interfaces";
-import { useState } from "react";
+import { MouseEvent, MouseEventHandler, useState } from "react";
 
 const Pagination = ({ pageIndex, perPage, totalItem, sibling = 1, showGoToFirst, showGoToLast, showNext, showPrev, onChange }: IPagination) => {
   const firstPage = 1;
@@ -7,10 +7,14 @@ const Pagination = ({ pageIndex, perPage, totalItem, sibling = 1, showGoToFirst,
 
   const [currentPage, setCurrentPage] = useState(pageIndex || 1);
 
+  const inputPage = () => {
+
+  }
+
   const DotsBtn = () => {
     return (
       <li className='item'>
-        <button style={{ minWidth: 28 }}>...</button>
+        <button onClick={inputPage} style={{ minWidth: 28 }}>...</button>
       </li>
     )
   }
@@ -33,7 +37,7 @@ const Pagination = ({ pageIndex, perPage, totalItem, sibling = 1, showGoToFirst,
         if (pageIndex > sibling + 3) {
           listPage.push(firstPage, -1);
 
-          if (pageIndex < lastPage - 3) {
+          if (pageIndex < lastPage - sibling - 2) {
             for (let index = pageIndex - sibling; index <= pageIndex + sibling; index++) {
               listPage.push(index);
             }
@@ -49,16 +53,18 @@ const Pagination = ({ pageIndex, perPage, totalItem, sibling = 1, showGoToFirst,
 
       return listPage.map(
         (page, i) => (
-          <>
+          <div key={i}>
             {page &&
-              <li className='item' key={i}>
+              <>
                 {page === -1
-                  ? <DotsBtn />
-                  : <button className={page === currentPage ? 'active' : ''} onClick={() => onChangePage(page)}>{page}</button>
+                  ? <DotsBtn key={i} />
+                  : <li className='item' key={i}>
+                    <button className={page === currentPage ? 'active' : ''} onClick={() => onChangePage(page)}>{page}</button>
+                  </li>
                 }
-              </li>
+              </>
             }
-          </>
+          </div>
         )
       )
     }
