@@ -1,0 +1,94 @@
+@import 'assets/styles/variables.scss';
+
+// .film-watching {
+//   position: relative;
+//   width: 100%;
+//   padding-top: 56.25%; /* Tỉ lệ 16:9 (h/16*9) */
+// }
+
+// .film-watching iframe {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+// }
+
+.film-detail {
+  .wrapper {
+    color: map-get($map: $colors, $key: neutral-100);
+
+    .description {
+      ul {
+        li {
+          font-size: 16px;
+          line-height: 1.3rem;
+
+          &:not(:first-child) {
+            margin-top: 15px;
+          }
+        }
+      }
+
+      .btn {
+        margin-top: 20px;
+
+        * {
+          font-size: 24px;
+          background-image: linear-gradient(to right, #EF8A8A, #DB5757, #ED3F3F);
+          line-height: 30px;
+          padding: 10px 40px;
+          border-radius: 10px;
+          box-shadow: 0 4px 4px 0 rgb(0, 0, 0, .25);
+          font-weight: 700;
+        }
+      }
+    }
+
+    .genres {
+
+      .genre-item {
+        text-align: center;
+        margin-top: -150px;
+  
+        li {
+          width: 30%;
+  
+        }
+  
+        a {
+          display: block;
+          border-radius: 20px;
+          font-size: 14px;
+          padding: 5px 10px;
+          border: 1px solid map-get($map: $colors, $key: neutral-100);
+          line-height: 1;
+        }
+      }
+    }
+  }
+
+  &.film-detail-light {
+    background-color: map-get($map: $colors, $key: neutral-300);
+
+    .summary {
+      color: map-get($map: $colors, $key: neutral-1000);
+
+      hr {
+        background-color: map-get($map: $colors, $key: neutral-1000);
+      }
+    }
+  }
+
+  &.film-detail-dark {
+    background-color: map-get($map: $colors, $key: neutral-800);
+
+    .summary {
+      color: map-get($map: $colors, $key: neutral-100);
+
+      hr {
+        background-color: map-get($map: $colors, $key: neutral-100);
+      }
+    }
+  }
+}

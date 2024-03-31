@@ -43,9 +43,9 @@ const Ranking = ({ listFilm }: IRanking) => {
               >
                 <ul>
                   {film && film.map((e, i) => (
-                    <>
+                    <div key={i}>
                       {e &&
-                        <li key={e.label} className="rank-item relative flex justify-center items-center p-2">
+                        <li className="rank-item relative flex justify-center items-center p-2">
                           <div
                             className="w-1/5 text-center text-4xl leading-none font-extrabold"
                             style={{ color: i + 1 === 1 ? '#F12828' : i + 1 === 2 ? '#26BE0D' : i + 1 === 3 ? '#0A85DD' : 'inherit' }}
@@ -67,7 +67,7 @@ const Ranking = ({ listFilm }: IRanking) => {
                           </div>
                         </li>
                       }
-                    </>
+                    </div>
                   ))}
                 </ul>
               </Tab.Panel>
