@@ -22,4 +22,9 @@ export const pages = [
     component: React.lazy(() => import('./film-detail')),
     title: 'Detail page',
   },
+  {
+    path: routerLink('Episode'),
+    component: React.lazy(() => import('./episode')),
+    title: 'Episode page',
+  },
 ]

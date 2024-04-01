@@ -1,5 +1,5 @@
-import { useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 import { images } from "images";
 import { Footer, Header } from "layouts";
@@ -21,23 +21,18 @@ const films: Array<IFilm> = [
 
 const FilmDetail = () => {
   const themeMode = useContext(ThemeContext);
+  const [film, setFilm] = useState<IFilm>();
   const params = useParams();
 
   useEffect(() => {
-    console.log(params);
+    setFilm(films.find(e => e.slug === params.id));
   }, [params]);
 
   return (
     <>
       <Header />
       <section className='mt-[60px] m-auto'>
-        {/* <div className="film-watching relative">
-          <iframe
-            className="w-full h-[700px]"
-            src="https://player.phimapi.com/player/?url=https://s2.phim1280.tv/20240109/ArJvWJhv/index.m3u8"
-            allowFullScreen />
-        </div> */}
-        {films.filter(e => e.slug === params.id).map((film, index) => (
+        {film &&
           <div className={`film-detail film-detail-${themeMode.theme} relative`}>
             <img className='w-full h-[700px] object-cover brightness-50' src={images[`./${params.id}-thumbnail.jpg`]} alt="" />
             <div className="container">
@@ -59,7 +54,7 @@ const FilmDetail = () => {
                       <li>Chất lượng:</li>
                     </ul>
                     <div className="btn">
-                      <button>Xem ngay</button>
+                      <Link to={`/film-detail/${film.slug}/1`}>Xem ngay</Link>
                       <button className="ms-5">Theo dõi</button>
                     </div>
                   </div>
@@ -81,7 +76,7 @@ const FilmDetail = () => {
               </div>
             </div>
           </div>
-        ))}
+        }
       </section>
       <Footer />
     </>
