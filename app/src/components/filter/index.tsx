@@ -47,28 +47,3 @@ const ListFilter = ({ data, listFilter, ...props }: IListFilter) => {
 }
 
 export default ListFilter;
-
-/**
- * ListFilter = {
- *   data: [],
- *   listFilter: [
- *     {
- *       title: string,
- *       data: [],
- *       options:
- *     },
- *     {
- *       title: string,
- *       data: [],
- *       options:
- *     },
- *     {
- *       title: string,
- *       data: [],
- *       options:
- *     }
- *   ],
- * }
- * 
- * 
- */

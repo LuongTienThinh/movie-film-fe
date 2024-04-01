@@ -164,8 +164,9 @@ const countries = [
 
 const Header = () => {
   const themeMode = useContext(ThemeContext);
-  const [searchFilmText, setSearchFilmText] = useState('');
-  const [filteredFilm, setFilteredFilm] = useState(top100Films);
+  const [searchFilmText, setSearchFilmText] = useState<string>('');
+  const [filteredFilm, setFilteredFilm] = useState<IFilm[]>(top100Films);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
 
   useEffect(() => {
     handleSearchFilm();
@@ -274,6 +275,7 @@ const Header = () => {
           </div>
           <div>
             <div className="header-nav-end common-flex-box">
+              {/* Nav search */}
               <div className="relative nav-search common-flex-box rounded-2xl px-1">
                 <Combobox nullable>
                   <Combobox.Button>
@@ -324,101 +326,118 @@ const Header = () => {
                   }
                 </Combobox>
               </div>
+              {/* End nav search */}
+
+              {/* Theme mode */}
               <button onClick={handleToggleTheme}>
                 <Icons themeMode={themeMode.theme} iconName="thememode" className="header-icon" />
               </button>
-              <Menu as="div" className="relative">
-                <Menu.Button className="common-flex-box">
-                  {({ open }) => (
-                    <>
-                      <Icons themeMode={themeMode.theme} iconName={notifications.filter(item => !item.seen).length > 0 ? 'notify-seen' : 'notify'} className="header-icon notify-icon" />
-                    </>
-                  )}
-                </Menu.Button>
-                {notifications.length > 0
-                  ? <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="header-nav-dropdown dropdown-notify absolute">
-                      <ul className="custom-scroll">
-                        {notifications.map((item, index) => (
-                          <Menu.Item as="li" key={index} className={!item.seen ? 'unseen' : ''}>
+              {/* End theme mode */}
+
+              {isAuth
+                ? <>
+                  {/* Notification */}
+                  <Menu as="div" className="relative">
+                    <Menu.Button className="common-flex-box">
+                      {({ open }) => (
+                        <>
+                          <Icons themeMode={themeMode.theme} iconName={notifications.filter(item => !item.seen).length > 0 ? 'notify-seen' : 'notify'} className="header-icon notify-icon" />
+                        </>
+                      )}
+                    </Menu.Button>
+                    {notifications.length > 0
+                      ? <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-100"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
+                        leaveFrom="transform opacity-100 scale-100"
+                        leaveTo="transform opacity-0 scale-95"
+                      >
+                        <Menu.Items className="header-nav-dropdown dropdown-notify absolute">
+                          <ul className="custom-scroll">
+                            {notifications.map((item, index) => (
+                              <Menu.Item as="li" key={index} className={!item.seen ? 'unseen' : ''}>
+                                {({ active }) => (
+                                  <a className="common-flex-box !h-[50px] relative" href="/movies">
+                                    <div className="w-1/4 h-full">
+                                      <img className="w-[40px] h-full rounded-[5px]" src={images[`./${item.slug}.jpg`]} alt="" />
+                                    </div>
+                                    <div className="w-3/4 h-full">
+                                      <p className="overflow-hidden text-ellipsis text-sm font-semibold h-full">
+                                        <b>{item.film}</b> vừa mới ra mắt ngay hôm nay.
+                                      </p>
+                                    </div>
+                                    {!item.seen
+                                      && <div className="absolute top-1/2 right-1 -translate-x-1/2 w-[6px] h-[6px] rounded-[50%] bg-[#406AFF]"></div>
+                                    }
+                                  </a>
+                                )}
+                              </Menu.Item>
+                            ))}
+                          </ul>
+                        </Menu.Items>
+                      </Transition>
+                      : ''
+                    }
+                  </Menu>
+                  {/* End notification */}
+
+                  {/* Account manage */}
+                  <Menu as="div" className="relative">
+                    <Menu.Button className="common-flex-box">
+                      {({ open }) => (
+                        <>
+                          <img className="w-9" src={images['./avatar.png']} alt="" />
+                        </>
+                      )}
+                    </Menu.Button>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      <Menu.Items className="header-nav-dropdown dropdown-user absolute right-0">
+                        <ul className="w-full py-[5px] overflow-hidden">
+                          <Menu.Item as="li">
                             {({ active }) => (
-                              <a className="common-flex-box !h-[50px] relative" href="/movies">
-                                <div className="w-1/4 h-full">
-                                  <img className="w-[40px] h-full rounded-[5px]" src={images[`./${item.slug}.jpg`]} alt="" />
-                                </div>
-                                <div className="w-3/4 h-full">
-                                  <p className="overflow-hidden text-ellipsis text-sm font-semibold h-full">
-                                    <b>{item.film}</b> vừa mới ra mắt ngay hôm nay.
-                                  </p>
-                                </div>
-                                {!item.seen
-                                  && <div className="absolute top-1/2 right-1 -translate-x-1/2 w-[6px] h-[6px] rounded-[50%] bg-[#406AFF]"></div>
-                                }
+                              <a href="#" className="common-flex-box">
+                                <Icons themeMode={themeMode.theme} iconName="account" className="header-icon" />
+                                <span>Tài khoản</span>
                               </a>
                             )}
                           </Menu.Item>
-                        ))}
-                      </ul>
-                    </Menu.Items>
-                  </Transition>
-                  : ''
-                }
-              </Menu>
-              <Menu as="div" className="relative">
-                <Menu.Button className="common-flex-box">
-                  {({ open }) => (
-                    <>
-                      <img className="w-9" src={images['./avatar.png']} alt="" />
-                    </>
-                  )}
-                </Menu.Button>
-                <Transition
-                  as={Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
-                  <Menu.Items className="header-nav-dropdown dropdown-user absolute right-0">
-                    <ul className="w-full py-[5px] overflow-hidden">
-                      <Menu.Item as="li">
-                        {({ active }) => (
-                          <a href="#" className="common-flex-box">
-                            <Icons themeMode={themeMode.theme} iconName="account" className="header-icon" />
-                            <span>Tài khoản</span>
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item as="li">
-                        {({ active }) => (
-                          <a href="#" className="common-flex-box">
-                            <Icons themeMode={themeMode.theme} iconName="collection" className="header-icon" />
-                            <span>Bộ sưu tập</span>
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item as="li">
-                        {({ active }) => (
-                          <a href="#" className="common-flex-box">
-                            <Icons themeMode={themeMode.theme} iconName="logout" className="header-icon" />
-                            <span>Đăng xuất</span>
-                          </a>
-                        )}
-                      </Menu.Item>
-                    </ul>
-                  </Menu.Items>
-                </Transition>
-              </Menu>
+                          <Menu.Item as="li">
+                            {({ active }) => (
+                              <a href="#" className="common-flex-box">
+                                <Icons themeMode={themeMode.theme} iconName="collection" className="header-icon" />
+                                <span>Bộ sưu tập</span>
+                              </a>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item as="li">
+                            {({ active }) => (
+                              <a href="#" className="common-flex-box">
+                                <Icons themeMode={themeMode.theme} iconName="logout" className="header-icon" />
+                                <span>Đăng xuất</span>
+                              </a>
+                            )}
+                          </Menu.Item>
+                        </ul>
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
+                  {/* End account manage */}
+                </>
+                : <>
+                  <Link to={'/login'} className="login-btn py-1.5 px-2 rounded-[10px] leading-[1.3rem] font-semibold">Đăng nhập</Link>
+                </>
+              }
             </div>
           </div>
         </div>

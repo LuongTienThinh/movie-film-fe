@@ -1,84 +1,84 @@
 import { ReactNode, ComponentType, ReactElement } from "react";
 import { JsxElement } from "typescript";
 
-interface ILazyComponent {
+export interface ILazyComponent {
   title?: string;
   component: ComponentType<any>;
 }
 
-interface IRouterLink {
+export interface IRouterLink {
   [key: string]: string;
 }
 
-interface IComponentProps {
+export interface IComponentProps {
   children: ReactNode;
 }
 
-interface IIcon {
+export interface IIcon {
   themeMode: string;
   iconName: string;
   className?: string;
 }
 
-interface IThemeIcon {
+export interface IThemeIcon {
   iconName: string;
 }
 
-interface IThemeContext {
+export interface IThemeContext {
   theme: string;
   toggleTheme: (newTheme: string) => void;
 }
 
-interface IFilm {
+export interface IFilm {
   label: string;
   [key: string]: any;
 }
 
-interface ITopFilm extends IFilm {
+export interface ITopFilm extends IFilm {
   rank: number | undefined;
 }
 
-interface IListFilter {
+export interface IListFilter {
   data: Array<IFilm>;
   listFilter: Array<IFilter>;
 }
 
-interface IFilter {
+export interface IFilter {
   data: Array<IFilm>;
   options: Array<IFilterItem>;
   title?: string;
   [key: string]: any;
 }
 
-interface IFilterItem {
+export interface IFilterItem {
   label: string;
   value: string;
 }
 
-interface ISideBar {
+export interface ISideBar {
   leftSide?: ISideBarItem | undefined;
   rightSide?: ISideBarItem | undefined;
 }
 
-interface ISideBarItem {
+export interface ISideBarItem {
   header?: IHeader | undefined;
   width?: number | undefined;
   content?: ReactElement<any, any> | undefined
 }
 
-interface IHeader {
+export interface IHeader {
   title?: string | undefined;
   btnMore?: boolean | undefined;
   titleWidth?: number | undefined;
   btnMoreWidth?: number | undefined;
 }
 
-interface IPage {
+export interface IPage {
   page: number | 1;
   perPage?: number | 0;
 }
 
-interface IPagination {
+export interface IPagination {
   perPage?: number | undefined;
   pageIndex?: number | undefined;
   showGoToFirst?: boolean | undefined;
@@ -90,7 +90,7 @@ interface IPagination {
   onChange?: (page: number) => void;
 }
 
-interface IDataHook {
+export interface IDataHook {
   title?: string | undefined;
   subHeader?: IHeader | undefined;
   filters?: IListFilter | undefined;
@@ -100,21 +100,33 @@ interface IDataHook {
   pagination?: ReactElement<any, any> | undefined;
 }
 
-export type {
-  ILazyComponent,
-  IRouterLink,
-  IComponentProps,
-  IThemeIcon,
-  IIcon,
-  IThemeContext,
-  IFilm,
-  ITopFilm,
-  IFilter,
-  ISideBar,
-  ISideBarItem,
-  IDataHook,
-  IFilterItem,
-  IListFilter,
-  IPagination,
-  IPage,
+export interface IButton {
+  leftIcon?: ReactElement<any, any> | undefined;
+  btnName?: string | undefined;
+  linkTo?: string | undefined;
+  rightIcon?: ReactElement<any, any> | undefined;
+  className?: string | undefined;
+  onClick?: () => void;
+  [key: string]: any;
+}
+
+export interface IInput {
+  placeholder?: string | "Nhập giá trị";
+  className?: string | undefined;
+  type: string | undefined;
+  label?: string | undefined;
+  name: string | undefined;
+  [key: string]: any;
+}
+
+export interface IConfirmBtns {
+  cancelBtn?: IButton;
+  continueBtn?: IButton;
+}
+
+export interface IAuthHook {
+  title?: string | undefined;
+  content?: ReactElement<any, any> | undefined;
+  otherBtns?: ReactElement<any, any> | undefined;
+  confirmBtns?: IConfirmBtns | undefined;
 }

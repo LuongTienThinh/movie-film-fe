@@ -1,7 +1,5 @@
-import { useState } from 'react';
-
 import { ListFilter, SubHeader, SideBar } from 'components';
-import { IDataHook, IPagination } from 'interfaces';
+import { IDataHook } from 'interfaces';
 import './index.scss';
 
 const DataHook = ({ title, subHeader, filters, sideBar, data, setData, pagination: Pagination }: IDataHook) => {
@@ -28,34 +26,3 @@ const DataHook = ({ title, subHeader, filters, sideBar, data, setData, paginatio
 }
 
 export default DataHook;
-
-/** 
- * datahook: {
- *  title,
- *  subHeader,
- *  filters: [
- *    {
- *      label,
- *      value,
- *    }
- *  ]
- *  sideBar: {
- *    leftSide: {
- *      title,
- *      content,
- *      cols,
- *    },
- *    rightSide: {
- *      title,
- *      content,
- *      cols,
- *    },
- *  },
- *  data,
- *  setData,
- *  pagination,
- * }
- * 
- * 
- * 
- * */ 

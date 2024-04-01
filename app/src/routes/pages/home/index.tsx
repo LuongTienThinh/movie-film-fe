@@ -9,6 +9,7 @@ import { ThemeContext } from 'contexts/themeContext';
 import { DataHook } from 'hooks';
 import { IFilm, IDataHook, ITopFilm } from 'interfaces';
 import { Film, Ranking, TopFilm } from 'components';
+import { Link } from 'react-router-dom';
 
 type SliderType = typeof Slider
 
@@ -186,7 +187,7 @@ const HomePage = () => {
                 ? latestFilms.map((item, index) => (
                   <div className="img-wrapper" key={index}>
                     <img src={images[`./${item.slug}.jpg`]} alt="" />
-                    <button className="movie-detail">Xem ngay</button>
+                    <Link to={`/film-detail/${item.slug}`} className="movie-detail">Xem ngay</Link>
                   </div>
                 ))
                 : ''
