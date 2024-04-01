@@ -7,10 +7,10 @@ const RouterLinks = (name: string): string | undefined => {
     GenresPage: 'genres/',
     FilmDetail: 'film-detail/:id',
     Episode: 'film-detail/:id/:ep',
+    Login: '/login',
+    SignUp: '/sign-up',
+    ForgotPassword: '/forgot-password',
   };
-
-  console.log(links[name]);
-  
 
   return links[name];
 }
