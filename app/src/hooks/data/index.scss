@@ -117,7 +117,7 @@
 
   &.sub-content-dark {
     .header {
-      >* {
+      >* .bg {
         background-color: map-get($map: $colors, $key: neutral-700);
       }
     }
