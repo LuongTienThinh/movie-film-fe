@@ -1,10 +1,12 @@
 import { Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 
 import { pages } from './pages';
 import { ILazyComponent } from "interfaces";
 
 const LazyPage = ({ title, component: Component, ...props }: ILazyComponent) => {
+  document.title = title || '';
+
   return (
     <Suspense>
       <Component {...props} />
