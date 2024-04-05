@@ -1,17 +1,15 @@
 import Slider from 'react-slick';
 import React, { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 
-import './index.scss';
-import { images } from "images";
-import { Header, Footer } from "layouts";
+import { images } from 'images';
+import { Header, Footer } from 'layouts';
 import Icons from 'assets/icons';
 import { ThemeContext } from 'contexts/themeContext';
 import { DataHook } from 'hooks';
-import { IFilm, IDataHook, ITopFilm } from 'interfaces';
+import { IFilm, IDataHook, ITopFilm, SliderType } from 'interfaces';
 import { Film, Ranking, TopFilm } from 'components';
-import { Link } from 'react-router-dom';
-
-type SliderType = typeof Slider
+import './index.scss';
 
 const latestFilms: Array<IFilm> = [
   { label: 'Solo leveling', slug: 'solo-leveling' },
@@ -22,19 +20,19 @@ const latestFilms: Array<IFilm> = [
   { label: 'The unwanted undead adventure', slug: 'the-unwanted-undead-adventure' },
   { label: 'Tom and jerry', slug: 'tom-and-jerry' },
   { label: 'The world ends with you', slug: 'the-world-ends-with-you' },
-]
+];
 
 const topFilms: Array<ITopFilm> = [
   { label: 'Magic and muscles', slug: 'magic-and-muscles', rank: 1 },
   { label: 'Ragna crimson', slug: 'ragna-crimson', rank: 2 },
   { label: 'Solo leveling', slug: 'solo-leveling', rank: 3 },
-]
+];
 
 const HomePage = () => {
   const slider = React.useRef<SliderType>(null);
   const themeMode = useContext(ThemeContext);
   const [filmActived, setFilmActived] = useState(latestFilms[0]);
-  
+
   const latestHooks: IDataHook = {
     sideBar: {
       leftSide: {
@@ -46,27 +44,22 @@ const HomePage = () => {
         },
         width: 8,
         content: (
-          <div className="content flex flex-wrap gap-5">
-            {latestFilms && latestFilms.length > 0 && latestFilms.map((film, index) => (
-              <Film key={index} {...film} style={{ width: 'calc(25% - 15px)' }} />
-            ))}
+          <div className='content flex flex-wrap gap-5'>
+            {latestFilms && latestFilms.length > 0 && latestFilms.map((film, index) => <Film key={index} {...film} style={{ width: 'calc(25% - 15px)' }} />)}
           </div>
-        )
+        ),
       },
       rightSide: {
         width: 4,
         content: (
-          <div className="content flex flex-wrap justify-center gap-9 mt-[90px]">
-            {topFilms && topFilms.length > 0 && topFilms.map((film, index) => (
-              <TopFilm key={index} {...film} />
-            ))}
+          <div className='content mt-[90px] flex flex-wrap justify-center gap-9'>
+            {topFilms && topFilms.length > 0 && topFilms.map((film, index) => <TopFilm key={index} {...film} />)}
           </div>
-        )
+        ),
       },
     },
     data: latestFilms,
-    setData: () => { },
-    
+    setData: () => {},
   };
 
   const seriesHook: IDataHook = {
@@ -80,25 +73,22 @@ const HomePage = () => {
         },
         width: 8,
         content: (
-          <div className="content flex flex-wrap gap-5">
-            {latestFilms && latestFilms.length > 0 && latestFilms.map((film, index) => (
-              <Film key={index} {...film} style={{ width: 'calc(25% - 15px)' }} />
-            ))}
+          <div className='content flex flex-wrap gap-5'>
+            {latestFilms && latestFilms.length > 0 && latestFilms.map((film, index) => <Film key={index} {...film} style={{ width: 'calc(25% - 15px)' }} />)}
           </div>
-        )
+        ),
       },
       rightSide: {
         width: 4,
         content: (
-          <div className="content flex flex-wrap justify-center gap-9">
+          <div className='content flex flex-wrap justify-center gap-9'>
             <Ranking listFilm={latestFilms.concat(latestFilms.slice(0, 2))}></Ranking>
           </div>
-        )
+        ),
       },
     },
     data: latestFilms,
-    setData: () => { },
-    
+    setData: () => {},
   };
 
   const moviesHook: IDataHook = {
@@ -112,25 +102,22 @@ const HomePage = () => {
       leftSide: {
         width: 4,
         content: (
-          <div className="content h-full">
-            <img className='rounded-[10px] h-full' src={images[`./${latestFilms[0].slug}.jpg`]} alt="" />
+          <div className='content h-full'>
+            <img className='h-full rounded-[10px]' src={images[`./${latestFilms[0].slug}.jpg`]} alt='' />
           </div>
-        )
+        ),
       },
       rightSide: {
         width: 8,
         content: (
-          <div className="content flex flex-wrap gap-5">
-            {latestFilms && latestFilms.length > 0 && latestFilms.map((film, index) => (
-              <Film key={index} {...film} style={{ width: 'calc(25% - 15px)' }} />
-            ))}
+          <div className='content flex flex-wrap gap-5'>
+            {latestFilms && latestFilms.length > 0 && latestFilms.map((film, index) => <Film key={index} {...film} style={{ width: 'calc(25% - 15px)' }} />)}
           </div>
-        )
+        ),
       },
     },
     data: latestFilms,
-    setData: () => { },
-    
+    setData: () => {},
   };
 
   const latestFilmData = DataHook(latestHooks);
@@ -144,7 +131,7 @@ const HomePage = () => {
         <Icons themeMode={themeMode.theme} iconName='btn-prev' />
       </button>
     );
-  }
+  };
 
   const NextArrow = (props: any) => {
     const { className, style, onClick } = props;
@@ -153,7 +140,7 @@ const HomePage = () => {
         <Icons themeMode={themeMode.theme} iconName='btn-next' />
       </button>
     );
-  }
+  };
 
   const settings = {
     infinite: true,
@@ -170,7 +157,7 @@ const HomePage = () => {
     autoplay: true,
     autoplaySpeed: 4000,
     pauseOnHover: false,
-    afterChange: (index: Number) => setFilmActived(latestFilms[Number(index)])
+    afterChange: (index: Number) => setFilmActived(latestFilms[Number(index)]),
   };
 
   return (
@@ -178,32 +165,27 @@ const HomePage = () => {
       <Header />
 
       {/* Banner */}
-      <section className='mt-[60px] m-auto'>
-        <div className="banner relative">
-          <img className='w-full h-[800px] object-cover' src={images[`./${filmActived.slug}-thumbnail.jpg`]} alt="" />
-          <div className="slick-wrapper">
+      <section className='m-auto mt-[60px]'>
+        <div className='banner relative'>
+          <img className='h-[800px] w-full object-cover' src={images[`./${filmActived.slug}-thumbnail.jpg`]} alt='' />
+          <div className='slick-wrapper'>
             <Slider ref={slider} {...settings}>
               {latestFilms.length > 0
                 ? latestFilms.map((item, index) => (
-                  <div className="img-wrapper" key={index}>
-                    <img src={images[`./${item.slug}.jpg`]} alt="" />
-                    <Link to={`/film-detail/${item.slug}`} className="movie-detail">Xem ngay</Link>
-                  </div>
-                ))
-                : ''
-              }
+                    <div className='img-wrapper' key={index}>
+                      <img src={images[`./${item.slug}.jpg`]} alt='' />
+                      <Link to={`/film-detail/${item.slug}`} className='movie-detail'>
+                        Xem ngay
+                      </Link>
+                    </div>
+                  ))
+                : ''}
             </Slider>
-            <div className="absolute top-0 left-0 w-full h-fit">
-              <div className="container">
-                <div className="flex justify-end items-center gap-[15px]">
-                  <PrevArrow
-                    className="slick-arrow slick-prev"
-                    onClick={() => slider?.current?.slickPrev()}
-                  />
-                  <NextArrow
-                    className="slick-arrow slick-next"
-                    onClick={() => slider?.current?.slickNext()}
-                  />
+            <div className='absolute left-0 top-0 h-fit w-full'>
+              <div className='container'>
+                <div className='flex items-center justify-end gap-[15px]'>
+                  <PrevArrow className='slick-arrow slick-prev' onClick={() => slider?.current?.slickPrev()} />
+                  <NextArrow className='slick-arrow slick-next' onClick={() => slider?.current?.slickNext()} />
                 </div>
               </div>
             </div>
@@ -213,26 +195,20 @@ const HomePage = () => {
       {/* End banner */}
 
       <section className={`anime-latest sub-content sub-content-${themeMode.theme}`}>
-        <div className="container">
-          {latestFilmData.renderData()}
-        </div>
+        <div className='container'>{latestFilmData.renderData()}</div>
       </section>
 
       <section className={`anime-series sub-content sub-content-${themeMode.theme}`}>
-        <div className="container">
-          {seriesFilmData.renderData()}
-        </div>
+        <div className='container'>{seriesFilmData.renderData()}</div>
       </section>
 
       <section className={`anime-movies sub-content sub-content-${themeMode.theme}`}>
-        <div className="container">
-          {moviesFilmData.renderData()}
-        </div>
+        <div className='container'>{moviesFilmData.renderData()}</div>
       </section>
 
       <Footer />
     </>
   );
-}
+};
 
 export default HomePage;

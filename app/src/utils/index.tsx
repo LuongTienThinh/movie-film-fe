@@ -1,5 +1,3 @@
-import routerLink from "./router-links";
+import routerLink from './router-links';
 
-export {
-  routerLink,
-}
+export { routerLink };

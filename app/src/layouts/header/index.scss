@@ -222,7 +222,7 @@ header.light-header {
       li {
 
         &:hover {
-          background-color: map-get($map: $colors, $key: neutral-400);
+          background-color: map-get($map: $colors, $key: neutral-500);
         }
       }
     }
@@ -335,7 +335,7 @@ header.dark-header {
       li {
 
         &:hover {
-          background-color: map-get($map: $colors, $key: neutral-700);
+          background-color: map-get($map: $colors, $key: neutral-600);
         }
       }
     }

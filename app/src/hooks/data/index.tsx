@@ -5,24 +5,24 @@ import './index.scss';
 const DataHook = ({ title, subHeader, filters, sideBar, data, setData, pagination: Pagination }: IDataHook) => {
   const onChange = () => {
     setData();
-  }
+  };
 
   const renderData = () => {
     return (
       <>
-        {title && <h1 className='font-bold uppercase mb-[30px] text-2xl'>{title}</h1>}
+        {title && <h1 className='mb-[30px] text-2xl font-bold uppercase'>{title}</h1>}
         {subHeader && <SubHeader {...subHeader} />}
-        {filters && <ListFilter data={data} listFilter={filters.listFilter} ></ListFilter>}
+        {filters && <ListFilter data={data} listFilter={filters.listFilter}></ListFilter>}
         {sideBar && <SideBar {...sideBar} />}
         {Pagination && Pagination}
       </>
     );
-  }
+  };
 
   return {
     onChange,
     renderData,
   };
-}
+};
 
 export default DataHook;
