@@ -1,23 +1,24 @@
-import { IPagination } from "interfaces";
-import { MouseEvent, MouseEventHandler, useState } from "react";
+import { useState } from 'react';
+
+import { IPagination } from 'interfaces';
 
 const Pagination = ({ pageIndex, perPage, totalItem, sibling = 1, showGoToFirst, showGoToLast, showNext, showPrev, onChange }: IPagination) => {
   const firstPage = 1;
-  const lastPage = totalItem && perPage && Math.ceil(totalItem / perPage) || firstPage;
+  const lastPage = (totalItem && perPage && Math.ceil(totalItem / perPage)) || firstPage;
 
   const [currentPage, setCurrentPage] = useState(pageIndex || 1);
 
-  const inputPage = () => {
-
-  }
+  const inputPage = () => {};
 
   const DotsBtn = () => {
     return (
       <li className='item'>
-        <button onClick={inputPage} style={{ minWidth: 28 }}>...</button>
+        <button onClick={inputPage} style={{ minWidth: 28 }}>
+          ...
+        </button>
       </li>
-    )
-  }
+    );
+  };
 
   const generatePage = (pageIndex: number | undefined) => {
     if (pageIndex) {
@@ -51,53 +52,78 @@ const Pagination = ({ pageIndex, perPage, totalItem, sibling = 1, showGoToFirst,
         }
       }
 
-      return listPage.map(
-        (page, i) => (
-          <div key={i}>
-            {page &&
-              <>
-                {page === -1
-                  ? <DotsBtn key={i} />
-                  : <li className='item' key={i}>
-                    <button className={page === currentPage ? 'active' : ''} onClick={() => onChangePage(page)}>{page}</button>
-                  </li>
-                }
-              </>
-            }
-          </div>
-        )
-      )
+      return listPage.map((page, i) => (
+        <div key={i}>
+          {page && (
+            <>
+              {page === -1 ? (
+                <DotsBtn key={i} />
+              ) : (
+                <li className='item' key={i}>
+                  <button className={page === currentPage ? 'active' : ''} onClick={() => onChangePage(page)}>
+                    {page}
+                  </button>
+                </li>
+              )}
+            </>
+          )}
+        </div>
+      ));
     }
-  }
+  };
 
   const onChangePage = (page: number) => {
     setCurrentPage(page);
     onChange && onChange(page);
-  }
+  };
 
   const showPagination = () => {
     return totalItem && perPage && lastPage > firstPage;
-  }
+  };
 
   return (
     <>
-      {showPagination() &&
+      {showPagination() && (
         <div className='mt-[30px] text-center'>
-          <ul className="pagination flex justify-center">
-            {showGoToFirst && <li className='item'><button onClick={() => onChangePage(firstPage)} disabled={currentPage === 1}>Trang đầu</button></li>}
+          <ul className='pagination flex justify-center'>
+            {showGoToFirst && (
+              <li className='item'>
+                <button onClick={() => onChangePage(firstPage)} disabled={currentPage === 1}>
+                  Trang đầu
+                </button>
+              </li>
+            )}
 
-            {showPrev && <li className='item'><button onClick={() => onChangePage(currentPage - 1)} disabled={currentPage === 1}>Trang trước</button></li>}
+            {showPrev && (
+              <li className='item'>
+                <button onClick={() => onChangePage(currentPage - 1)} disabled={currentPage === 1}>
+                  Trang trước
+                </button>
+              </li>
+            )}
 
             {currentPage && generatePage(currentPage)}
 
-            {showNext && <li className='item'><button onClick={() => onChangePage(currentPage + 1)} disabled={currentPage === lastPage}>Trang sau</button></li>}
+            {showNext && (
+              <li className='item'>
+                <button onClick={() => onChangePage(currentPage + 1)} disabled={currentPage === lastPage}>
+                  Trang sau
+                </button>
+              </li>
+            )}
 
-            {showGoToLast && <li className='item'><button onClick={() => onChangePage(lastPage)} disabled={currentPage === lastPage}>Trang cuối</button></li>}
+            {showGoToLast && (
+              <li className='item'>
+                <button onClick={() => onChangePage(lastPage)} disabled={currentPage === lastPage}>
+                  Trang cuối
+                </button>
+              </li>
+            )}
           </ul>
         </div>
-      }
+      )}
     </>
   );
-}
+};
 
 export default Pagination;

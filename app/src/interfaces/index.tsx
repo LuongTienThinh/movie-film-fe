@@ -1,5 +1,5 @@
-import { ReactNode, ComponentType, ReactElement } from "react";
-import { JsxElement } from "typescript";
+import { ReactNode, ComponentType, ReactElement } from 'react';
+import Slider from 'react-slick';
 
 export interface ILazyComponent {
   title?: string;
@@ -12,6 +12,25 @@ export interface IRouterLink {
 
 export interface IComponentProps {
   children: ReactNode;
+}
+
+export interface IAssetImage {
+  [key: string]: string;
+}
+
+export interface IContent {
+  left?: ReactElement<any, any> | undefined;
+  right?: ReactElement<any, any> | undefined;
+  leftWidth?: Number | undefined;
+  rightWidth?: Number | undefined;
+  submitBtn?: IButton;
+}
+
+export interface ITabSetting {
+  iconName?: string | undefined;
+  title?: string | '';
+  content?: IContent;
+  onClick?: () => void;
 }
 
 export interface IIcon {
@@ -29,9 +48,21 @@ export interface IThemeContext {
   toggleTheme: (newTheme: string) => void;
 }
 
+export interface IAuthContext {
+  user: Object;
+  isAuth: boolean;
+  setIsAuth: (newState: boolean) => void;
+}
+
+export type SliderType = typeof Slider;
+
 export interface IFilm {
   label: string;
   [key: string]: any;
+}
+
+export interface IRanking {
+  listFilm?: Array<IFilm>;
 }
 
 export interface ITopFilm extends IFilm {
@@ -63,7 +94,7 @@ export interface ISideBar {
 export interface ISideBarItem {
   header?: IHeader | undefined;
   width?: number | undefined;
-  content?: ReactElement<any, any> | undefined
+  content?: ReactElement<any, any> | undefined;
 }
 
 export interface IHeader {
@@ -111,7 +142,7 @@ export interface IButton {
 }
 
 export interface IInput {
-  placeholder?: string | "Nhập giá trị";
+  placeholder?: string | 'Nhập giá trị';
   className?: string | undefined;
   type: string | undefined;
   label?: string | undefined;
