@@ -1,12 +1,13 @@
-import { Fragment, useContext, useEffect, useState } from "react";
-import { Menu, Transition, Combobox } from "@headlessui/react";
-import { Link } from "react-router-dom";
+import { Fragment, useContext, useEffect, useState } from 'react';
+import { Menu, Transition, Combobox } from '@headlessui/react';
+import { Link, useNavigate } from 'react-router-dom';
 
-import './index.scss';
 import Icons from 'assets/icons';
-import { images } from "images";
-import { ThemeContext } from "contexts/themeContext";
-import { IFilm } from "interfaces";
+import { images } from 'images';
+import { ThemeContext } from 'contexts/themeContext';
+import { IFilm } from 'interfaces';
+import { AuthContext } from 'contexts/authContext';
+import './index.scss';
 
 const top100Films = [
   { label: 'The Shawshank Redemption', year: 1994 },
@@ -144,129 +145,116 @@ const notifications = [
   { film: 'The unwanted undead adventure', slug: 'the-unwanted-undead-adventure', seen: false },
   { film: 'Tom and jerry', slug: 'tom-and-jerry', seen: true },
   { film: 'The world ends with you', slug: 'the-world-ends-with-you', seen: true },
-]
-
-const genres = [
-  'Hành động',
-  'Thể thao',
-  'Thần thoại',
-  'Tình cảm',
-  'Võ thuật',
 ];
 
-const countries = [
-  'Việt Nam',
-  'Nhật Bản',
-  'Hàn Quốc',
-  'Trung Quốc',
-  'Mỹ',
-]
+const genres = ['Hành động', 'Thể thao', 'Thần thoại', 'Tình cảm', 'Võ thuật'];
+
+const countries = ['Việt Nam', 'Nhật Bản', 'Hàn Quốc', 'Trung Quốc', 'Mỹ'];
 
 const Header = () => {
   const themeMode = useContext(ThemeContext);
   const [searchFilmText, setSearchFilmText] = useState<string>('');
   const [filteredFilm, setFilteredFilm] = useState<IFilm[]>(top100Films);
-  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     handleSearchFilm();
   }, [searchFilmText]);
 
   const handleSearchFilm = () => {
-    setFilteredFilm(
-      top100Films.filter(
-        (item) => item.label.trim().toLocaleLowerCase().includes(searchFilmText)
-      )
-    );
-  }
+    setFilteredFilm(top100Films.filter((item) => item.label.trim().toLocaleLowerCase().includes(searchFilmText)));
+  };
 
   const handleToggleTheme = () => {
     themeMode.toggleTheme(themeMode.theme === 'dark' ? 'light' : 'dark');
-  }
+  };
 
   return (
-    <header className={themeMode.theme + "-header py-[5px]"}>
-      <div className="container">
-        <div className="common-flex-box">
-          <Link className="logo" to="/">
-            <img className="h-[50px]" src={images[`./logo-${themeMode.theme}.png`]} alt="Logo" />
+    <header className={themeMode.theme + '-header py-[5px]'}>
+      <div className='container'>
+        <div className='common-flex-box'>
+          <Link className='logo' to='/'>
+            <img className='h-[50px]' src={images[`./logo-${themeMode.theme}.png`]} alt='Logo' />
           </Link>
           <div>
-            <ul className="header-nav-mid common-flex-box">
+            <ul className='header-nav-mid common-flex-box'>
               <li>
-                <Link to={'/series'} className="common-flex-box">
+                <Link to={'/series'} className='common-flex-box'>
                   <span>Anime bộ</span>
                 </Link>
               </li>
               <li>
-                <Link to={''} className="common-flex-box">
+                <Link to={''} className='common-flex-box'>
                   <span>Movie (OVA)</span>
                 </Link>
               </li>
-              <Menu as="li" className="relative">
-                <Menu.Button className="common-flex-box">
+              <Menu as='li' className='relative'>
+                <Menu.Button className='common-flex-box'>
                   {({ open }) => (
                     <>
-                      <span className="me-1">Thể loại</span>
-                      <Icons
-                        themeMode={themeMode.theme}
-                        iconName={open ? 'dropdownfirst-up' : 'dropdownfirst-down'}
-                        className="h-[6px]" />
+                      <span className='me-1'>Thể loại</span>
+                      <Icons themeMode={themeMode.theme} iconName={open ? 'dropdownfirst-up' : 'dropdownfirst-down'} className='h-[6px]' />
                     </>
                   )}
                 </Menu.Button>
                 <Transition
                   as={Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
+                  enter='transition ease-out duration-100'
+                  enterFrom='transform opacity-0 scale-95'
+                  enterTo='transform opacity-100 scale-100'
+                  leave='transition ease-in duration-75'
+                  leaveFrom='transform opacity-100 scale-100'
+                  leaveTo='transform opacity-0 scale-95'
                 >
-                  <Menu.Items className="header-nav-dropdown dropdown-genre absolute left-1/2 translate-x-[-50%]">
-                    <ul className="common-flex-box flex-wrap w-full p-3 py-1 overflow-hidden">
-                      {genres && genres.length > 0 && genres.map((genre) => (
-                        <Menu.Item as="li" key={genre}>
-                          {({ active }) => (
-                            <Link to={'/genres'} className={active ? '' : ''}>{genre}</Link>
-                          )}
-                        </Menu.Item>
-                      ))}
+                  <Menu.Items className='header-nav-dropdown dropdown-genre absolute left-1/2 translate-x-[-50%]'>
+                    <ul className='common-flex-box w-full flex-wrap overflow-hidden p-3 py-1'>
+                      {genres &&
+                        genres.length > 0 &&
+                        genres.map((genre) => (
+                          <Menu.Item as='li' key={genre}>
+                            {({ active }) => (
+                              <Link to={'/genres'} className={active ? '' : ''}>
+                                {genre}
+                              </Link>
+                            )}
+                          </Menu.Item>
+                        ))}
                     </ul>
                   </Menu.Items>
                 </Transition>
               </Menu>
-              <Menu as="li" className="relative">
-                <Menu.Button className="common-flex-box">
+              <Menu as='li' className='relative'>
+                <Menu.Button className='common-flex-box'>
                   {({ open }) => (
                     <>
-                      <span className="me-1">Quốc gia</span>
-                      <Icons
-                        themeMode={themeMode.theme}
-                        iconName={open ? 'dropdownfirst-up' : 'dropdownfirst-down'}
-                        className="h-[6px]" />
+                      <span className='me-1'>Quốc gia</span>
+                      <Icons themeMode={themeMode.theme} iconName={open ? 'dropdownfirst-up' : 'dropdownfirst-down'} className='h-[6px]' />
                     </>
                   )}
                 </Menu.Button>
                 <Transition
                   as={Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
+                  enter='transition ease-out duration-100'
+                  enterFrom='transform opacity-0 scale-95'
+                  enterTo='transform opacity-100 scale-100'
+                  leave='transition ease-in duration-75'
+                  leaveFrom='transform opacity-100 scale-100'
+                  leaveTo='transform opacity-0 scale-95'
                 >
-                  <Menu.Items className="header-nav-dropdown dropdown-country absolute left-1/2 translate-x-[-50%]">
-                    <ul className="common-flex-box flex-wrap w-full p-3 py-1 overflow-hidden">
-                      {countries && countries.length > 0 && countries.map((country) => (
-                        <Menu.Item as="li" key={country}>
-                          {({ active }) => (
-                            <a href="#" className={active ? '' : ''}>{country}</a>
-                          )}
-                        </Menu.Item>
-                      ))}
+                  <Menu.Items className='header-nav-dropdown dropdown-country absolute left-1/2 translate-x-[-50%]'>
+                    <ul className='common-flex-box w-full flex-wrap overflow-hidden p-3 py-1'>
+                      {countries &&
+                        countries.length > 0 &&
+                        countries.map((country) => (
+                          <Menu.Item as='li' key={country}>
+                            {({ active }) => (
+                              <a href='#' className={active ? '' : ''}>
+                                {country}
+                              </a>
+                            )}
+                          </Menu.Item>
+                        ))}
                     </ul>
                   </Menu.Items>
                 </Transition>
@@ -274,45 +262,46 @@ const Header = () => {
             </ul>
           </div>
           <div>
-            <div className="header-nav-end common-flex-box">
+            <div className='header-nav-end common-flex-box'>
               {/* Nav search */}
-              <div className="relative nav-search common-flex-box rounded-2xl px-1">
+              <div className='nav-search common-flex-box relative rounded-2xl px-1'>
                 <Combobox nullable>
                   <Combobox.Button>
-                    <Icons themeMode={themeMode.theme} iconName="search" className="header-icon" />
+                    <Icons themeMode={themeMode.theme} iconName='search' className='header-icon' />
                   </Combobox.Button>
                   <Combobox.Input
-                    className="w-[226px] p-1" type="text"
+                    className='w-[226px] p-1'
+                    type='text'
                     displayValue={(item: IFilm) => item?.label}
                     onChange={(e) => setSearchFilmText(e.target.value.toLocaleLowerCase())}
-                    autoComplete="off"
+                    autoComplete='off'
                   />
-                  {filteredFilm.length > 0
-                    ? <Transition
+                  {filteredFilm.length > 0 ? (
+                    <Transition
                       as={Fragment}
-                      enter="transition ease-out duration-100"
-                      enterFrom="transform opacity-0 scale-95"
-                      enterTo="transform opacity-100 scale-100"
-                      leave="transition ease-in duration-75"
-                      leaveFrom="transform opacity-100 scale-100"
-                      leaveTo="transform opacity-0 scale-95"
+                      enter='transition ease-out duration-100'
+                      enterFrom='transform opacity-0 scale-95'
+                      enterTo='transform opacity-100 scale-100'
+                      leave='transition ease-in duration-75'
+                      leaveFrom='transform opacity-100 scale-100'
+                      leaveTo='transform opacity-0 scale-95'
                       afterLeave={() => setSearchFilmText('')}
                     >
-                      <div className="header-nav-dropdown dropdown-search absolute left-1/2 translate-x-[-50%]">
-                        <Combobox.Options className="custom-scroll">
+                      <div className='header-nav-dropdown dropdown-search absolute left-1/2 translate-x-[-50%]'>
+                        <Combobox.Options className='custom-scroll'>
                           {filteredFilm.map((item, index) => (
                             <Combobox.Option value={item.label} key={index}>
-                              <a className="common-flex-box !h-[50px]" href="/movies">
-                                <div className="w-1/4 h-full">
-                                  <img className="w-[40px] h-full rounded-[5px]" src={images['./solo-leveling.jpg']} alt="" />
+                              <a className='common-flex-box !h-[50px]' href='/movies'>
+                                <div className='h-full w-1/4'>
+                                  <img className='h-full w-[40px] rounded-[5px]' src={images['./solo-leveling.jpg']} alt='' />
                                 </div>
-                                <div className="w-3/4 h-full flex flex-col justify-between">
-                                  <p className="text-nowrap overflow-hidden text-ellipsis text-sm font-semibold">{item.label}</p>
-                                  <div className="common-flex-box text-xs font-light">
+                                <div className='flex h-full w-3/4 flex-col justify-between'>
+                                  <p className='overflow-hidden text-ellipsis text-nowrap text-sm font-semibold'>{item.label}</p>
+                                  <div className='common-flex-box text-xs font-light'>
                                     <span>{item.year}</span>
                                     <div>
                                       <span>FHD</span>
-                                      <span className="ms-[10px]">Vietsub</span>
+                                      <span className='ms-[10px]'>Vietsub</span>
                                     </div>
                                   </div>
                                 </div>
@@ -322,56 +311,59 @@ const Header = () => {
                         </Combobox.Options>
                       </div>
                     </Transition>
-                    : ''
-                  }
+                  ) : (
+                    ''
+                  )}
                 </Combobox>
               </div>
               {/* End nav search */}
 
               {/* Theme mode */}
               <button onClick={handleToggleTheme}>
-                <Icons themeMode={themeMode.theme} iconName="thememode" className="header-icon" />
+                <Icons themeMode={themeMode.theme} iconName='thememode' className='header-icon' />
               </button>
               {/* End theme mode */}
 
-              {isAuth
-                ? <>
+              {auth.isAuth ? (
+                <>
                   {/* Notification */}
-                  <Menu as="div" className="relative">
-                    <Menu.Button className="common-flex-box">
+                  <Menu as='div' className='relative'>
+                    <Menu.Button className='common-flex-box'>
                       {({ open }) => (
                         <>
-                          <Icons themeMode={themeMode.theme} iconName={notifications.filter(item => !item.seen).length > 0 ? 'notify-seen' : 'notify'} className="header-icon notify-icon" />
+                          <Icons
+                            themeMode={themeMode.theme}
+                            iconName={notifications.filter((item) => !item.seen).length > 0 ? 'notify-seen' : 'notify'}
+                            className='header-icon notify-icon'
+                          />
                         </>
                       )}
                     </Menu.Button>
-                    {notifications.length > 0
-                      ? <Transition
+                    {notifications.length > 0 ? (
+                      <Transition
                         as={Fragment}
-                        enter="transition ease-out duration-100"
-                        enterFrom="transform opacity-0 scale-95"
-                        enterTo="transform opacity-100 scale-100"
-                        leave="transition ease-in duration-75"
-                        leaveFrom="transform opacity-100 scale-100"
-                        leaveTo="transform opacity-0 scale-95"
+                        enter='transition ease-out duration-100'
+                        enterFrom='transform opacity-0 scale-95'
+                        enterTo='transform opacity-100 scale-100'
+                        leave='transition ease-in duration-75'
+                        leaveFrom='transform opacity-100 scale-100'
+                        leaveTo='transform opacity-0 scale-95'
                       >
-                        <Menu.Items className="header-nav-dropdown dropdown-notify absolute">
-                          <ul className="custom-scroll">
+                        <Menu.Items className='header-nav-dropdown dropdown-notify absolute'>
+                          <ul className='custom-scroll'>
                             {notifications.map((item, index) => (
-                              <Menu.Item as="li" key={index} className={!item.seen ? 'unseen' : ''}>
+                              <Menu.Item as='li' key={index} className={!item.seen ? 'unseen' : ''}>
                                 {({ active }) => (
-                                  <a className="common-flex-box !h-[50px] relative" href="/movies">
-                                    <div className="w-1/4 h-full">
-                                      <img className="w-[40px] h-full rounded-[5px]" src={images[`./${item.slug}.jpg`]} alt="" />
+                                  <a className='common-flex-box relative !h-[50px]' href='/movies'>
+                                    <div className='h-full w-1/4'>
+                                      <img className='h-full w-[40px] rounded-[5px]' src={images[`./${item.slug}.jpg`]} alt='' />
                                     </div>
-                                    <div className="w-3/4 h-full">
-                                      <p className="overflow-hidden text-ellipsis text-sm font-semibold h-full">
+                                    <div className='h-full w-3/4'>
+                                      <p className='h-full overflow-hidden text-ellipsis text-sm font-semibold'>
                                         <b>{item.film}</b> vừa mới ra mắt ngay hôm nay.
                                       </p>
                                     </div>
-                                    {!item.seen
-                                      && <div className="absolute top-1/2 right-1 -translate-x-1/2 w-[6px] h-[6px] rounded-[50%] bg-[#406AFF]"></div>
-                                    }
+                                    {!item.seen && <div className='absolute right-1 top-1/2 h-[6px] w-[6px] -translate-x-1/2 rounded-[50%] bg-[#406AFF]'></div>}
                                   </a>
                                 )}
                               </Menu.Item>
@@ -379,51 +371,59 @@ const Header = () => {
                           </ul>
                         </Menu.Items>
                       </Transition>
-                      : ''
-                    }
+                    ) : (
+                      ''
+                    )}
                   </Menu>
                   {/* End notification */}
 
                   {/* Account manage */}
-                  <Menu as="div" className="relative">
-                    <Menu.Button className="common-flex-box">
+                  <Menu as='div' className='relative'>
+                    <Menu.Button className='common-flex-box'>
                       {({ open }) => (
                         <>
-                          <img className="w-9" src={images['./avatar.png']} alt="" />
+                          <img className='h-9 w-9 rounded-[5px]' src={images['./avatar.png']} alt='' />
                         </>
                       )}
                     </Menu.Button>
                     <Transition
                       as={Fragment}
-                      enter="transition ease-out duration-100"
-                      enterFrom="transform opacity-0 scale-95"
-                      enterTo="transform opacity-100 scale-100"
-                      leave="transition ease-in duration-75"
-                      leaveFrom="transform opacity-100 scale-100"
-                      leaveTo="transform opacity-0 scale-95"
+                      enter='transition ease-out duration-100'
+                      enterFrom='transform opacity-0 scale-95'
+                      enterTo='transform opacity-100 scale-100'
+                      leave='transition ease-in duration-75'
+                      leaveFrom='transform opacity-100 scale-100'
+                      leaveTo='transform opacity-0 scale-95'
                     >
-                      <Menu.Items className="header-nav-dropdown dropdown-user absolute right-0">
-                        <ul className="w-full py-[5px] overflow-hidden">
-                          <Menu.Item as="li">
+                      <Menu.Items className='header-nav-dropdown dropdown-user absolute right-0'>
+                        <ul className='w-full overflow-hidden py-[5px]'>
+                          <Menu.Item as='li'>
                             {({ active }) => (
-                              <a href="#" className="common-flex-box">
-                                <Icons themeMode={themeMode.theme} iconName="account" className="header-icon" />
+                              <Link to={'/profile'} className='common-flex-box'>
+                                <Icons themeMode={themeMode.theme} iconName='account' className='header-icon' />
                                 <span>Tài khoản</span>
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
-                          <Menu.Item as="li">
+                          <Menu.Item as='li'>
                             {({ active }) => (
-                              <a href="#" className="common-flex-box">
-                                <Icons themeMode={themeMode.theme} iconName="collection" className="header-icon" />
+                              <a href='#' className='common-flex-box'>
+                                <Icons themeMode={themeMode.theme} iconName='collection' className='header-icon' />
                                 <span>Bộ sưu tập</span>
                               </a>
                             )}
                           </Menu.Item>
-                          <Menu.Item as="li">
+                          <Menu.Item as='li'>
                             {({ active }) => (
-                              <a href="#" className="common-flex-box">
-                                <Icons themeMode={themeMode.theme} iconName="logout" className="header-icon" />
+                              <a
+                                href='#'
+                                className='common-flex-box'
+                                onClick={() => {
+                                  auth.setIsAuth(false);
+                                  navigate('/login');
+                                }}
+                              >
+                                <Icons themeMode={themeMode.theme} iconName='logout' className='header-icon' />
                                 <span>Đăng xuất</span>
                               </a>
                             )}
@@ -434,16 +434,19 @@ const Header = () => {
                   </Menu>
                   {/* End account manage */}
                 </>
-                : <>
-                  <Link to={'/login'} className="login-btn py-1.5 px-2 rounded-[10px] leading-[1.3rem] font-semibold">Đăng nhập</Link>
+              ) : (
+                <>
+                  <Link to={'/login'} className='login-btn rounded-[10px] px-2 py-1.5 font-semibold leading-[1.3rem]'>
+                    Đăng nhập
+                  </Link>
                 </>
-              }
+              )}
             </div>
           </div>
         </div>
       </div>
     </header>
   );
-}
+};
 
 export default Header;

@@ -1,6 +1,4 @@
-interface IAssetImage {
-  [key: string]: string,
-}
+import { IAssetImage } from 'interfaces';
 
 const images: IAssetImage = {};
 
@@ -9,14 +7,4 @@ reqImages.keys().forEach((key) => {
   images[key] = reqImages(key);
 });
 
-const icons: IAssetImage = {};
-
-const reqIcons = require.context('./assets/icons/light', false, /\.(png|jpe?g|svg)$/);
-reqIcons.keys().forEach((key) => {
-  icons[key] = reqIcons(key);
-});
-
-export {
-  images,
-  icons
-};
+export { images };

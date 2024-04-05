@@ -102,70 +102,65 @@ const Google = ({ ...props }) => <svg width="40" height="40" viewBox="0 0 40 40"
   <path d="M36.2332 18.45C36.1498 17.6 35.4332 16.9667 34.5832 16.9667H21.9998C21.0832 16.9667 20.3332 17.7167 20.3332 18.6333V21.4834C20.3332 22.4 21.0832 23.15 21.9998 23.15H29.5165C29.3332 24.6834 28.3332 27 26.1165 28.55C24.6998 29.5334 22.8165 30.2167 20.3332 30.2167C20.2165 30.2167 20.1165 30.2167 19.9998 30.2C15.7498 30.0667 12.1498 27.2167 10.8498 23.3C10.4998 22.25 10.2998 21.15 10.2998 20C10.2998 18.85 10.4998 17.7333 10.8332 16.7C10.9332 16.4 11.0498 16.1 11.1832 15.8C12.7165 12.35 16.0665 9.91669 19.9998 9.80002C20.0998 9.78335 20.2165 9.78334 20.3332 9.78334C22.7165 9.78334 24.4998 10.5667 25.7498 11.4333C26.3998 11.8833 27.2665 11.7833 27.8332 11.2333L30.1498 8.96669C30.8832 8.25002 30.8165 7.03332 29.9832 6.43332C27.3332 4.48332 24.0998 3.33334 20.3332 3.33334C20.2165 3.33334 20.1165 3.33336 19.9998 3.35003C13.6165 3.46669 8.13317 7.16669 5.44984 12.5167C4.3165 14.7834 3.6665 17.3167 3.6665 20C3.6665 22.6833 4.3165 25.2167 5.44984 27.4833H5.46651C8.14984 32.8333 13.6332 36.5333 19.9998 36.65C20.1165 36.6667 20.2165 36.6667 20.3332 36.6667C24.8332 36.6667 28.6165 35.1833 31.3665 32.6333C34.5165 29.7167 36.3332 25.45 36.3332 20.3667C36.3332 19.65 36.2998 19.0334 36.2332 18.45Z" fill="#F9FAFB" />
 </svg>
 
+const Profile = ({ ...props }) => <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <path d="M20.2663 18.1166C20.0996 18.1 19.8996 18.1 19.7163 18.1166C15.7496 17.9833 12.5996 14.7333 12.5996 10.7333C12.5996 6.64998 15.8996 3.33331 19.9996 3.33331C24.0829 3.33331 27.3996 6.64998 27.3996 10.7333C27.3829 14.7333 24.2329 17.9833 20.2663 18.1166Z" stroke="#EAEDF0" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M11.9332 24.2667C7.89987 26.9667 7.89987 31.3667 11.9332 34.05C16.5165 37.1167 24.0332 37.1167 28.6165 34.05C32.6499 31.35 32.6499 26.95 28.6165 24.2667C24.0499 21.2167 16.5332 21.2167 11.9332 24.2667Z" stroke="#EAEDF0" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
 
+const Lock = ({ ...props }) => <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <path d="M10 16.6666V13.3333C10 7.81665 11.6667 3.33331 20 3.33331C28.3333 3.33331 30 7.81665 30 13.3333V16.6666" stroke="#EAEDF0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M19.9997 30.8333C22.3009 30.8333 24.1663 28.9679 24.1663 26.6667C24.1663 24.3655 22.3009 22.5 19.9997 22.5C17.6985 22.5 15.833 24.3655 15.833 26.6667C15.833 28.9679 17.6985 30.8333 19.9997 30.8333Z" stroke="#EAEDF0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M28.333 36.6667H11.6663C4.99967 36.6667 3.33301 35 3.33301 28.3334V25C3.33301 18.3334 4.99967 16.6667 11.6663 16.6667H28.333C34.9997 16.6667 36.6663 18.3334 36.6663 25V28.3334C36.6663 35 34.9997 36.6667 28.333 36.6667Z" stroke="#EAEDF0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
+
+const Password = ({ ...props }) => <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <path d="M32.6 12V28C32.6 34.4 31 36 24.6 36H15C8.6 36 7 34.4 7 28V12C7 5.6 8.6 4 15 4H24.6C31 4 32.6 5.6 32.6 12Z" stroke="#EAEDF0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M22.9996 9.60001H16.5996" stroke="#EAEDF0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M19.8003 31.36C21.17 31.36 22.2803 30.2497 22.2803 28.88C22.2803 27.5103 21.17 26.4 19.8003 26.4C18.4306 26.4 17.3203 27.5103 17.3203 28.88C17.3203 30.2497 18.4306 31.36 19.8003 31.36Z" stroke="#EAEDF0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
+
+const Sms = ({ ...props }) => <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <path d="M28.333 34.1667H11.6663C6.66634 34.1667 3.33301 31.6667 3.33301 25.8333V14.1667C3.33301 8.33334 6.66634 5.83334 11.6663 5.83334H28.333C33.333 5.83334 36.6663 8.33334 36.6663 14.1667V25.8333C36.6663 31.6667 33.333 34.1667 28.333 34.1667Z" stroke="#EAEDF0" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M28.3337 15L23.117 19.1667C21.4003 20.5333 18.5837 20.5333 16.867 19.1667L11.667 15" stroke="#EAEDF0" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
+
+const Camera = ({ ...props }) => <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <path d="M7.5004 2.50016C7.24623 2.50016 7.0129 2.35433 6.89623 2.12933L6.59623 1.52516C6.40456 1.146 5.90456 0.833496 5.47956 0.833496H4.5254C4.09623 0.833496 3.59623 1.146 3.40456 1.52516L3.10456 2.12933C2.9879 2.35433 2.75456 2.50016 2.5004 2.50016C1.59623 2.50016 0.879562 3.26266 0.937895 4.16266L1.15456 7.60433C1.20456 8.46266 1.66706 9.16683 2.81706 9.16683H7.18373C8.33373 9.16683 8.79206 8.46266 8.84623 7.60433L9.0629 4.16266C9.12123 3.26266 8.40456 2.50016 7.5004 2.50016ZM4.3754 3.021H5.6254C5.79623 3.021 5.9379 3.16266 5.9379 3.3335C5.9379 3.50433 5.79623 3.646 5.6254 3.646H4.3754C4.20456 3.646 4.0629 3.50433 4.0629 3.3335C4.0629 3.16266 4.20456 3.021 4.3754 3.021ZM5.0004 7.55016C4.2254 7.55016 3.59206 6.921 3.59206 6.14183C3.59206 5.36266 4.22123 4.7335 5.0004 4.7335C5.77956 4.7335 6.40873 5.36266 6.40873 6.14183C6.40873 6.921 5.7754 7.55016 5.0004 7.55016Z" fill="#22262A" />
+</svg>
+
+
+
+const iconComponents: { [key: string]: React.ElementType<IThemeIcon> } = {
+  account: Account,
+  collection: Collection,
+  'dropdownfirst-down': DropdownFirstDown,
+  'dropdownfirst-up': DropdownFirstUp,
+  instagram: Instagram,
+  logout: Logout,
+  notify: Notify,
+  search: Search,
+  thememode: ThemeMode,
+  facebook: Facebook,
+  youtube: Youtube,
+  'direct-notification': DirectNotification,
+  'btn-prev': BtnPrev,
+  'btn-next': BtnNext,
+  'notify-seen': NotifySeen,
+  'chevron-down': ChevronDown,
+  'chevron-up': ChevronUp,
+  view: View,
+  google: Google,
+  profile: Profile,
+  lock: Lock,
+  password: Password,
+  sms: Sms,
+  camera: Camera,
+};
 
 const DarkIcons = ({ iconName, ...props }: IThemeIcon) => {
-  switch (iconName) {
-    case 'account':
-      return <Account {...props} />;
+  const IconComponent = iconComponents[iconName];
 
-    case 'collection':
-      return <Collection {...props} />;
-
-    case 'dropdownfirst-down':
-      return <DropdownFirstDown {...props} />;
-
-    case 'dropdownfirst-up':
-      return <DropdownFirstUp {...props} />;
-
-    case 'instagram':
-      return <Instagram {...props} />;
-
-    case 'logout':
-      return <Logout {...props} />;
-
-    case 'notify':
-      return <Notify {...props} />;
-
-    case 'search':
-      return <Search {...props} />;
-
-    case 'thememode':
-      return <ThemeMode {...props} />;
-
-    case 'facebook':
-      return <Facebook {...props} />;
-
-    case 'youtube':
-      return <Youtube {...props} />;
-
-    case 'direct-notification':
-      return <DirectNotification {...props} />;
-
-    case 'btn-prev':
-      return <BtnPrev {...props} />;
-
-    case 'btn-next':
-      return <BtnNext {...props} />;
-
-    case 'notify-seen':
-      return <NotifySeen {...props} />;
-
-    case 'chevron-down':
-      return <ChevronDown {...props} />;
-
-    case 'chevron-up':
-      return <ChevronUp {...props} />;
-
-    case 'view':
-      return <View {...props} />;
-
-    case 'google':
-      return <Google {...props} />;
-
-    default:
-      return null;
-  }
-}
+  return IconComponent ? <IconComponent iconName={iconName} {...props} /> : null;
+};
 
 export default DarkIcons;

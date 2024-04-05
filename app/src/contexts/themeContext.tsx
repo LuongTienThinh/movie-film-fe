@@ -1,10 +1,10 @@
-import { IComponentProps, IThemeContext } from "interfaces";
-import React, { useState } from "react"
+import React, { useState } from 'react';
 
+import { IComponentProps, IThemeContext } from 'interfaces';
 
 export const ThemeContext = React.createContext<IThemeContext>({
   theme: 'light',
-  toggleTheme: () => {}
+  toggleTheme: () => {},
 });
 
 export const ThemeContextProvider: React.FC<IComponentProps> = ({ children }) => {
@@ -12,11 +12,7 @@ export const ThemeContextProvider: React.FC<IComponentProps> = ({ children }) =>
 
   const toggleTheme = (newTheme: string) => {
     setTheme(newTheme);
-  }
+  };
 
-  return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      { children }
-    </ThemeContext.Provider>
-  )
-}
+  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
+};

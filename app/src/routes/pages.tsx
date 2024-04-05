@@ -1,5 +1,5 @@
-import React from "react";
-import { routerLink } from "utils";
+import React from 'react';
+import { routerLink } from 'utils';
 
 export const pages = [
   {
@@ -42,4 +42,9 @@ export const pages = [
     component: React.lazy(() => import('./auth/forgot-password')),
     title: 'Forgot password page',
   },
-]
+  {
+    path: routerLink('Profile'),
+    component: React.lazy(() => import('./pages/profile')),
+    title: 'Profile page',
+  },
+];
