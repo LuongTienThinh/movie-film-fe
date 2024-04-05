@@ -1,8 +1,8 @@
 import { Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { pages } from './pages';
-import { ILazyComponent } from "interfaces";
+import { ILazyComponent } from 'interfaces';
 
 const LazyPage = ({ title, component: Component, ...props }: ILazyComponent) => {
   document.title = title || '';
@@ -11,8 +11,8 @@ const LazyPage = ({ title, component: Component, ...props }: ILazyComponent) => 
     <Suspense>
       <Component {...props} />
     </Suspense>
-  )
-}
+  );
+};
 
 const RouterPages = () => {
   return (
@@ -24,6 +24,6 @@ const RouterPages = () => {
       </Routes>
     </Router>
   );
-}
+};
 
 export default RouterPages;

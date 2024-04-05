@@ -1,9 +1,9 @@
-import { useContext } from "react";
+import { useContext } from 'react';
 
-import { IAuthHook } from "interfaces"
+import { IAuthHook } from 'interfaces';
+import { ThemeContext } from 'contexts/themeContext';
+import Button from 'components/auth/button';
 import './index.scss';
-import { ThemeContext } from "contexts/themeContext";
-import Button from "components/auth/button";
 
 const AuthHook = ({ title, content: Content, otherBtns: OtherBtns, confirmBtns }: IAuthHook) => {
   const themeMode = useContext(ThemeContext);
@@ -11,37 +11,37 @@ const AuthHook = ({ title, content: Content, otherBtns: OtherBtns, confirmBtns }
   const renderData = () => {
     return (
       <>
-        <section className={`auth auth-${themeMode.theme} py-20 mt-[60px]`}>
-          <div className="container">
-            <div className="auth-area mx-auto rounded-[20px] w-[550px] text-center py-5 px-[75px]">
-              <form action="">
-                <h1 className="font-bold text-3xl py-[5px]">{title}</h1>
-                {Content && <div className="content py-[5px]">{Content}</div>}
-                {OtherBtns &&
+        <section className={`auth auth-${themeMode.theme} mt-[60px] py-20`}>
+          <div className='container'>
+            <div className='auth-area mx-auto w-[550px] rounded-[20px] px-[75px] py-5 text-center'>
+              <form action=''>
+                <h1 className='py-[5px] text-3xl font-bold'>{title}</h1>
+                {Content && <div className='content py-[5px]'>{Content}</div>}
+                {OtherBtns && (
                   <>
-                    <hr className="border-0 my-5 h-[1px]" />
-                    <div className="btn-area py-[5px]">{OtherBtns}</div>
+                    <hr className='my-5 h-[1px] border-0' />
+                    <div className='btn-area py-[5px]'>{OtherBtns}</div>
                   </>
-                }
-                {confirmBtns &&
+                )}
+                {confirmBtns && (
                   <>
-                    <div className="confirm-btns py-[5px] flex justify-end gap-x-2.5">
-                      {confirmBtns.cancelBtn && <Button className="cancel-btn py-2 px-4" {...confirmBtns.cancelBtn} />}
-                      {confirmBtns.continueBtn && <Button className="continue-btn py-2 px-4" {...confirmBtns.continueBtn} />}
+                    <div className='confirm-btns flex justify-end gap-x-2.5 py-[5px]'>
+                      {confirmBtns.cancelBtn && <Button className='cancel-btn px-4 py-2' {...confirmBtns.cancelBtn} />}
+                      {confirmBtns.continueBtn && <Button className='continue-btn px-4 py-2' {...confirmBtns.continueBtn} />}
                     </div>
                   </>
-                }
+                )}
               </form>
             </div>
           </div>
         </section>
       </>
     );
-  }
+  };
 
   return {
     renderData,
-  }
-}
+  };
+};
 
 export default AuthHook;
