@@ -1,37 +1,37 @@
 import Slider from 'react-slick';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { images } from 'images';
 import { Header, Footer } from 'layouts';
 import Icons from 'assets/icons';
 import { ThemeContext } from 'contexts/themeContext';
-import { DataHook } from 'hooks';
-import { IFilm, IDataHook, ITopFilm, SliderType } from 'interfaces';
+import { useDataHook, useViewport } from 'hooks';
+import { IFilm, IDataHook, ITopFilm, SliderType, IApiResponseData } from 'interfaces';
 import { Film, Ranking, TopFilm } from 'components';
 import './index.scss';
-
-const latestFilms: Array<IFilm> = [
-  { label: 'Solo leveling', slug: 'solo-leveling' },
-  { label: 'Fluffy paradise', slug: 'fluffy-paradise' },
-  { label: 'Metallic rouge', slug: 'metallic-rouge' },
-  { label: 'Magic and muscles', slug: 'magic-and-muscles' },
-  { label: 'Ragna crimson', slug: 'ragna-crimson' },
-  { label: 'The unwanted undead adventure', slug: 'the-unwanted-undead-adventure' },
-  { label: 'Tom and jerry', slug: 'tom-and-jerry' },
-  { label: 'The world ends with you', slug: 'the-world-ends-with-you' },
-];
-
-const topFilms: Array<ITopFilm> = [
-  { label: 'Magic and muscles', slug: 'magic-and-muscles', rank: 1 },
-  { label: 'Ragna crimson', slug: 'ragna-crimson', rank: 2 },
-  { label: 'Solo leveling', slug: 'solo-leveling', rank: 3 },
-];
+import axios from 'axios';
 
 const HomePage = () => {
-  const slider = React.useRef<SliderType>(null);
   const themeMode = useContext(ThemeContext);
-  const [filmActived, setFilmActived] = useState(latestFilms[0]);
+
+  const slider = React.useRef<SliderType>(null);
+  const { width: viewWidth, breakPoint } = useViewport();
+  const [films, setFilms] = useState<Array<IFilm>>([]);
+  const [filmActived, setFilmActived] = useState<IFilm>();
+
+  useEffect(() => {
+    const getApiLatest = async () => {
+      const { data }: IApiResponseData = await axios.get('http://animetop.id.vn/api/film/latest');
+      setFilms(data?.data);
+    };
+
+    getApiLatest();
+  }, []);
+
+  useEffect(() => {
+    setFilmActived(films[0]);
+  }, [films]);
 
   const latestHooks: IDataHook = {
     sideBar: {
@@ -39,26 +39,32 @@ const HomePage = () => {
         header: {
           title: 'Anime mới nhất',
           btnMore: true,
-          titleWidth: 3,
-          btnMoreWidth: 1,
+          titleWidth: viewWidth >= breakPoint.sm ? 9 : 8,
+          btnMoreWidth: viewWidth >= breakPoint.sm ? 3 : 4,
+          linkTo: '/pages/latest'
         },
-        width: 8,
+        width: viewWidth >= breakPoint.lg ? 8 : 12,
         content: (
-          <div className='content flex flex-wrap gap-5'>
-            {latestFilms && latestFilms.length > 0 && latestFilms.map((film, index) => <Film key={index} {...film} style={{ width: 'calc(25% - 15px)' }} />)}
+          <div className='content flex flex-wrap gap-x-[5%] gap-y-5 md:gap-5 lg:gap-x-[5%] lg:gap-y-5 xl:gap-5'>
+            {films &&
+              films.length > 0 &&
+              films.map((film, index) => <Film key={index} {...film} className='w-[47.5%] sm:w-3/10 md:w-[calc(25%-15px)] lg:w-3/10 xl:w-[calc(25%-15px)]' />)}
           </div>
         ),
       },
-      rightSide: {
-        width: 4,
-        content: (
-          <div className='content mt-[90px] flex flex-wrap justify-center gap-9'>
-            {topFilms && topFilms.length > 0 && topFilms.map((film, index) => <TopFilm key={index} {...film} />)}
-          </div>
-        ),
-      },
+      rightSide:
+        viewWidth >= breakPoint.lg
+          ? {
+              width: 4,
+              content: (
+                <div className='content mt-[90px] flex flex-wrap justify-center gap-9'>
+                  {films && films.length > 0 && films.slice(0, 3).map((film, index) => <TopFilm key={index} {...film} rank={index + 1} />)}
+                </div>
+              ),
+            }
+          : undefined,
     },
-    data: latestFilms,
+    data: films,
     setData: () => {},
   };
 
@@ -68,26 +74,31 @@ const HomePage = () => {
         header: {
           title: 'Anime bộ (TV - SERIES)',
           btnMore: true,
-          titleWidth: 3,
-          btnMoreWidth: 1,
+          titleWidth: viewWidth >= breakPoint.sm ? 9 : 8,
+          btnMoreWidth: viewWidth >= breakPoint.sm ? 3 : 4,
         },
-        width: 8,
+        width: viewWidth >= breakPoint.lg ? 8 : 12,
         content: (
-          <div className='content flex flex-wrap gap-5'>
-            {latestFilms && latestFilms.length > 0 && latestFilms.map((film, index) => <Film key={index} {...film} style={{ width: 'calc(25% - 15px)' }} />)}
+          <div className='content flex flex-wrap gap-x-[5%] gap-y-5 md:gap-5 lg:gap-x-[5%] lg:gap-y-5 xl:gap-5'>
+            {films &&
+              films.length > 0 &&
+              films.map((film, index) => <Film key={index} {...film} className='w-[47.5%] sm:w-3/10 md:w-[calc(25%-15px)] lg:w-3/10 xl:w-[calc(25%-15px)]' />)}
           </div>
         ),
       },
-      rightSide: {
-        width: 4,
-        content: (
-          <div className='content flex flex-wrap justify-center gap-9'>
-            <Ranking listFilm={latestFilms.concat(latestFilms.slice(0, 2))}></Ranking>
-          </div>
-        ),
-      },
+      rightSide:
+        viewWidth >= breakPoint.lg
+          ? {
+              width: 4,
+              content: (
+                <div className='content flex flex-wrap justify-center gap-9'>
+                  <Ranking listFilm={films}></Ranking>
+                </div>
+              ),
+            }
+          : undefined,
     },
-    data: latestFilms,
+    data: films,
     setData: () => {},
   };
 
@@ -95,40 +106,61 @@ const HomePage = () => {
     subHeader: {
       btnMore: true,
       title: 'MOVIES (OVA)',
-      titleWidth: 10,
-      btnMoreWidth: 2,
+      titleWidth: viewWidth >= breakPoint.sm ? 10 : 8,
+      btnMoreWidth: viewWidth >= breakPoint.sm ? 2 : 4,
     },
     sideBar: {
-      leftSide: {
-        width: 4,
-        content: (
-          <div className='content h-full'>
-            <img className='h-full rounded-[10px]' src={images[`./${latestFilms[0].slug}.jpg`]} alt='' />
-          </div>
-        ),
-      },
+      leftSide:
+        viewWidth >= breakPoint.lg
+          ? {
+              width: 4.3,
+              content: (
+                <div className='content h-full'>
+                  <img className='h-full rounded-p2' src={films[0] ? films[0].poster_url : images[`./solo-leveling`]} alt='' />
+                </div>
+              ),
+            }
+          : undefined,
       rightSide: {
-        width: 8,
+        width: viewWidth >= breakPoint.lg ? 7.7 : 12,
         content: (
-          <div className='content flex flex-wrap gap-5'>
-            {latestFilms && latestFilms.length > 0 && latestFilms.map((film, index) => <Film key={index} {...film} style={{ width: 'calc(25% - 15px)' }} />)}
+          <div className='content flex flex-wrap gap-x-[5%] gap-y-5 md:gap-5 lg:gap-x-[5%] lg:gap-y-5 xl:gap-5'>
+            {films &&
+              films.length > 0 &&
+              films.map((film, index) => <Film key={index} {...film} className='w-[47.5%] sm:w-3/10 md:w-[calc(25%-15px)] lg:w-3/10 xl:w-[calc(25%-15px)]' />)}
           </div>
         ),
       },
     },
-    data: latestFilms,
+    data: films,
     setData: () => {},
   };
 
-  const latestFilmData = DataHook(latestHooks);
-  const seriesFilmData = DataHook(seriesHook);
-  const moviesFilmData = DataHook(moviesHook);
+  const ranksHook: IDataHook = {
+    sideBar: {
+      leftSide: {
+        width: 12,
+        content: (
+          <div className='content flex flex-wrap justify-center gap-9'>
+            <Ranking listFilm={films.concat(films.slice(0, 2))}></Ranking>
+          </div>
+        ),
+      },
+    },
+    data: films,
+    setData: () => {},
+  };
+
+  const latestFilmData = useDataHook(latestHooks);
+  const seriesFilmData = useDataHook(seriesHook);
+  const moviesFilmData = useDataHook(moviesHook);
+  const ranksFilmData = useDataHook(ranksHook);
 
   const PrevArrow = (props: any) => {
     const { className, style, onClick } = props;
     return (
       <button style={{ ...style }} className={className} onClick={onClick}>
-        <Icons themeMode={themeMode.theme} iconName='btn-prev' />
+        <Icons themeMode={themeMode.theme} iconName='btn-prev' className='icon' />
       </button>
     );
   };
@@ -137,7 +169,7 @@ const HomePage = () => {
     const { className, style, onClick } = props;
     return (
       <button style={{ ...style }} className={className} onClick={onClick}>
-        <Icons themeMode={themeMode.theme} iconName='btn-next' />
+        <Icons themeMode={themeMode.theme} iconName='btn-next' className='icon' />
       </button>
     );
   };
@@ -146,18 +178,74 @@ const HomePage = () => {
     infinite: true,
     speed: 500,
     focusOnSelect: true,
-    slidesToShow: 7,
+    slidesToShow: 9,
     slidesToScroll: 1,
     centerMode: true,
-    centerPadding: '40px',
-    prevArrow: <PrevArrow />,
-    nextArrow: <NextArrow />,
+    centerPadding: '60px',
     draggable: false,
     arrows: false,
     autoplay: true,
     autoplaySpeed: 4000,
     pauseOnHover: false,
-    afterChange: (index: Number) => setFilmActived(latestFilms[Number(index)]),
+    afterChange: (index: Number) => setFilmActived(films[Number(index)]),
+    responsive: [
+      {
+        breakpoint: 1400,
+        settings: {
+          centerPadding: '0px',
+          slidesToShow: 7,
+        },
+      },
+      {
+        breakpoint: 1280,
+        settings: {
+          centerPadding: '100px',
+          slidesToShow: 5,
+        },
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          centerPadding: '40px',
+          slidesToShow: 5,
+        },
+      },
+      {
+        breakpoint: 860,
+        settings: {
+          centerPadding: '140px',
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          centerPadding: '80px',
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          centerPadding: '60px',
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 500,
+        settings: {
+          centerPadding: '20px',
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 360,
+        settings: {
+          centerPadding: '100px',
+          slidesToShow: 1,
+        },
+      },
+    ],
   };
 
   return (
@@ -165,30 +253,30 @@ const HomePage = () => {
       <Header />
 
       {/* Banner */}
-      <section className='m-auto mt-[60px]'>
+      <section className='m-auto'>
         <div className='banner relative'>
-          <img className='h-[800px] w-full object-cover' src={images[`./${filmActived.slug}-thumbnail.jpg`]} alt='' />
+          <img className='banner-img' src={filmActived && filmActived.thumbnail_url} alt='' />
           <div className='slick-wrapper'>
             <Slider ref={slider} {...settings}>
-              {latestFilms.length > 0
-                ? latestFilms.map((item, index) => (
+              {films.length > 0
+                ? films.map((item, index) => (
                     <div className='img-wrapper' key={index}>
-                      <img src={images[`./${item.slug}.jpg`]} alt='' />
-                      <Link to={`/film-detail/${item.slug}`} className='movie-detail'>
+                      <img src={item.poster_url} alt='' />
+                      <Link to={`/film-detail/${item.slug}`} className='movie-detail max-sm:hidden'>
                         Xem ngay
                       </Link>
                     </div>
                   ))
                 : ''}
             </Slider>
-            <div className='absolute left-0 top-0 h-fit w-full'>
+            {/* <div className='absolute left-0 top-0 h-fit w-full'>
               <div className='container'>
-                <div className='flex items-center justify-end gap-[15px]'>
+                <div className='flex items-center justify-end gap-p3'>
                   <PrevArrow className='slick-arrow slick-prev' onClick={() => slider?.current?.slickPrev()} />
                   <NextArrow className='slick-arrow slick-next' onClick={() => slider?.current?.slickNext()} />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
@@ -205,6 +293,12 @@ const HomePage = () => {
       <section className={`anime-movies sub-content sub-content-${themeMode.theme}`}>
         <div className='container'>{moviesFilmData.renderData()}</div>
       </section>
+
+      {viewWidth < breakPoint.lg && (
+        <section className={`anime-ranks sub-content sub-content-${themeMode.theme}`}>
+          <div className='container'>{ranksFilmData.renderData()}</div>
+        </section>
+      )}
 
       <Footer />
     </>

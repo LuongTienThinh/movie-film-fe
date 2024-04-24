@@ -1,14 +1,15 @@
 import { useContext, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { ThemeContext } from 'contexts/themeContext';
-import AuthHook from 'hooks/auth';
+import useAuthHook from 'hooks/auth';
 import { IAuthHook } from 'interfaces';
 import { Footer, Header } from 'layouts';
-import Input from 'components/auth/input';
+import Input from 'components/elements/input';
 
 const ForgotPassword = () => {
   const themeMode = useContext(ThemeContext);
+  const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
   const [step, setStep] = useState<string | null>(params.get('step') || '1');
 
@@ -17,14 +18,14 @@ const ForgotPassword = () => {
       ? {
           title: 'Tìm lại tài khoản của bạn',
           content: (
-            <>
-              <div className='note p-2.5 text-left text-sm'>
+            <div className='space-y-p3'>
+              <div className='note text-left text-sm'>
                 <p className='text-justify font-light'>Vui lòng nhập lại email hoặc số điện thoại để tìm kiếm tài khoản của bạn</p>
               </div>
               <div>
                 <Input type='text' name='mail-phone' placeholder='Email hoặc số điện thoại' />
               </div>
-            </>
+            </div>
           ),
           confirmBtns: {
             cancelBtn: {
@@ -32,9 +33,9 @@ const ForgotPassword = () => {
             },
             continueBtn: {
               btnName: 'Gửi mã',
-              linkTo: '/forgot-password?step=2',
               onClick: () => {
                 setStep('2');
+                navigate('?step=2');
               },
             },
           },
@@ -43,17 +44,17 @@ const ForgotPassword = () => {
         ? {
             title: 'Xác thực tài khoản',
             content: (
-              <>
+              <div className='space-y-p3'>
                 <div className='note p-2.5 text-left text-sm'>
                   <p className='mb-2.5 text-justify font-light'>Nhập mã OTP để xác thực tài khoản của bạn</p>
                   <strong className='italic'>Lưu ý:</strong>
                   <p className='text-justify font-light italic'>Không chia sẻ mã OTP cho bất kỳ ai, điều đó có thể ảnh hưởng tới tài khoản của bạn!</p>
                 </div>
-                <div>
+                <div className='space-y-p2'>
                   <Input type='text' name='otp' placeholder='Nhập mã xác thực' />
                   <Input type='text' name='captcha' placeholder='Mã captcha' />
                 </div>
-              </>
+              </div>
             ),
             confirmBtns: {
               cancelBtn: {
@@ -61,9 +62,9 @@ const ForgotPassword = () => {
               },
               continueBtn: {
                 btnName: 'Xác nhận',
-                linkTo: '/forgot-password?step=3',
                 onClick: () => {
                   setStep('3');
+                  navigate('?step=3');
                 },
               },
             },
@@ -73,7 +74,7 @@ const ForgotPassword = () => {
               title: 'Đặt lại mật khẩu',
               content: (
                 <>
-                  <div>
+                  <div className='space-y-p2'>
                     <Input type='text' name='new-password' placeholder='Mật khẩu mới' />
                     <Input type='text' name='renew-password' placeholder='Xác nhận mật khẩu mới' />
                     <Input type='text' name='captcha' placeholder='Mã captcha' />
@@ -86,9 +87,9 @@ const ForgotPassword = () => {
                 },
                 continueBtn: {
                   btnName: 'Thay đổi',
-                  linkTo: '/forgot-password?step=4',
                   onClick: () => {
                     setStep('4');
+                    navigate('?step=4');
                   },
                 },
               },
@@ -105,12 +106,14 @@ const ForgotPassword = () => {
               confirmBtns: {
                 continueBtn: {
                   btnName: 'Xác nhận',
-                  linkTo: '/login',
+                  onClick: () => {
+                    navigate('/login');
+                  }
                 },
               },
             };
 
-  const forgotData = AuthHook(forgotHook);
+  const forgotData = useAuthHook(forgotHook);
 
   return (
     <>

@@ -1,20 +1,20 @@
 import { ITopFilm } from 'interfaces';
 import { images } from 'images';
 
-const TopFilm = ({ label, slug, rank }: ITopFilm) => {
+const TopFilm = ({ name, poster_url, thumbnail_url, slug, year, rank }: ITopFilm) => {
   return (
     <>
       <div
-        className='top-film-item relative h-[150px] w-full rounded-[10px] p-8'
+        className='top-film-item relative h-[150px] w-full rounded-p2 p-8'
         style={{
-          backgroundImage: `url(${images[`./${slug}-thumbnail.jpg`]})`,
+          backgroundImage: `url(${thumbnail_url})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           color: '#ffffff',
         }}
       >
         <div
-          className='blur-bg absolute inset-0 h-full w-full rounded-[10px]'
+          className='blur-bg absolute inset-0 h-full w-full rounded-p2'
           style={{
             backgroundImage:
               rank === 1
@@ -25,13 +25,13 @@ const TopFilm = ({ label, slug, rank }: ITopFilm) => {
           }}
         ></div>
         <div className='sticker absolute left-0 top-0 -translate-y-1/2'>
-          <img className='h-[60px] w-[60px]' src={images[`./${slug}-sticker.png`]} alt='' />
+          <img className='h-p12 w-p12' src={poster_url} alt='' />
         </div>
         <div className='relative z-10 flex h-full w-full items-center gap-4'>
           <div className='w-1/5 text-center text-8xl font-extrabold'>{rank}</div>
           <div className='flex h-full w-4/5 flex-col justify-between'>
-            <div className='name text-lg font-extrabold uppercase'>{label}</div>
-            <div className='year self-end'>2024</div>
+            <div className='name text-lg font-extrabold uppercase'>{name}</div>
+            <div className='year self-end'>{year}</div>
           </div>
         </div>
       </div>
