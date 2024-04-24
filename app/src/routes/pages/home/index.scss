@@ -12,7 +12,7 @@
   }
 
   .slick-wrapper {
-    @apply absolute left-1/2 w-full -translate-x-1/2 -bottom-p2 lg:bottom-p2 xl:bottom-p6;
+    @apply absolute -bottom-p2 left-1/2 w-full -translate-x-1/2 lg:bottom-p2 xl:bottom-p6;
 
     .slick-arrow {
       @apply relative left-auto right-auto top-0 z-50 block h-fit w-fit transform-none;
