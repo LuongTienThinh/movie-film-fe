@@ -16,7 +16,7 @@
 
         &.logout {
           g {
-            @apply scale-[2];
+            @apply scale-[2] z-auto;
 
             path {
               @apply stroke-0.75;

@@ -5,7 +5,7 @@
     @apply mb-p8 gap-p4 rounded-p2 leading-7;
 
     > * {
-      @apply relative rounded-p2 py-[11px];
+      @apply rounded-p2 py-[11px] relative;
 
       .bg {
         @apply absolute top-0 z-10 block h-full w-full rounded-p2;
@@ -52,7 +52,7 @@
   }
 
   .list-filter {
-    @apply mb-p6 w-full gap-p4 max-sm:gap-x-[5%];
+    @apply mb-p6 gap-p4 max-sm:gap-x-[5%] w-full;
 
     .filter-item {
       .title {
@@ -132,8 +132,7 @@
           @apply h-7 w-7 text-transparent;
 
           path {
-            @apply scale-[.7];
-            @apply stroke-2;
+            @apply scale-[.7] stroke-2;
           }
         }
 
