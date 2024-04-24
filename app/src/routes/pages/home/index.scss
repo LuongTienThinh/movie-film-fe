@@ -8,7 +8,7 @@
 
 .banner {
   .banner-img {
-    @apply h-[min(400px,100vh-60px)] w-full object-cover lg:h-[min(800px,100vh-60px)];
+    @apply h-[min(400px,100vh-60px)] w-full lg:h-[min(800px,100vh-60px)] object-cover;
   }
 
   .slick-wrapper {
@@ -44,8 +44,8 @@
 
           img {
             @apply pointer-events-auto m-auto h-[126px] w-[91px] cursor-pointer;
-            @apply sm:h-[162px] sm:w-[117px];
-            @apply xl:h-[180px] xl:w-[130px];
+            @apply sm:h-[162px] sm:w-[117px] cursor-pointer;
+            @apply xl:h-[180px] xl:w-[130px] cursor-pointer;
             border-radius: 10px !important;
           }
 
@@ -70,7 +70,7 @@
             }
 
             img {
-              @apply scale-[1.6];
+              @apply scale-[1.6] cursor-pointer;
             }
 
             .movie-detail {
