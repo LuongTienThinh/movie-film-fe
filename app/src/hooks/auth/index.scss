@@ -15,7 +15,7 @@
         @apply h-6 w-6 sm:h-10 sm:w-10;
 
         path {
-          @apply max-sm:scale-[.6];
+          @apply max-sm:scale-[.6] m-0;
         }
       }
     }
