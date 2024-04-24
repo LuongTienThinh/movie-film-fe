@@ -3,7 +3,8 @@
 .ranking {
   .tab-panel {
     ul {
-      @apply divide-y-[1px];
+      @apply divide-y-[1px] block;
+      
 
       .rank-item {
         .icon {
