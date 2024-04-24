@@ -46,7 +46,7 @@
       }
 
       a {
-        @apply relative z-10 h-full w-full text-center text-lg italic leading-[1.2] max-sm:text-sm cursor-pointer;
+        @apply relative z-10 h-full w-full cursor-pointer text-center text-lg italic leading-[1.2] max-sm:text-sm;
       }
     }
   }
