@@ -20,34 +20,12 @@ body {
 }
 
 .container {
-  margin: 0 auto;
-  height: 100%;
-  width: 100%;
-  max-width: calc(100vw - 48px);
-}
-
-@media not all and (screen(sm)) {
-  .container {
-    max-width: 600px;
-  }
-}
-
-@media not all and (screen(md)) {
-  .container {
-    max-width: 700px;
-  }
-}
-
-@media not all and (screen(lg)) {
-  .container {
-    max-width: 900px;
-  }
-}
-
-@media not all and (screen(xl)) {
-  .container {
-    max-width: 1120px;
-  }
+  @apply max-w-[calc(100vw-48px)];
+  @apply sm:max-w-[600px];
+  @apply md:max-w-[700px];
+  @apply lg:max-w-[900px];
+  @apply xl:max-w-[1120px];
+  @apply mx-auto my-0 h-full w-full;
 }
 
 ul {
