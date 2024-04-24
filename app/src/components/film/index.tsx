@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import { IFilm } from 'interfaces';
 import { images } from 'images';
 
-const Film = ({ label, slug, ...props }: IFilm) => {
+const Film = ({ name, slug, poster_url, className, ...props }: IFilm) => {
   return (
-    <Link to={`/film-detail/${slug}`} {...props}>
-      <img className='pointer-events-none mb-[10px] h-[238px] w-full rounded-[10px]' src={images[`./${slug}.jpg`]} alt='' />
-      <div className='pointer-events-none min-h-[40px] text-lg font-extrabold leading-5'>{label}</div>
+    <Link to={`/film-detail/${slug}`} className={className}>
+      <img className='pointer-events-none mb-p2 h-[224px] w-full rounded-p2 sm:h-[238px]' src={poster_url} alt='' />
+      <div className='line-clamp-2 h-[40px] text-lg font-extrabold leading-5' title={name}>
+        {name}
+      </div>
     </Link>
   );
 };

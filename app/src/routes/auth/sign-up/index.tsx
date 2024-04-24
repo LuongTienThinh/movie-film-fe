@@ -1,39 +1,152 @@
-import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { FormEvent, RefObject, useRef, useState } from 'react';
 
-import Icons from 'assets/icons';
-import { ThemeContext } from 'contexts/themeContext';
-import AuthHook from 'hooks/auth';
-import { IAuthHook } from 'interfaces';
+import useAuthHook from 'hooks/auth';
+import { IAuthHook, IPopup, IPopupRef, IResponseData } from 'interfaces';
 import { Footer, Header } from 'layouts';
-import Input from 'components/auth/input';
-import Button from 'components/auth/button';
+import { Anchor, Button, Input, Popup } from 'components';
+import { AuthService } from 'services';
 
 const SignUp = () => {
-  const themeMode = useContext(ThemeContext);
+
+  const popupRef: RefObject<IPopupRef> = useRef(null);
+  const [popupData, setPopupData] = useState<IPopup>({});
+  
+  const [formData, setFormData] = useState({
+    email: {
+      value: '',
+      formatter: /^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/g,
+      formatted: false,
+      rules: 'Không đúng định dạng email',
+    },
+
+    password: {
+      value: '',
+      formatter: /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#_?&])[A-Za-z\d@$!%*#_?&]{8,}$/g,
+      formatted: false,
+      rules: 'Mật khẩu có ít nhất 8 ký tự bao gồm chữ hoa, số và ký tự đặc biệt',
+    },
+
+    rePassword: {
+      value: '',
+      formatted: false,
+      rules: 'Không trùng mật khẩu',
+    },
+  });
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    let checkSubmit = true;
+
+    Object.keys(formData).forEach((field) => {
+      const value = formData[field as keyof typeof formData];
+      if (!value.formatted) {
+        event.preventDefault();
+        checkSubmit = false;
+      }
+    });
+
+    if (checkSubmit) {
+      event.preventDefault();
+
+      const response: IResponseData | null = await AuthService.signUp({
+        email: formData.email.value,
+        password: formData.password.value,
+      });
+
+      console.log(response);
+
+      if (response) {
+        const { status, message } = response;
+
+        setPopupData((prev) => ({
+          ...prev,
+          title: status === 200 ? 'Thông báo' : 'Lỗi đăng ký',
+          message: message,
+          navigateTo:  status === 200 ? '/login' : '',
+        }));
+
+        popupRef.current && popupRef.current.openModal();
+      }
+    }
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+
+    if (name === 'email' || name === 'password') {
+      setFormData((prev) => {
+        return {
+          ...prev,
+          [name]: {
+            ...prev[name],
+            value,
+            formatted: !!value.match(prev[name].formatter),
+          },
+        };
+      });
+    } else if (name === 'rePassword') {
+      setFormData((prev) => {
+        return {
+          ...prev,
+          [name]: {
+            ...prev[name],
+            value,
+            formatted: prev['password'].value === value,
+          },
+        };
+      });
+    }
+  };
 
   const signUpHook: IAuthHook = {
     title: 'ĐĂNG KÝ',
     content: (
       <>
-        <div>
-          <Input type='text' name='email' placeholder='Email hoặc số điện thoại' />
-          <Input type='text' name='password' placeholder='Mật khẩu' />
-          <Input type='text' name='re-password' placeholder='Nhập lại mật khẩu' />
-          <Button className='w-full bg-[#04C700] py-3' btnName={'Tạo tài khoản'} />
-        </div>
+        <form onSubmit={handleSubmit} className='space-y-2'>
+          <Input
+            type='text'
+            name='email'
+            placeholder='Email hoặc số điện thoại'
+            formatted={formData.email.formatted}
+            rules={formData.email.rules}
+            value={formData.email.value}
+            required
+            onChange={handleInputChange}
+          />
+          <Input
+            type='password'
+            name='password'
+            placeholder='Mật khẩu'
+            formatted={formData.password.formatted}
+            rules={formData.password.rules}
+            value={formData.password.value}
+            required
+            onChange={handleInputChange}
+          />
+          <Input
+            type='password'
+            name='rePassword'
+            placeholder='Nhập lại mật khẩu'
+            formatted={formData.rePassword.formatted}
+            rules={formData.rePassword.rules}
+            value={formData.rePassword.value}
+            required
+            onChange={handleInputChange}
+          />
+          <Button className='w-full bg-green !py-3' type='submit' btnName='Tạo tài khoản' />
+        </form>
       </>
     ),
-    otherBtns: <Button className='mx-auto w-full bg-[#FE2828] py-3' linkTo='/login' btnName={'Đăng nhập'} />,
+    otherBtns: <Anchor className='mx-auto w-full bg-red !py-3' linkTo='/login' anchorName={'Đăng nhập'} />,
   };
 
-  const signUpData = AuthHook(signUpHook);
+  const signUpData = useAuthHook(signUpHook);
 
   return (
     <>
       <Header />
 
       {signUpData.renderData()}
+      {popupData && <Popup {...popupData} ref={popupRef} />}
 
       <Footer />
     </>

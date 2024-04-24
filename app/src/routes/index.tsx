@@ -15,6 +15,8 @@ const LazyPage = ({ title, component: Component, ...props }: ILazyComponent) => 
 };
 
 const RouterPages = () => {
+  console.log(pages);
+  
   return (
     <Router>
       <Routes>

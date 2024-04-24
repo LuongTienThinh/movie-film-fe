@@ -47,13 +47,13 @@ const Ranking = ({ listFilm }: IRanking) => {
                                 {i + 1}
                               </div>
                               <div className='flex h-12 w-4/5 items-center justify-between'>
-                                <img className='h-full w-12 rounded-[5px] object-cover object-center' src={images[`./${e.slug}.jpg`]} alt='' />
+                                <img className='h-full w-12 rounded-p1 object-cover object-center' src={e.poster_url} alt='' />
                                 <div className='flex h-full w-[75%] flex-col justify-between'>
-                                  <span className='text-[13px] font-extrabold'>{e.label}</span>
+                                  <span className='text-[13px] font-extrabold max-sm:leading-none'>{e.name}</span>
                                   <div className='common-flex-box'>
-                                    <span className='text-[10px] font-semibold'>2024</span>
+                                    <span className='text-[10px] font-semibold'>{e.year}</span>
                                     <div className='flex min-w-[25%] items-center text-[8px] italic'>
-                                      <Icons className='me-1 h-2.5 w-2.5' themeMode={themeMode.theme} iconName={'view'} />
+                                      <Icons className='me-1 h-2.5 w-2.5 icon' themeMode={themeMode.theme} iconName={'view'} />
                                       <span>15.314k</span>
                                     </div>
                                   </div>
