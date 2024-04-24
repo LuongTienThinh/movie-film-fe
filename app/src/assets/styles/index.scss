@@ -21,11 +21,11 @@ body {
 
 .container {
   @apply mx-auto my-0 h-full w-full;
-  @apply max-w-[calc(100vw-48px)];
-  @apply sm:max-w-[600px];
-  @apply md:max-w-[700px];
-  @apply lg:max-w-[900px];
-  @apply xl:max-w-[1120px];
+  @apply max-w-[calc(100vw-48px)] block;
+  @apply sm:max-w-[600px] block;
+  @apply md:max-w-[700px] block;
+  @apply lg:max-w-[900px] block;
+  @apply xl:max-w-[1120px] block;
 }
 
 ul {
