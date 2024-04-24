@@ -1,8 +1,14 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { IPagination } from 'interfaces';
+import { useViewport } from 'hooks';
+import Icons from 'assets/icons';
+import { ThemeContext } from 'contexts/themeContext';
 
 const Pagination = ({ pageIndex, perPage, totalItem, sibling = 1, showGoToFirst, showGoToLast, showNext, showPrev, onChange }: IPagination) => {
+  const { width: viewWidth, breakPoint } = useViewport();
+  const themeMode = useContext(ThemeContext);
+
   const firstPage = 1;
   const lastPage = (totalItem && perPage && Math.ceil(totalItem / perPage)) || firstPage;
 
@@ -85,19 +91,19 @@ const Pagination = ({ pageIndex, perPage, totalItem, sibling = 1, showGoToFirst,
     <>
       {showPagination() && (
         <div className='mt-[30px] text-center'>
-          <ul className='pagination flex justify-center'>
+          <ul className='pagination flex items-center justify-center'>
             {showGoToFirst && (
               <li className='item'>
-                <button onClick={() => onChangePage(firstPage)} disabled={currentPage === 1}>
-                  Trang đầu
+                <button className='max-sm:!border-0 max-sm:!p-0' onClick={() => onChangePage(firstPage)} disabled={currentPage === 1}>
+                  {viewWidth >= breakPoint.sm ? 'Trang đầu' : ''}
                 </button>
               </li>
             )}
 
             {showPrev && (
               <li className='item'>
-                <button onClick={() => onChangePage(currentPage - 1)} disabled={currentPage === 1}>
-                  Trang trước
+                <button className='max-sm:!border-0 max-sm:!p-0' onClick={() => onChangePage(currentPage - 1)} disabled={currentPage === 1}>
+                  {viewWidth >= breakPoint.sm ? 'Trang trước' : <Icons themeMode={themeMode.theme} iconName='btn-prev' className='icon' />}
                 </button>
               </li>
             )}
@@ -106,16 +112,16 @@ const Pagination = ({ pageIndex, perPage, totalItem, sibling = 1, showGoToFirst,
 
             {showNext && (
               <li className='item'>
-                <button onClick={() => onChangePage(currentPage + 1)} disabled={currentPage === lastPage}>
-                  Trang sau
+                <button className='max-sm:!border-0 max-sm:!p-0' onClick={() => onChangePage(currentPage + 1)} disabled={currentPage === lastPage}>
+                  {viewWidth >= breakPoint.sm ? 'Trang sau' : <Icons themeMode={themeMode.theme} iconName='btn-next' className='icon' />}
                 </button>
               </li>
             )}
 
             {showGoToLast && (
               <li className='item'>
-                <button onClick={() => onChangePage(lastPage)} disabled={currentPage === lastPage}>
-                  Trang cuối
+                <button className='max-sm:!border-0 max-sm:!p-0' onClick={() => onChangePage(lastPage)} disabled={currentPage === lastPage}>
+                  {viewWidth >= breakPoint.sm ? 'Trang cuối' : ''}
                 </button>
               </li>
             )}

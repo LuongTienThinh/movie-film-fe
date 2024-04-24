@@ -2,13 +2,13 @@ import DarkIcons from './dark';
 import LightIcons from './light';
 import { IIcon } from 'interfaces';
 
-const Icons = ({ themeMode, iconName, ...props }: IIcon) => {
+const Icons = ({ themeMode, fill = 'currentColor', iconName, ...props }: IIcon) => {
   switch (themeMode) {
     case 'dark':
-      return <DarkIcons iconName={iconName} {...props} />;
+      return <DarkIcons iconName={iconName} fill={fill} {...props} />;
   
     default:
-      return <LightIcons iconName={iconName} {...props} />;
+      return <LightIcons iconName={iconName} fill={fill} {...props} />;
   }
 }
 

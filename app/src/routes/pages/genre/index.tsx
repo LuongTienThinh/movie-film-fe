@@ -2,48 +2,32 @@ import { useContext, useEffect, useState } from 'react';
 
 import { Film, Pagination } from 'components';
 import { ThemeContext } from 'contexts/themeContext';
-import { DataHook } from 'hooks';
-import { IDataHook, IFilm, IPage, ITopFilm } from 'interfaces';
+import { useDataHook } from 'hooks';
+import { IApiResponseData, IDataHook, IFilm, IPage } from 'interfaces';
 import { Footer, Header } from 'layouts';
-
-const latestFilms: Array<IFilm> = [
-  { label: 'Solo leveling', slug: 'solo-leveling' },
-  { label: 'Fluffy paradise', slug: 'fluffy-paradise' },
-  { label: 'Metallic rouge', slug: 'metallic-rouge' },
-  { label: 'Magic and muscles', slug: 'magic-and-muscles' },
-  { label: 'Ragna crimson', slug: 'ragna-crimson' },
-  { label: 'The unwanted undead adventure', slug: 'the-unwanted-undead-adventure' },
-  { label: 'Tom and jerry', slug: 'tom-and-jerry' },
-  { label: 'The world ends with you', slug: 'the-world-ends-with-you' },
-  { label: 'Solo leveling', slug: 'solo-leveling' },
-  { label: 'Fluffy paradise', slug: 'fluffy-paradise' },
-  { label: 'Metallic rouge', slug: 'metallic-rouge' },
-  { label: 'Magic and muscles', slug: 'magic-and-muscles' },
-  { label: 'Ragna crimson', slug: 'ragna-crimson' },
-  { label: 'The unwanted undead adventure', slug: 'the-unwanted-undead-adventure' },
-  { label: 'Tom and jerry', slug: 'tom-and-jerry' },
-  { label: 'The world ends with you', slug: 'the-world-ends-with-you' },
-  { label: 'Tom and jerry', slug: 'tom-and-jerry' },
-  { label: 'The world ends with you', slug: 'the-world-ends-with-you' },
-];
-
-const topFilms: Array<ITopFilm> = [
-  { label: 'Magic and muscles', slug: 'magic-and-muscles', rank: 1 },
-  { label: 'Ragna crimson', slug: 'ragna-crimson', rank: 2 },
-  { label: 'Solo leveling', slug: 'solo-leveling', rank: 3 },
-];
+import axios from 'axios';
 
 const GenresPage = () => {
   const themeMode = useContext(ThemeContext);
-  const [filmData, setFilmData] = useState(latestFilms);
+  const [filmData, setFilmData] = useState<Array<IFilm>>([]);
   const [pageManage, setPageManage] = useState<IPage>({ page: 1, perPage: 6 });
+  const [films, setFilms] = useState<Array<IFilm>>([]);
+
+  useEffect(() => {
+    const getApiLatest = async () => {
+      const { data }: IApiResponseData = await axios.get('http://animetop.id.vn/api/film/latest');
+      setFilms(data?.data);
+    };
+
+    getApiLatest();
+  }, []);
 
   const paginationChange = (event: IPage) => {
     setPageManage((prev) => ({ ...prev, ...event }));
   };
 
   useEffect(() => {
-    pageManage.page && pageManage.perPage && setFilmData(latestFilms.slice((pageManage.page - 1) * pageManage.perPage, pageManage.page * pageManage.perPage));
+    pageManage.page && pageManage.perPage && setFilmData(films.slice((pageManage.page - 1) * pageManage.perPage, pageManage.page * pageManage.perPage));
   }, [pageManage]);
 
   const genresPageHook: IDataHook = {
@@ -52,17 +36,19 @@ const GenresPage = () => {
       leftSide: {
         width: 12,
         content: (
-          <div className='content flex flex-wrap gap-5'>
-            {filmData && filmData.length > 0 && filmData.map((film, index) => <Film key={index} {...film} style={{ width: `calc(16.667% - 16.667px)` }} />)}
+          <div className='content flex flex-wrap sm:gap-x-[5%] sm:gap-y-3 md:gap-5 lg:gap-x-[2.5%] lg:gap-y-5 xl:gap-5'>
+            {filmData &&
+              filmData.length > 0 &&
+              filmData.map((film, index) => <Film key={index} {...film} className='sm:w-3/10 md:w-[calc(25%-15px)] lg:w-[18%] xl:w-[calc(16.667%-16.667px)]' />)}
           </div>
         ),
       },
     },
     filters: {
-      data: latestFilms,
+      data: films,
       listFilter: [
         {
-          data: latestFilms,
+          data: films,
           options: [
             {
               label: 'Phim a',
@@ -84,7 +70,7 @@ const GenresPage = () => {
           title: 'Loại phim',
         },
         {
-          data: latestFilms,
+          data: films,
           options: [
             {
               label: 'Phim a',
@@ -106,7 +92,7 @@ const GenresPage = () => {
           title: 'Thể loại',
         },
         {
-          data: latestFilms,
+          data: films,
           options: [
             {
               label: 'Phim a',
@@ -128,7 +114,7 @@ const GenresPage = () => {
           title: 'Quốc gia',
         },
         {
-          data: latestFilms,
+          data: films,
           options: [
             {
               label: 'Phim a',
@@ -150,7 +136,7 @@ const GenresPage = () => {
           title: 'Năm',
         },
         {
-          data: latestFilms,
+          data: films,
           options: [
             {
               label: 'Phim a',
@@ -172,7 +158,7 @@ const GenresPage = () => {
           title: 'Số tập',
         },
         {
-          data: latestFilms,
+          data: films,
           options: [
             {
               label: 'Phim a',
@@ -194,19 +180,19 @@ const GenresPage = () => {
         },
       ],
     },
-    data: latestFilms,
+    data: films,
     setData: () => {},
-    pagination: latestFilms && pageManage && (
-      <Pagination onChange={(page) => paginationChange({ page: page })} totalItem={latestFilms.length} showPrev showNext {...pageManage} />
+    pagination: films && pageManage && (
+      <Pagination onChange={(page) => paginationChange({ page: page })} totalItem={films.length} showPrev showNext {...pageManage} />
     ),
   };
 
-  const genresPageData = DataHook(genresPageHook);
+  const genresPageData = useDataHook(genresPageHook);
   return (
     <>
       <Header />
 
-      <section className={`genres-page sub-content m-auto mt-[60px] sub-content-${themeMode.theme}`}>
+      <section className={`genres-page sub-content m-auto  sub-content-${themeMode.theme}`}>
         <div className='container'>{genresPageData.renderData()}</div>
       </section>
 

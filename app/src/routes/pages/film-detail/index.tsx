@@ -3,90 +3,92 @@ import { Link, useParams } from 'react-router-dom';
 
 import { images } from 'images';
 import { Footer, Header } from 'layouts';
-import { IFilm } from 'interfaces';
+import { IApiResponseData, IFilm } from 'interfaces';
 import { ThemeContext } from 'contexts/themeContext';
 import './index.scss';
-
-const films: Array<IFilm> = [
-  { label: 'Solo leveling', slug: 'solo-leveling' },
-  { label: 'Fluffy paradise', slug: 'fluffy-paradise' },
-  { label: 'Metallic rouge', slug: 'metallic-rouge' },
-  { label: 'Magic and muscles', slug: 'magic-and-muscles' },
-  { label: 'Ragna crimson', slug: 'ragna-crimson' },
-  { label: 'The unwanted undead adventure', slug: 'the-unwanted-undead-adventure' },
-  { label: 'Tom and jerry', slug: 'tom-and-jerry' },
-  { label: 'The world ends with you', slug: 'the-world-ends-with-you' },
-];
+import Icons from 'assets/icons';
+import axios from 'axios';
 
 const FilmDetail = () => {
   const themeMode = useContext(ThemeContext);
   const [film, setFilm] = useState<IFilm>();
+  const [films, setFilms] = useState<Array<IFilm>>([]);
   const params = useParams();
 
   useEffect(() => {
+    const getApiLatest = async () => {
+      const { data }: IApiResponseData = await axios.get('http://animetop.id.vn/api/film/latest');
+      setFilms(data?.data);
+    };
+
+    getApiLatest();
+  }, []);
+
+  useEffect(() => {
     setFilm(films.find((e) => e.slug === params.id));
-  }, [params]);
+  }, [params, films]);
 
   return (
     <>
       <Header />
-      <section className='m-auto mt-[60px]'>
+      <section className='m-auto '>
         {film && (
           <div className={`film-detail film-detail-${themeMode.theme} relative`}>
-            <img className='h-[700px] w-full object-cover brightness-50' src={images[`./${params.id}-thumbnail.jpg`]} alt='' />
+            <img className='h-[min(400px,100vh-150px)] w-full object-cover brightness-50 lg:h-[min(700px,100vh-150px)]' src={film.thumbnail_url} alt='' />
             <div className='container'>
-              <div className='wrapper relative z-50 -mt-[350px]'>
-                <div className='flex justify-between gap-10'>
-                  <div className='h-[420px] w-[300px] overflow-hidden rounded-[10px]'>
-                    <img className='h-full w-full object-cover' src={images[`./${film.slug}.jpg`]} alt='' />
-                  </div>
-                  <div className='description flex w-[40%] flex-col justify-between'>
-                    <h1 className='title text-3xl font-bold'>{film.label}</h1>
-                    <ul>
-                      <li>Tên gốc:</li>
-                      <li>Tình trạng:</li>
-                      <li>Số tập:</li>
-                      <li>Thời lượng:</li>
-                      <li>Năm phát hành:</li>
-                      <li>Quốc gia:</li>
-                      <li>Định dạng phim:</li>
-                      <li>Chất lượng:</li>
-                    </ul>
-                    <div className='btn'>
-                      <Link to={`/film-detail/${film.slug}/1`}>Xem ngay</Link>
-                      <button className='ms-5'>Theo dõi</button>
+              <div className='wrapper relative z-40 -mt-[380px] lg:-mt-[260px] xl:-mt-[360px]'>
+                <div className='flex justify-between gap-5 max-lg:flex-col xl:gap-10'>
+                  <div className='poster w-[210px] space-y-p2 max-lg:self-center lg:overflow-hidden xl:h-[420px] xl:w-[300px]'>
+                    <img className='h-full w-full rounded-p2 object-cover max-lg:aspect-auto max-lg:h-auto' src={film.poster_url} alt='' />
+                    <div className='btn flex items-center justify-between lg:hidden'>
+                      <Link className='inline-block px-10' to={`/film-detail/${film.slug}/${film.episodes[0].slug}`}>
+                        Xem ngay
+                      </Link>
+                      <Link className='!m-0 inline-block !bg-none !p-0' to={''}>
+                        <Icons themeMode={themeMode.theme} iconName={'follow'} className='icon h-p6 w-p6' />
+                      </Link>
                     </div>
                   </div>
-                  <div className='genres w-[30%] self-end'>
-                    <ul className='genre-item flex w-full flex-wrap-reverse justify-end gap-2.5'>
+                  <div className='description flex flex-col justify-between gap-y-p2 lg:w-[40%]'>
+                    <h1 className='title text-2xl font-bold xl:text-3xl'>{film.name}</h1>
+                    <ul>
+                      <li>Tên gốc: {film.origin_name}</li>
+                      <li>Tình trạng: {film.status == 'completed' ? 'Hoàn thành' : 'Đang ra'}</li>
                       <li>
-                        <a href=''>Khoa học</a>
+                        Số tập: {film.episode_current}/{film.episode_total}
                       </li>
-                      <li>
-                        <a href=''>Viễn tưởng</a>
-                      </li>
-                      <li>
-                        <a href=''>Hành động</a>
-                      </li>
-                      <li>
-                        <a href=''>Hài hước</a>
-                      </li>
-                      <li>
-                        <a href=''>Phiêu lưu</a>
-                      </li>
+                      <li>Thời lượng: {film.time}</li>
+                      <li>Năm phát hành: {film.year}</li>
+                      <li>Quốc gia: {film.countries.map((e) => e.name).join(', ')}</li>
+                      <li>Định dạng phim: {film.quality}</li>
+                      <li>Chất lượng: {film.quality}</li>
+                    </ul>
+                    <div className='btn max-lg:hidden'>
+                      <Link className='inline-block px-10' to={`/film-detail/${film.slug}/${film.episodes[0].slug}`}>
+                        Xem ngay
+                      </Link>
+                      <Link className='ms-5 inline-block px-5' to={''}>
+                        Theo dõi
+                      </Link>
+                    </div>
+                  </div>
+                  <div className='genres max-lg:space-y-p3 lg:flex lg:w-[35%] lg:items-end'>
+                    <div className='genre-title text-lg font-bold lg:hidden'>Thể loại</div>
+                    <ul className='genre-item flex w-full flex-wrap gap-2.5 lg:flex-wrap-reverse lg:justify-end'>
+                      {film.genres.map((genre) => (
+                        <li key={genre}>
+                          <a href=''>{genre.name}</a>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
               </div>
               <div className='summary py-10'>
-                <h3 className='text-[26px] font-bold'>Nội dung phim</h3>
-                <hr className='my-[15px] h-[1px] border-none' />
-                <p className='text-justify text-xl font-medium'>
-                  Makoto Misumi chỉ là một học sinh trung học bình thường sống một cuộc sống bình thường, nhưng đột nhiên bị triệu hồi đến thế giới khác để trở thành một “anh
-                  hùng”. Tuy nhiên, nữ thần của thế giới đó đã lăng mạ anh ta vì sự khác biệt và tước bỏ danh hiệu “anh hùng” của anh ta, trước khi tống cổ anh ta đến vùng
-                  hoang dã ở rìa thế giới. Khi đi lang thang trong vùng hoang dã, Makoto chạm trán với rồng, nhện, Orc, người lùn và đủ loại bộ tộc không phải con người. Bởi
-                  vì Makoto đến từ một thế giới khác, anh ta có thể giải phóng sức mạnh ma thuật và kỹ năng chiến đấu ngoài sức tưởng tượng. Nhưng anh ấy sẽ xử lý như thế nào
-                  khi gặp nhiều loài sinh vật khác nhau và tồn tại trong một môi trường mới?
+                <h3 className='text-[22px] font-bold xl:text-[26px]'>Nội dung phim</h3>
+                <hr className='my-p3 h-[1px] border-none' />
+                <p className='text-justify text-base font-medium xl:text-xl'>
+                  {film.description}
                 </p>
               </div>
             </div>

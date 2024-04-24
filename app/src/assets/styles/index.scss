@@ -12,6 +12,7 @@
 body {
   font-family: "Plus Jakarta Sans", sans-serif;
   margin: 0 auto;
+  background-color: map-get($map: $colors, $key: neutral-500);
 }
 
 * {
@@ -19,10 +20,12 @@ body {
 }
 
 .container {
-  margin: 0 auto;
-  max-width: 1120px;
-  width: 100%;
-  height: 100%;
+  @apply w-full h-full my-0 mx-auto;
+  @apply max-w-[calc(100vw-48px)];
+  @apply sm:max-w-[600px];
+  @apply md:max-w-[700px];
+  @apply lg:max-w-[900px];
+  @apply xl:max-w-[1120px];
 }
 
 ul {
@@ -41,6 +44,12 @@ select {
   -moz-appearance: none;
 }
 
+// button {
+//   &:focus-visible {
+//     outline: none;
+//   }
+// }
+
 .common-flex-box {
   display: flex !important;
   justify-content: space-between !important;
@@ -56,18 +65,17 @@ select {
   // }
 
   &::-webkit-scrollbar {
-    width: 8px;
+    @apply w-2;
   }
 
   &::-webkit-scrollbar-thumb {
-    width: 8px;
-    border-radius: 9999px;
+    @apply w-2 rounded-full;
     background-color: #A7A7A7;
   }
 }
 
 .sub-content {
-  padding: 40px 0;
+  @apply py-10;
 
   &.sub-content-light {
     color: map-get($map: $colors, $key: neutral-1000);
@@ -90,6 +98,10 @@ select {
     
     &.anime-movies {
       background-color: map-get($map: $colors, $key: neutral-300);
+    }
+    
+    &.anime-ranks {
+      background-color: map-get($map: $colors, $key: neutral-200);
     }
   }
 
@@ -114,6 +126,10 @@ select {
 
     &.anime-movies {
       background-color: map-get($map: $colors, $key: neutral-800);
+    }
+    
+    &.anime-ranks {
+      background-color: map-get($map: $colors, $key: neutral-900);
     }
   }
 }

@@ -5,6 +5,7 @@ const RouterLinks = (name: string): string | undefined => {
     HomePage: '/',
     SeriesPage: '/series',
     GenresPage: '/genres',
+    SearchPage: '/pages/:page',
     FilmDetail: 'film-detail/:id',
     Episode: 'film-detail/:id/:ep',
     Login: '/login',

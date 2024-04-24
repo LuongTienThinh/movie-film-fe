@@ -6,7 +6,14 @@ import RouterPages from 'routes';
 import { ThemeContextProvider } from 'contexts/themeContext';
 import { AuthContextProvider } from 'contexts/authContext';
 
-axios.defaults.baseURL = 'enter api link here';
+axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.withCredentials = true;
+
+const accessToken = localStorage.getItem('X-CSRF-TOKEN');
+if (accessToken) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+}
+
 
 const Styling = lazy(() => import('./styling'));
 const App = () => {

@@ -1,48 +1,84 @@
 @import 'assets/styles/variables.scss';
 
 .profile {
+  .tab-list {
+    .tab {
+      .icon {
+        @apply h-10 w-10 text-transparent;
+
+        &.selected {
+          @apply origin-bottom max-lg:scale-125;
+
+          path {
+            @apply stroke-2.5;
+          }
+        }
+
+        &.logout {
+          g {
+            @apply scale-[2];
+
+            path {
+              @apply stroke-0.75;
+            }
+          }
+
+          &.selected {
+            path {
+              @apply stroke-1.25;
+            }
+          }
+        }
+      }
+    }
+  }
+
   .tab-panel {
     .panel {
       .detail {
+        @apply space-y-p4;
+        @apply xl:space-y-p6;
+
         li {
-          display: flex;
-          align-items: center;
-          width: 100%;
+          @apply flex w-full items-center;
 
-          >span,
-          >.action {
-            width: 30%;
+          > span {
+            @apply w-2/5 sm:w-3/10;
           }
 
-          >div {
-            width: 40%;
+          > .action {
+            @apply w-[15%] text-center sm:w-3/10;
           }
 
-          &:not(:first-child) {
-            margin-top: 30px;
+          > div {
+            @apply w-[45%] sm:w-2/5;
+          }
+
+          .edit-avatar {
+            .icon {
+              @apply h-p2 w-p2;
+            }
           }
         }
       }
 
       input {
-        font-size: 14px;
-        margin: 0 0 16px 0;
+        @apply mb-4 text-sm leading-none;
 
         &::placeholder {
-          font-weight: 200;
+          @apply font-extralight;
         }
       }
 
       p {
-        margin: 4px 0;
-        font-size: 14px;
-        font-weight: 200;
+        @apply text-xs;
+        @apply xl:text-sm;
+        @apply my-1 font-extralight leading-5;
       }
 
       .submit-btn {
-        background-color: #E12222;
+        @apply w-full bg-red;
         color: map-get($map: $colors, $key: neutral-100);
-        margin: 24px 0 0 0;
       }
     }
   }
@@ -58,6 +94,10 @@
         .title {
           border-color: map-get($map: $colors, $key: neutral-1000);
         }
+
+        .icon {
+          stroke: map-get($map: $colors, $key: neutral-1000);
+        }
       }
     }
 
@@ -69,6 +109,10 @@
           li {
             .edit-avatar {
               background-color: map-get($map: $colors, $key: neutral-700);
+
+              .icon {
+                color: map-get($map: $colors, $key: neutral-200);
+              }
             }
           }
         }
@@ -95,6 +139,10 @@
         .title {
           border-color: map-get($map: $colors, $key: neutral-100);
         }
+
+        .icon {
+          stroke: map-get($map: $colors, $key: neutral-100);
+        }
       }
     }
 
@@ -106,6 +154,10 @@
           li {
             .edit-avatar {
               background-color: map-get($map: $colors, $key: neutral-400);
+
+              .icon {
+                color: map-get($map: $colors, $key: neutral-900);
+              }
             }
           }
         }
