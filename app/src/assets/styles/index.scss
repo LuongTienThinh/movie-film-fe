@@ -20,7 +20,9 @@ body {
 }
 
 .container {
-  @apply mx-auto my-0 h-full w-full;
+  margin: 0 auto;
+  height: 100%;
+  width: 100%;
   max-width: calc(100vw - 48px);
 }
 
