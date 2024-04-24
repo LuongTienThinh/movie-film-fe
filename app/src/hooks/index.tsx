@@ -1,4 +1,5 @@
-import DataHook from './data';
-import AuthHook from './auth';
+import useDataHook from './data';
+import useAuthHook from './auth';
+import useViewport from './viewport';
 
-export { DataHook, AuthHook };
+export { useDataHook, useAuthHook, useViewport };

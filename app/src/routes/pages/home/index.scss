@@ -1,116 +1,84 @@
 @import 'assets/styles/variables.scss';
 
 @property --gradient {
-  syntax: "<angle>";
+  syntax: '<angle>';
   initial-value: 0deg;
   inherits: false;
 }
 
-.slick-wrapper {
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translate(-50%);
-  width: 100%;
-
-  .slick-prev,
-  .slick-next {
-    position: relative;
-    display: block;
-    width: fit-content;
-    height: fit-content;
-    z-index: 50;
-    top: 0;
-    transform: none;
-    left: auto;
-    right: auto;
-
-    &::before {
-      color: black !important;
-      content: none;
-    }
+.banner {
+  .banner-img {
+    @apply h-[min(400px,100vh-60px)] w-full object-cover lg:h-[min(800px,100vh-60px)];
   }
 
-  .slick-track {
-    display: flex;
-    align-items: center;
+  .slick-wrapper {
+    @apply absolute left-1/2 w-full -translate-x-1/2 -bottom-p2 lg:bottom-p2 xl:bottom-p6;
 
-    .slick-slide {
-      display: flex !important;
-      justify-content: center;
-      margin: 80px 0;
-      align-items: center;
-      pointer-events: none;
-      position: relative;
+    .slick-arrow {
+      @apply relative left-auto right-auto top-0 z-50 block h-fit w-fit transform-none;
 
-      * {
-        outline: none;
+      .icon {
+        @apply h-10 w-10;
+        stroke: map-get($map: $colors, $key: neutral-200);
       }
 
-      .img-wrapper {
-        position: relative;
-
-        img {
-          width: 130px;
-          border-radius: 10px !important;
-          height: 180px;
-          margin: auto;
-          cursor: pointer;
-          pointer-events: all;
-        }
-
-        .movie-detail {
-          position: absolute;
-          left: 50%;
-          top: 90%;
-          background-color: red;
-          transform: translate(-50%);
-          border-radius: 10px;
-          font-size: 12px;
-          padding: 5px 15px;
-          opacity: 0;
-          min-width: 116px;
-        }
+      &::before {
+        content: none;
+        color: black !important;
       }
+    }
 
-      &.slick-center {
-        margin-top: 60px;
+    .slick-track {
+      @apply flex items-center;
+
+      .slick-slide {
+        display: flex !important;
+        @apply pointer-events-none relative mb-p16 mt-p20 items-center justify-center;
+
+        * {
+          @apply outline-none;
+        }
 
         .img-wrapper {
-          border-radius: 6px;
-
-          &::before {
-            content: "";
-            width: 104%;
-            height: 103%;
-            border-radius: 12px;
-            background-image:
-              linear-gradient(var(--gradient),
-                map-get($border-gradient, 'cl-1'),
-                map-get($border-gradient, 'cl-2'),
-                map-get($border-gradient, 'cl-3'));
-            position: absolute;
-            z-index: -1;
-            top: -1.5%;
-            left: -2%;
-            animation: rotation 4s linear infinite;
-            transform: scale(1.6);
-          }
+          @apply relative;
 
           img {
-            transform: scale(1.6);
+            @apply pointer-events-auto m-auto h-[126px] w-[91px] cursor-pointer;
+            @apply sm:h-[162px] sm:w-[117px];
+            @apply xl:h-[180px] xl:w-[130px];
+            border-radius: 10px !important;
           }
 
           .movie-detail {
-            top: calc(90% + 56px);
-            transform: translate(-50%);
-            opacity: 1;
-            color: #FFFFFF;
-            font-size: 18px;
-            font-weight: 700;
-            background-image: linear-gradient(to right, #8AB9EF, #5789DB, #3F8FED);
-            pointer-events: all;
-            transition: all linear .5s;
+            @apply absolute left-1/2 top-9/10 min-w-[116px] -translate-x-1/2 rounded-p2 px-p3 py-2 text-xs leading-none opacity-0;
+          }
+        }
+
+        &.slick-center {
+          @apply mt-p12;
+
+          .img-wrapper {
+            @apply mt-1.5;
+
+            &::before {
+              content: '';
+
+              @apply absolute -left-[1.5%] -top-[1.5%] -z-10 h-[103%] w-[103%] scale-[1.6] rounded-3;
+
+              background-image: linear-gradient(var(--gradient), map-get($border-gradient, cl-1), map-get($border-gradient, cl-2), map-get($border-gradient, cl-3));
+              animation: rotation 4s linear infinite;
+            }
+
+            img {
+              @apply scale-[1.6];
+            }
+
+            .movie-detail {
+              @apply pointer-events-auto top-[calc(90%+56px)] -translate-x-1/2 text-lg font-bold leading-none opacity-100;
+              color: map-get($map: $colors, $key: neutral-100);
+              background-image: linear-gradient(to right, map-get($btn-bg-gradient, cl-sky-1), map-get($btn-bg-gradient, cl-sky-2), map-get($btn-bg-gradient, cl-sky-3));
+              transition: all linear 0.5s;
+            }
           }
         }
       }

@@ -2,7 +2,7 @@ import { ListFilter, SubHeader, SideBar } from 'components';
 import { IDataHook } from 'interfaces';
 import './index.scss';
 
-const DataHook = ({ title, subHeader, filters, sideBar, data, setData, pagination: Pagination }: IDataHook) => {
+const useDataHook = ({ title, subHeader, filters, sideBar, data, setData, pagination: Pagination }: IDataHook) => {
   const onChange = () => {
     setData();
   };
@@ -25,4 +25,4 @@ const DataHook = ({ title, subHeader, filters, sideBar, data, setData, paginatio
   };
 };
 
-export default DataHook;
+export default useDataHook;

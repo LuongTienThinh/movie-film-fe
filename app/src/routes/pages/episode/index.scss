@@ -2,16 +2,11 @@
 
 .episodes {
   .film-watching {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%;
-  
+    @apply relative w-full;
+    padding-top: min(56.25%, calc(100vh - 60px));
+
     iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      @apply absolute left-0 top-0 h-full w-full;
     }
   }
 
@@ -25,10 +20,9 @@
 
   &.episodes-dark {
     color: map-get($map: $colors, $key: neutral-200);
-    
+
     .list-episodes {
       background-color: map-get($map: $colors, $key: neutral-800);
     }
   }
 }
-
