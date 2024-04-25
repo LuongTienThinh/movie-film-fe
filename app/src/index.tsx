@@ -6,7 +6,7 @@ import RouterPages from 'routes';
 import { ThemeContextProvider } from 'contexts/themeContext';
 import { AuthContextProvider } from 'contexts/authContext';
 
-axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.baseURL = 'https://animetop.id.vn';
 axios.defaults.withCredentials = true;
 
 const accessToken = localStorage.getItem('X-CSRF-TOKEN');
