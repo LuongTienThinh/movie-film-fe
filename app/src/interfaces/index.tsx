@@ -49,11 +49,19 @@ export interface IThemeContext {
 }
 
 export interface IAuthContext {
-  user: Object;
+  user: {
+    email?: string | undefined;
+    name?: string | undefined;
+    avatar?: string | undefined;
+    gender?: boolean;
+    phone?: string | undefined;
+    [key: string]: any;
+  };
   setUser: (user: Object) => void;
   isAuth: boolean;
   accessToken: string;
   setIsAuth: (newState: boolean) => void;
+  setAccessToken: (newValue: string) => void;
 }
 
 export type SliderType = typeof Slider;
@@ -118,7 +126,7 @@ export interface IHeader {
   linkTo?: string | undefined;
 }
 
-export interface IPage {
+export interface IPageManage {
   page: number | 1;
   perPage?: number | 0;
 }
@@ -197,6 +205,15 @@ export interface IResponseData {
 
 export interface IApiResponseData {
   data: IResponseData | null;
+}
+
+export interface IPageContent {
+  title: string | undefined;
+  getData: () => Promise<IResponseData>;
+}
+
+export interface IPage {
+  [key: string]: IPageContent;
 }
 
 export interface IPopup {

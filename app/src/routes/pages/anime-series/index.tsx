@@ -3,33 +3,35 @@ import { useContext, useEffect, useState } from 'react';
 import { Film, Pagination } from 'components';
 import { ThemeContext } from 'contexts/themeContext';
 import { useDataHook } from 'hooks';
-import { IApiResponseData, IDataHook, IFilm, IPage } from 'interfaces';
+import { IDataHook, IFilm, IPageManage, IResponseData } from 'interfaces';
 import { Footer, Header } from 'layouts';
-import axios from 'axios';
+import { FilmService } from 'services';
 
 
 const SeriesPage = () => {
   const themeMode = useContext(ThemeContext);
   const [filmData, setFilmData] = useState<Array<IFilm>>([]);
-  const [pageManage, setPageManage] = useState<IPage>({ page: 1, perPage: 12 });
+  const [pageManage, setPageManage] = useState<IPageManage>({ page: 1, perPage: 12 });
   const [films, setFilms] = useState<Array<IFilm>>([]);
 
   useEffect(() => {
-    const getApiLatest = async () => {
-      const { data }: IApiResponseData = await axios.get('http://animetop.id.vn/api/film/latest');
-      setFilms(data?.data);
-    };
+    const getData = async () => {
+      const response: IResponseData | null = await FilmService.getLatest();
 
-    getApiLatest();
+      console.log(response);
+      setFilms(response?.data)
+    }
+
+    getData();
   }, []);
 
-  const paginationChange = (event: IPage) => {
+  const paginationChange = (event: IPageManage) => {
     setPageManage((prev) => ({ ...prev, ...event }));
   };
 
   useEffect(() => {
     pageManage.page && pageManage.perPage && setFilmData(films.slice((pageManage.page - 1) * pageManage.perPage, pageManage.page * pageManage.perPage));
-  }, [pageManage]);
+  }, [pageManage, films]);
 
   const seriesPageHook: IDataHook = {
     title: 'Anime trọn bộ',

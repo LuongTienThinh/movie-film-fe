@@ -7,16 +7,10 @@ import { ILazyComponent } from 'interfaces';
 const LazyPage = ({ title, component: Component, ...props }: ILazyComponent) => {
   document.title = title || '';
 
-  return (
-    <Suspense>
-      <Component {...props} />
-    </Suspense>
-  );
+  return <Component {...props} />;
 };
 
 const RouterPages = () => {
-  console.log(pages);
-  
   return (
     <Router>
       <Routes>
