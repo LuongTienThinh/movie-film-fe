@@ -17,7 +17,7 @@ import { Loading } from 'components';
 
 axios.interceptors.request.use((config) => {
   config.headers['Access-Control-Allow-Origin'] = '*';
-  config.baseURL = 'https://f55e-2402-800-63a6-d71e-b133-3d6-744c-88f3.ngrok-free.app';
+  config.baseURL = 'https://animetop.id.vn';
   config.withCredentials = true;
 
   return config;
