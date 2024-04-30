@@ -1,9 +1,19 @@
+import { IPage } from "interfaces";
+import { FilmService } from "services";
 
-const PAGE = {
+const PAGE: IPage = {
   'latest': {
     title: 'Anime mới nhất',
-    linkApi: 'http://animetop.id.vn/api/film/latest',
-  }
+    getData: FilmService.getLatest,
+  },
+  'series': {
+    title: 'Anime bộ (series)',
+    getData: FilmService.getSeries,
+  },
+  'movies': {
+    title: 'Anime movie',
+    getData: FilmService.getMovies,
+  },
 };
 
 export default PAGE;

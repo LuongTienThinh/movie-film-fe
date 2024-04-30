@@ -2,22 +2,16 @@ import axios from 'axios';
 import { routerApisLink } from 'utils';
 import { IApiResponseData } from 'interfaces';
 
-const AuthService = {
-  nameLink: 'Auth',
+const FilmService = {
+  nameLink: 'Film',
 
-  login: async (params: Object) => {
+  getLatest: async () => {
     try {
       let data: IApiResponseData = {
         data: null,
       };
 
-      await axios
-        .get('/sanctum/csrf-cookie', {
-          withCredentials: true,
-        })
-        .then(async (res) => {
-          data = await axios.post(`${routerApisLink(AuthService.nameLink)}/login`, { ...params });
-        });
+      data = await axios.get(`${routerApisLink(FilmService.nameLink)}/latest`);
 
       return data?.data;
     } catch (error) {
@@ -30,10 +24,13 @@ const AuthService = {
       return null;
     }
   },
-
-  signUp: async (params: Object) => {
+  getSeries: async () => {
     try {
-      const data: IApiResponseData = await axios.post(`${routerApisLink(AuthService.nameLink)}/sign-up`, { ...params });
+      let data: IApiResponseData = {
+        data: null,
+      };
+
+      data = await axios.get(`${routerApisLink(FilmService.nameLink)}/series`);
 
       return data?.data;
     } catch (error) {
@@ -46,14 +43,13 @@ const AuthService = {
       return null;
     }
   },
-
-  logout: async () => {
+  getMovies: async () => {
     try {
-      const data: IApiResponseData = await axios.post(`${routerApisLink(AuthService.nameLink)}/logout`, null, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('access-token') || ''}`,
-        },
-      });
+      let data: IApiResponseData = {
+        data: null,
+      };
+
+      data = await axios.get(`${routerApisLink(FilmService.nameLink)}/movies`);
 
       return data?.data;
     } catch (error) {
@@ -66,6 +62,7 @@ const AuthService = {
       return null;
     }
   },
+  
 };
 
-export default AuthService;
+export default FilmService;

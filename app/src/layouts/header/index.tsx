@@ -5,12 +5,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import Icons from 'assets/icons';
 import { images } from 'images';
 import { ThemeContext } from 'contexts/themeContext';
-import { IApiResponseData, IFilm } from 'interfaces';
+import { IApiResponseData, IFilm, IResponseData } from 'interfaces';
 import { AuthContext } from 'contexts/authContext';
 import './index.scss';
 import { useViewport } from 'hooks';
 import { MenuBar } from 'components';
-import axios from 'axios';
+import { AuthService, FilmService } from 'services';
 
 const Header = () => {
   const themeMode = useContext(ThemeContext);
@@ -26,8 +26,8 @@ const Header = () => {
 
   useEffect(() => {
     const getApiLatest = async () => {
-      const { data }: IApiResponseData = await axios.get('http://animetop.id.vn/api/film/latest');
-      setFilms(data?.data);
+      const { data }: IApiResponseData = await FilmService.getLatest();
+      setFilms(data?.data?.movie);
     };
 
     getApiLatest();
@@ -42,16 +42,25 @@ const Header = () => {
   };
 
   const handleSearchFilm = () => {
-    setFilteredFilm(films.filter((item) => item.name.trim().toLocaleLowerCase().includes(searchFilmText)));
+    setFilteredFilm(films?.filter((item) => item.name.trim().toLocaleLowerCase().includes(searchFilmText)));
   };
 
   const handleToggleTheme = () => {
     themeMode.toggleTheme(themeMode.theme === 'dark' ? 'light' : 'dark');
   };
 
-  const handleLogout = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    auth.setIsAuth(false);
-    navigate('/login');
+  const handleLogout = async (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    const response: IResponseData = await AuthService.logout();
+    
+    if (response) {
+      const { data, status, message } = response;
+
+      if (status === 200) {
+        localStorage.removeItem('access-token');
+        auth.setIsAuth(false);
+        navigate('/login');
+      }
+    }
   };
 
   return (
@@ -297,7 +306,7 @@ const Header = () => {
                     <Menu.Button className='common-flex-box'>
                       <Icons
                         themeMode={themeMode.theme}
-                        iconName={films.filter((item) => !item.seen).length > 0 ? 'notify-seen' : 'notify'}
+                        iconName={films?.filter((item) => !item.seen).length > 0 ? 'notify-seen' : 'notify'}
                         className={`header-icon notify-icon ${menuOpen && 'active'}`}
                       />
                     </Menu.Button>
