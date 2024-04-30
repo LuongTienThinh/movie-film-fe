@@ -3,14 +3,14 @@ import { useContext, useEffect, useState } from 'react';
 import { Film, Pagination } from 'components';
 import { ThemeContext } from 'contexts/themeContext';
 import { useDataHook } from 'hooks';
-import { IApiResponseData, IDataHook, IFilm, IPage } from 'interfaces';
+import { IApiResponseData, IDataHook, IFilm, IPageManage } from 'interfaces';
 import { Footer, Header } from 'layouts';
 import axios from 'axios';
 
 const GenresPage = () => {
   const themeMode = useContext(ThemeContext);
   const [filmData, setFilmData] = useState<Array<IFilm>>([]);
-  const [pageManage, setPageManage] = useState<IPage>({ page: 1, perPage: 6 });
+  const [pageManage, setPageManage] = useState<IPageManage>({ page: 1, perPage: 6 });
   const [films, setFilms] = useState<Array<IFilm>>([]);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const GenresPage = () => {
     getApiLatest();
   }, []);
 
-  const paginationChange = (event: IPage) => {
+  const paginationChange = (event: IPageManage) => {
     setPageManage((prev) => ({ ...prev, ...event }));
   };
 

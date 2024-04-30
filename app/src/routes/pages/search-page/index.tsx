@@ -3,44 +3,53 @@ import { useContext, useEffect, useState } from 'react';
 import { Film, Pagination } from 'components';
 import { ThemeContext } from 'contexts/themeContext';
 import { useDataHook } from 'hooks';
-import { IApiResponseData, IDataHook, IFilm, IPage } from 'interfaces';
+import { IDataHook, IFilm, IPageContent, IPageManage, IResponseData } from 'interfaces';
 import { Footer, Header } from 'layouts';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { PAGE } from 'constants';
-
 
 const SeriesPage = () => {
   const themeMode = useContext(ThemeContext);
   const [films, setFilms] = useState<Array<IFilm>>([]);
   const [filmData, setFilmData] = useState<Array<IFilm>>([]);
-  const [pageManage, setPageManage] = useState<IPage>({ page: 1, perPage: 12 });
-  const [pageData, setPageData] = useState();
+  const [pageManage, setPageManage] = useState<IPageManage>({ page: 1, perPage: 12 });
+  const [pageData, setPageData] = useState<IPageContent>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const params = useParams();
 
   useEffect(() => {
-    const getApiLatest = async () => {
-      const { data }: IApiResponseData = await axios.get('http://animetop.id.vn/api/film/latest');
-      setFilms(data?.data);
+    const getDataFilms = async () => {
+      if (pageData) {
+        const response: IResponseData | null = await pageData.getData() || null;
+
+        console.log(response);
+  
+        if (response) {
+          setFilms(response?.data?.movie || []);
+        }
+      }
+      console.log(films);
     };
 
-    getApiLatest();
-  }, []);
+    getDataFilms();
+  }, [pageData]);
 
-  const paginationChange = (event: IPage) => {
+  const paginationChange = (event: IPageManage) => {
     setPageManage((prev) => ({ ...prev, ...event }));
   };
 
   useEffect(() => {
-    // setPageData(PAGE[params.page]);
+    if (params.page) {
+      setPageData(PAGE[params.page]);
+    }
   }, [params]);
 
   useEffect(() => {
-    pageManage.page && pageManage.perPage && setFilmData(films.slice((pageManage.page - 1) * pageManage.perPage, pageManage.page * pageManage.perPage));
+    pageManage.page && pageManage.perPage && setFilmData(films?.slice((pageManage.page - 1) * pageManage.perPage, pageManage.page * pageManage.perPage));
   }, [films, pageManage]);
 
   const seriesPageHook: IDataHook = {
-    title: 'Anime trọn bộ',
+    title: pageData?.title,
     sideBar: {
       leftSide: {
         width: 12,
@@ -189,10 +198,10 @@ const SeriesPage = () => {
         },
       ],
     },
-    data: films,
+    data: filmData,
     setData: () => {},
-    pagination: films && pageManage && (
-      <Pagination onChange={(page) => paginationChange({ page: page })} totalItem={films.length} showPrev sibling={1} showNext {...pageManage} />
+    pagination: filmData && pageManage && (
+      <Pagination onChange={(page) => paginationChange({ page: page })} totalItem={filmData.length} showPrev sibling={1} showNext {...pageManage} />
     ),
   };
   const seriesPageData = useDataHook(seriesPageHook);

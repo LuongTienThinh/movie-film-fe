@@ -7,10 +7,10 @@ import { Header, Footer } from 'layouts';
 import Icons from 'assets/icons';
 import { ThemeContext } from 'contexts/themeContext';
 import { useDataHook, useViewport } from 'hooks';
-import { IFilm, IDataHook, ITopFilm, SliderType, IApiResponseData } from 'interfaces';
-import { Film, Ranking, TopFilm } from 'components';
+import { IFilm, IDataHook, SliderType, IResponseData } from 'interfaces';
+import { Film, Ranking, TopFilm, Loading } from 'components';
+import { FilmService } from 'services';
 import './index.scss';
-import axios from 'axios';
 
 const HomePage = () => {
   const themeMode = useContext(ThemeContext);
@@ -19,18 +19,30 @@ const HomePage = () => {
   const { width: viewWidth, breakPoint } = useViewport();
   const [films, setFilms] = useState<Array<IFilm>>([]);
   const [filmActived, setFilmActived] = useState<IFilm>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const pageLoadTime = performance.timing.loadEventEnd - performance.timing.fetchStart;
 
   useEffect(() => {
     const getApiLatest = async () => {
-      const { data }: IApiResponseData = await axios.get('http://animetop.id.vn/api/film/latest');
-      setFilms(data?.data);
+      const response: IResponseData = await FilmService.getLatest();
+      setFilms(response?.data?.movie);
     };
 
     getApiLatest();
   }, []);
 
   useEffect(() => {
-    setFilmActived(films[0]);
+    console.log(isLoading);
+    
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (films) {
+      setFilmActived(films[0]);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, pageLoadTime);
+    }
   }, [films]);
 
   const latestHooks: IDataHook = {
@@ -41,7 +53,7 @@ const HomePage = () => {
           btnMore: true,
           titleWidth: viewWidth >= breakPoint.sm ? 9 : 8,
           btnMoreWidth: viewWidth >= breakPoint.sm ? 3 : 4,
-          linkTo: '/pages/latest'
+          linkTo: '/pages/latest',
         },
         width: viewWidth >= breakPoint.lg ? 8 : 12,
         content: (
@@ -76,6 +88,7 @@ const HomePage = () => {
           btnMore: true,
           titleWidth: viewWidth >= breakPoint.sm ? 9 : 8,
           btnMoreWidth: viewWidth >= breakPoint.sm ? 3 : 4,
+          linkTo: '/pages/series',
         },
         width: viewWidth >= breakPoint.lg ? 8 : 12,
         content: (
@@ -108,6 +121,7 @@ const HomePage = () => {
       title: 'MOVIES (OVA)',
       titleWidth: viewWidth >= breakPoint.sm ? 10 : 8,
       btnMoreWidth: viewWidth >= breakPoint.sm ? 2 : 4,
+      linkTo: '/pages/movies',
     },
     sideBar: {
       leftSide:
@@ -116,7 +130,7 @@ const HomePage = () => {
               width: 4.3,
               content: (
                 <div className='content h-full'>
-                  <img className='h-full rounded-p2' src={films[0] ? films[0].poster_url : images[`./solo-leveling`]} alt='' />
+                  <img className='h-full rounded-p2' src={films && films[0] ? films[0].poster_url : images[`./solo-leveling`]} alt='' />
                 </div>
               ),
             }
@@ -142,7 +156,7 @@ const HomePage = () => {
         width: 12,
         content: (
           <div className='content flex flex-wrap justify-center gap-9'>
-            <Ranking listFilm={films.concat(films.slice(0, 2))}></Ranking>
+            <Ranking listFilm={films && films.concat(films.slice(0, 2))}></Ranking>
           </div>
         ),
       },
@@ -249,7 +263,7 @@ const HomePage = () => {
   };
 
   return (
-    <>
+    <Loading isLoading={isLoading} timingRender={pageLoadTime}>
       <Header />
 
       {/* Banner */}
@@ -258,7 +272,7 @@ const HomePage = () => {
           <img className='banner-img' src={filmActived && filmActived.thumbnail_url} alt='' />
           <div className='slick-wrapper'>
             <Slider ref={slider} {...settings}>
-              {films.length > 0
+              {films && films.length > 0
                 ? films.map((item, index) => (
                     <div className='img-wrapper' key={index}>
                       <img src={item.poster_url} alt='' />
@@ -301,7 +315,7 @@ const HomePage = () => {
       )}
 
       <Footer />
-    </>
+    </Loading>
   );
 };
 

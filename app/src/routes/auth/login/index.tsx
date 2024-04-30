@@ -58,7 +58,7 @@ const Login = () => {
     if (checkSubmit) {
       event.preventDefault();
 
-      const response: IResponseData | null = await AuthService.login({
+      const response: IResponseData = await AuthService.login({
         email: formData.email.value,
         password: formData.password.value,
         remember: formData.remember.value,
@@ -70,12 +70,12 @@ const Login = () => {
         const { data, status, message } = response;
 
         if (status === 200) {
-          auth.setIsAuth(true);
-          navigate('/');
-
           if (data) {
             data.token && localStorage.setItem('access-token', data.token);
           }
+
+          auth.setIsAuth(true);
+          navigate('/');
         }
 
         setPopupData((prev) => ({
