@@ -17,7 +17,7 @@ import { Loading } from 'components';
 
 axios.interceptors.request.use((config) => {
   config.headers['Access-Control-Allow-Origin'] = '*';
-  config.baseURL = 'https://f55e-2402-800-63a6-d71e-b133-3d6-744c-88f3.ngrok-free.app';
+  config.baseURL = 'https://0bca-2402-800-63a6-99a2-d435-199b-36f2-a555.ngrok-free.app';
   config.withCredentials = true;
 
   return config;

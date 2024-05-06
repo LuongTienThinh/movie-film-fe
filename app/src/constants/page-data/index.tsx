@@ -1,19 +1,29 @@
-import { IPage } from "interfaces";
-import { FilmService } from "services";
+import { IPage } from 'interfaces';
+import { FilmService } from 'services';
 
 const PAGE: IPage = {
-  'latest': {
+  latest: {
     title: 'Anime mới nhất',
     getData: FilmService.getLatest,
   },
-  'series': {
+
+  series: {
     title: 'Anime bộ (series)',
     getData: FilmService.getSeries,
   },
-  'movies': {
+
+  movies: {
     title: 'Anime movie',
     getData: FilmService.getMovies,
   },
+
+  genres: {
+    getData: FilmService.getFilmByGenre,
+  },
+
+  countries: {
+    getData: FilmService.getFilmByCountry,
+  }
 };
 
 export default PAGE;

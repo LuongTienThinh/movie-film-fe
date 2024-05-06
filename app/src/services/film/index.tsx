@@ -5,13 +5,22 @@ import { IApiResponseData } from 'interfaces';
 const FilmService = {
   nameLink: 'Film',
 
-  getLatest: async () => {
+  getData: async (url: string, params?: Object) => {
+    console.log('url =>', url);
+    console.log('params =>', params);
+    
     try {
       let data: IApiResponseData = {
         data: null,
       };
 
-      data = await axios.get(`${routerApisLink(FilmService.nameLink)}/latest`);
+      if (params) {
+        data = await axios.get(`${routerApisLink(FilmService.nameLink)}${url}`, {
+          params: params,
+        });
+      } else {
+        data = await axios.get(`${routerApisLink(FilmService.nameLink)}${url}`);
+      }
 
       return data?.data;
     } catch (error) {
@@ -24,45 +33,20 @@ const FilmService = {
       return null;
     }
   },
-  getSeries: async () => {
-    try {
-      let data: IApiResponseData = {
-        data: null,
-      };
 
-      data = await axios.get(`${routerApisLink(FilmService.nameLink)}/series`);
+  getLatest: async (params?: Object) => await FilmService.getData('/latest', params),
 
-      return data?.data;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        return error?.response?.data || null;
-      }
+  getSeries: async (params?: Object) => await FilmService.getData('/series', params),
 
-      console.log('An error occurred:', error);
+  getMovies: async (params?: Object) => await FilmService.getData('/movies', params),
 
-      return null;
-    }
-  },
-  getMovies: async () => {
-    try {
-      let data: IApiResponseData = {
-        data: null,
-      };
+  getDetailFilm: async (params?: Object) => await FilmService.getData('/detail', params),
 
-      data = await axios.get(`${routerApisLink(FilmService.nameLink)}/movies`);
+  getFilmBySearch: async (params?: Object) => await FilmService.getData('/search', params),
 
-      return data?.data;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        return error?.response?.data || null;
-      }
+  getFilmByGenre: async (params?: Object, slug?: string) => await FilmService.getData(`/genre/${slug}`, params),
 
-      console.log('An error occurred:', error);
-
-      return null;
-    }
-  },
-  
+  getFilmByCountry: async (params?: Object, slug?: string) => await FilmService.getData(`/country/${slug}`, params),
 };
 
 export default FilmService;
