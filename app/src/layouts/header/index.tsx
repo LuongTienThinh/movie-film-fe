@@ -2,47 +2,62 @@ import { Fragment, useContext, useEffect, useState } from 'react';
 import { Menu, Transition, Combobox, Disclosure, Switch } from '@headlessui/react';
 import { Link, useNavigate } from 'react-router-dom';
 
+import './index.scss';
 import Icons from 'assets/icons';
 import { images } from 'images';
 import { ThemeContext } from 'contexts/themeContext';
-import { IApiResponseData, IFilm, IResponseData } from 'interfaces';
+import { ICountry, IFilm, IGenre, IResponseData } from 'interfaces';
 import { AuthContext } from 'contexts/authContext';
-import './index.scss';
 import { useViewport } from 'hooks';
 import { MenuBar } from 'components';
-import { AuthService, FilmService } from 'services';
+import { AuthService, CountryService, FilmService, GenreService } from 'services';
 
 const Header = () => {
   const themeMode = useContext(ThemeContext);
   const auth = useContext(AuthContext);
+  const { width: viewWidth, breakPoint } = useViewport();
 
+  const [comboboxSearchOpen, setComboboxSearchOpen] = useState<boolean>(false);
+  const [films, setFilms] = useState<Array<IFilm>>([]);
+  const [genres, setGenres] = useState<Array<IGenre>>([]);
+  const [countries, setCountries] = useState<Array<ICountry>>([]);
   const [searchFilmText, setSearchFilmText] = useState<string>('');
   const [filteredFilm, setFilteredFilm] = useState<IFilm[]>([]);
-  const [comboboxSearchOpen, setComboboxSearchOpen] = useState<boolean>(false);
-  const { width: viewWidth, breakPoint } = useViewport();
-  const [films, setFilms] = useState<Array<IFilm>>([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const getApiLatest = async () => {
-      const { data }: IApiResponseData = await FilmService.getLatest();
-      setFilms(data?.data?.movie);
+      const response: IResponseData = await FilmService.getLatest();
+      setFilms(response?.data?.movie);
+    };
+    
+    const getApiGenres = async () => {
+      const response: IResponseData = await GenreService.getAllGenres();
+      setGenres(response?.data);
+    };
+    
+    const getApiCountries = async () => {
+      const response: IResponseData = await CountryService.getAllCountries();
+      setCountries(response?.data);
     };
 
     getApiLatest();
+    getApiGenres();
+    getApiCountries();
   }, []);
-
+  
   useEffect(() => {
+    const handleSearchFilm = async () => {
+      const response: IResponseData = await FilmService.getFilmBySearch({ search: searchFilmText});
+      setFilteredFilm(response?.data);
+    };
+
     handleSearchFilm();
   }, [searchFilmText]);
 
   const handleSearch = (isOpen: boolean) => {
     setComboboxSearchOpen(isOpen);
-  };
-
-  const handleSearchFilm = () => {
-    setFilteredFilm(films?.filter((item) => item.name.trim().toLocaleLowerCase().includes(searchFilmText)));
   };
 
   const handleToggleTheme = () => {
@@ -56,7 +71,6 @@ const Header = () => {
       const { data, status, message } = response;
 
       if (status === 200) {
-        localStorage.removeItem('access-token');
         auth.setIsAuth(false);
         navigate('/login');
       }
@@ -104,22 +118,22 @@ const Header = () => {
                                 <div className='header-nav-dropdown dropdown-search absolute left-1/2 translate-x-[-50%]'>
                                   <Combobox.Options className='custom-scroll'>
                                     {filteredFilm.map((item, index) => (
-                                      <Combobox.Option value={item.label} key={index}>
-                                        <a className='common-flex-box !h-[50px]' href='/movies'>
+                                      <Combobox.Option value={item.slug} key={index}>
+                                        <Link className='common-flex-box !h-[50px]' to={`/film-detail/${item.slug}`}>
                                           <div className='h-full w-1/4'>
-                                            <img className='h-full w-[40px] rounded-p1' src={images['./solo-leveling.jpg']} alt='' />
+                                            <img className='h-full w-[40px] rounded-p1' src={item.poster_url} alt='' />
                                           </div>
                                           <div className='flex h-full w-3/4 flex-col justify-between'>
-                                            <p className='overflow-hidden text-ellipsis text-nowrap text-sm font-semibold'>{item.label}</p>
+                                            <p className='overflow-hidden text-ellipsis text-nowrap text-sm font-semibold'>{item.name}</p>
                                             <div className='common-flex-box text-xs font-light'>
                                               <span>{item.year}</span>
                                               <div>
-                                                <span>FHD</span>
+                                                <span>{item.quality}</span>
                                                 <span className='ms-p2'>Vietsub</span>
                                               </div>
                                             </div>
                                           </div>
-                                        </a>
+                                        </Link>
                                       </Combobox.Option>
                                     ))}
                                   </Combobox.Options>
@@ -138,12 +152,12 @@ const Header = () => {
             ) : (
               <ul className='common-flex-box'>
                 <li>
-                  <Link to={'/series'} className='common-flex-box'>
+                  <Link to={'/pages/series'} className='common-flex-box'>
                     <span>Anime bộ</span>
                   </Link>
                 </li>
                 <li>
-                  <Link to={''} className='common-flex-box'>
+                  <Link to={'/pages/movies'} className='common-flex-box'>
                     <span>Movie (OVA)</span>
                   </Link>
                 </li>
@@ -167,17 +181,17 @@ const Header = () => {
                   >
                     <Menu.Items className='header-nav-dropdown dropdown-genre absolute left-1/2 translate-x-[-50%]'>
                       <ul className='common-flex-box w-full flex-wrap overflow-hidden p-3 py-1'>
-                        {/* {genres &&
+                        {genres &&
                           genres.length > 0 &&
                           genres.map((genre) => (
-                            <Menu.Item as='li' key={genre}>
-                              {({ active }) => (
-                                <Link to={'/genres'} className={active ? '' : ''}>
-                                  {genre}
+                            <Menu.Item as='li' key={genre.slug}>
+                              {({ close }) => (
+                                <Link to={`/pages/genres/${genre.slug}`} onClick={close}>
+                                  {genre.name}
                                 </Link>
                               )}
                             </Menu.Item>
-                          ))} */}
+                          ))}
                       </ul>
                     </Menu.Items>
                   </Transition>
@@ -202,17 +216,17 @@ const Header = () => {
                   >
                     <Menu.Items className='header-nav-dropdown dropdown-country absolute left-1/2 translate-x-[-50%]'>
                       <ul className='common-flex-box w-full flex-wrap overflow-hidden p-3 py-1'>
-                        {/* {countries &&
+                        {countries &&
                           countries.length > 0 &&
                           countries.map((country) => (
-                            <Menu.Item as='li' key={country}>
-                              {({ active }) => (
-                                <a href='#' className={active ? '' : ''}>
-                                  {country}
-                                </a>
+                            <Menu.Item as='li' key={country.slug}>
+                              {({ close }) => (
+                                <Link to={`/pages/countries/${country.slug}`} onClick={close}>
+                                  {country.name}
+                                </Link>
                               )}
                             </Menu.Item>
-                          ))} */}
+                          ))}
                       </ul>
                     </Menu.Items>
                   </Transition>
@@ -262,22 +276,22 @@ const Header = () => {
                             <div className='header-nav-dropdown dropdown-search absolute left-1/2 translate-x-[-50%]'>
                               <Combobox.Options className='custom-scroll'>
                                 {filteredFilm.map((item, index) => (
-                                  <Combobox.Option value={item.label} key={index}>
-                                    <a className='common-flex-box !h-[50px]' href='/movies'>
+                                  <Combobox.Option value={item.slug} key={index}>
+                                    <Link className='common-flex-box !h-[50px]' to={`/film-detail/${item.slug}`}>
                                       <div className='h-full w-1/4'>
-                                        <img className='h-full w-[40px] rounded-p1' src={images['./solo-leveling.jpg']} alt='' />
+                                        <img className='h-full w-[40px] rounded-p1' src={item.poster_url} alt='' />
                                       </div>
                                       <div className='flex h-full w-3/4 flex-col justify-between'>
-                                        <p className='overflow-hidden text-ellipsis text-nowrap text-sm font-semibold'>{item.label}</p>
+                                        <p className='overflow-hidden text-ellipsis text-nowrap text-sm font-semibold'>{item.name}</p>
                                         <div className='common-flex-box text-xs font-light'>
                                           <span>{item.year}</span>
                                           <div>
-                                            <span>FHD</span>
+                                            <span>{item.quality}</span>
                                             <span className='ms-p2'>Vietsub</span>
                                           </div>
                                         </div>
                                       </div>
-                                    </a>
+                                    </Link>
                                   </Combobox.Option>
                                 ))}
                               </Combobox.Options>
@@ -325,7 +339,7 @@ const Header = () => {
                             {films.map((item, index) => (
                               <Menu.Item as='li' key={index} className={!item.seen ? 'unseen' : ''}>
                                 {({ active }) => (
-                                  <a className='common-flex-box relative !h-[50px]' href='/movies'>
+                                  <Link className='common-flex-box relative !h-[50px]' to={`/film-detail/${item.slug}`}>
                                     <div className='h-full w-1/4'>
                                       <img className='h-full w-[40px] rounded-p1' src={images[`./${item.slug}.jpg`]} alt='' />
                                     </div>
@@ -335,7 +349,7 @@ const Header = () => {
                                       </p>
                                     </div>
                                     {!item.seen && <div className='absolute right-1 top-1/2 h-[6px] w-[6px] -translate-x-1/2 rounded-[50%] bg-[#406AFF]'></div>}
-                                  </a>
+                                  </Link>
                                 )}
                               </Menu.Item>
                             ))}
@@ -468,15 +482,15 @@ const Header = () => {
                                 >
                                   <Disclosure.Panel className='header-nav-dropdown dropdown-genre' onClickCapture={(e) => e.stopPropagation()}>
                                     <ul className='mt-5 w-full flex-wrap overflow-hidden bg-transparent'>
-                                      {/* {genres &&
+                                      {genres &&
                                         genres.length > 0 &&
                                         genres.map((genre, index) => (
                                           <li key={`${genre} + ${index}`}>
-                                            <Link to={'/genres'} className={''}>
-                                              {genre}
+                                            <Link to={`/pages/genres/${genre.slug}`} className={''}>
+                                              {genre.name}
                                             </Link>
                                           </li>
-                                        ))} */}
+                                        ))}
                                     </ul>
                                   </Disclosure.Panel>
                                 </Transition>
@@ -501,15 +515,15 @@ const Header = () => {
                                 >
                                   <Disclosure.Panel className='header-nav-dropdown dropdown-genre' onClickCapture={(e) => e.stopPropagation()}>
                                     <ul className='mt-5 w-full flex-wrap overflow-hidden bg-transparent'>
-                                      {/* {countries &&
+                                      {countries &&
                                         countries.length > 0 &&
                                         countries.map((country, index) => (
                                           <li key={`${country} + ${index}`}>
-                                            <Link to={''} className={''}>
-                                              {country}
+                                            <Link to={`/pages/countries/${country.slug}`} className={''}>
+                                              {country.name}
                                             </Link>
                                           </li>
-                                        ))} */}
+                                        ))}
                                     </ul>
                                   </Disclosure.Panel>
                                 </Transition>

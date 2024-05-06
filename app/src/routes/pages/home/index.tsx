@@ -1,49 +1,60 @@
-import Slider from 'react-slick';
 import React, { useContext, useEffect, useState } from 'react';
+import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
 
+import './index.scss';
+import Icons from 'assets/icons';
 import { images } from 'images';
 import { Header, Footer } from 'layouts';
-import Icons from 'assets/icons';
 import { ThemeContext } from 'contexts/themeContext';
 import { useDataHook, useViewport } from 'hooks';
-import { IFilm, IDataHook, SliderType, IResponseData } from 'interfaces';
+import { IFilm, IDataHook, SliderType, IResponseData, IPageManage } from 'interfaces';
 import { Film, Ranking, TopFilm, Loading } from 'components';
 import { FilmService } from 'services';
-import './index.scss';
 
 const HomePage = () => {
   const themeMode = useContext(ThemeContext);
-
-  const slider = React.useRef<SliderType>(null);
   const { width: viewWidth, breakPoint } = useViewport();
-  const [films, setFilms] = useState<Array<IFilm>>([]);
+  const slider = React.useRef<SliderType>(null);
+  const pageLoadTime = performance.timing.loadEventEnd - performance.timing.fetchStart;
+
+  const [latestFilms, setLatestFilms] = useState<Array<IFilm>>([]);
+  const [seriesFilms, setSeriesFilms] = useState<Array<IFilm>>([]);
+  const [movieFilms, setMovieFilms] = useState<Array<IFilm>>([]);
   const [filmActived, setFilmActived] = useState<IFilm>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const pageLoadTime = performance.timing.loadEventEnd - performance.timing.fetchStart;
+  const [pageManage, setPageManage] = useState<IPageManage>({ page: 1, perPage: 24 });
 
   useEffect(() => {
     const getApiLatest = async () => {
-      const response: IResponseData = await FilmService.getLatest();
-      setFilms(response?.data?.movie);
+      const response: IResponseData = await FilmService.getLatest(pageManage);
+      setLatestFilms(response?.data?.movie);
+    };
+
+    const getApiSeries = async () => {
+      const response: IResponseData = await FilmService.getSeries(pageManage);
+      setSeriesFilms(response?.data?.movie);
+    };
+
+    const getApiMovies = async () => {
+      const response: IResponseData = await FilmService.getMovies(pageManage);
+      setMovieFilms(response?.data?.movie);
     };
 
     getApiLatest();
+    getApiMovies();
+    getApiSeries();
   }, []);
 
   useEffect(() => {
-    console.log(isLoading);
-    
-  }, [isLoading]);
+    if (latestFilms) {
+      setFilmActived(latestFilms[0]);
 
-  useEffect(() => {
-    if (films) {
-      setFilmActived(films[0]);
       setTimeout(() => {
         setIsLoading(false);
       }, pageLoadTime);
     }
-  }, [films]);
+  }, [latestFilms]);
 
   const latestHooks: IDataHook = {
     sideBar: {
@@ -58,9 +69,11 @@ const HomePage = () => {
         width: viewWidth >= breakPoint.lg ? 8 : 12,
         content: (
           <div className='content flex flex-wrap gap-x-[5%] gap-y-5 md:gap-5 lg:gap-x-[5%] lg:gap-y-5 xl:gap-5'>
-            {films &&
-              films.length > 0 &&
-              films.map((film, index) => <Film key={index} {...film} className='w-[47.5%] sm:w-3/10 md:w-[calc(25%-15px)] lg:w-3/10 xl:w-[calc(25%-15px)]' />)}
+            {latestFilms &&
+              latestFilms.length > 0 &&
+              latestFilms
+                .slice(0, 8)
+                .map((film, index) => <Film key={index} {...film} className='w-[47.5%] sm:w-3/10 md:w-[calc(25%-15px)] lg:w-3/10 xl:w-[calc(25%-15px)]' />)}
           </div>
         ),
       },
@@ -70,14 +83,12 @@ const HomePage = () => {
               width: 4,
               content: (
                 <div className='content mt-[90px] flex flex-wrap justify-center gap-9'>
-                  {films && films.length > 0 && films.slice(0, 3).map((film, index) => <TopFilm key={index} {...film} rank={index + 1} />)}
+                  {latestFilms && latestFilms.length > 0 && latestFilms.slice(0, 3).map((film, index) => <TopFilm key={index} {...film} rank={index + 1} />)}
                 </div>
               ),
             }
           : undefined,
     },
-    data: films,
-    setData: () => {},
   };
 
   const seriesHook: IDataHook = {
@@ -93,9 +104,11 @@ const HomePage = () => {
         width: viewWidth >= breakPoint.lg ? 8 : 12,
         content: (
           <div className='content flex flex-wrap gap-x-[5%] gap-y-5 md:gap-5 lg:gap-x-[5%] lg:gap-y-5 xl:gap-5'>
-            {films &&
-              films.length > 0 &&
-              films.map((film, index) => <Film key={index} {...film} className='w-[47.5%] sm:w-3/10 md:w-[calc(25%-15px)] lg:w-3/10 xl:w-[calc(25%-15px)]' />)}
+            {seriesFilms &&
+              seriesFilms.length > 0 &&
+              seriesFilms
+                .slice(0, 8)
+                .map((film, index) => <Film key={index} {...film} className='w-[47.5%] sm:w-3/10 md:w-[calc(25%-15px)] lg:w-3/10 xl:w-[calc(25%-15px)]' />)}
           </div>
         ),
       },
@@ -105,14 +118,12 @@ const HomePage = () => {
               width: 4,
               content: (
                 <div className='content flex flex-wrap justify-center gap-9'>
-                  <Ranking listFilm={films}></Ranking>
+                  <Ranking listFilm={movieFilms.slice(0, 10)}></Ranking>
                 </div>
               ),
             }
           : undefined,
     },
-    data: films,
-    setData: () => {},
   };
 
   const moviesHook: IDataHook = {
@@ -130,7 +141,7 @@ const HomePage = () => {
               width: 4.3,
               content: (
                 <div className='content h-full'>
-                  <img className='h-full rounded-p2' src={films && films[0] ? films[0].poster_url : images[`./solo-leveling`]} alt='' />
+                  <img className='h-full rounded-p2' src={movieFilms && movieFilms[0] ? movieFilms[0].poster_url : images[`./solo-leveling`]} alt='' />
                 </div>
               ),
             }
@@ -139,15 +150,15 @@ const HomePage = () => {
         width: viewWidth >= breakPoint.lg ? 7.7 : 12,
         content: (
           <div className='content flex flex-wrap gap-x-[5%] gap-y-5 md:gap-5 lg:gap-x-[5%] lg:gap-y-5 xl:gap-5'>
-            {films &&
-              films.length > 0 &&
-              films.map((film, index) => <Film key={index} {...film} className='w-[47.5%] sm:w-3/10 md:w-[calc(25%-15px)] lg:w-3/10 xl:w-[calc(25%-15px)]' />)}
+            {movieFilms &&
+              movieFilms.length > 0 &&
+              movieFilms
+                .slice(0, 8)
+                .map((film, index) => <Film key={index} {...film} className='w-[47.5%] sm:w-3/10 md:w-[calc(25%-15px)] lg:w-3/10 xl:w-[calc(25%-15px)]' />)}
           </div>
         ),
       },
     },
-    data: films,
-    setData: () => {},
   };
 
   const ranksHook: IDataHook = {
@@ -156,13 +167,11 @@ const HomePage = () => {
         width: 12,
         content: (
           <div className='content flex flex-wrap justify-center gap-9'>
-            <Ranking listFilm={films && films.concat(films.slice(0, 2))}></Ranking>
+            <Ranking listFilm={latestFilms && latestFilms.concat(latestFilms.slice(0, 2))}></Ranking>
           </div>
         ),
       },
     },
-    data: films,
-    setData: () => {},
   };
 
   const latestFilmData = useDataHook(latestHooks);
@@ -201,7 +210,7 @@ const HomePage = () => {
     autoplay: true,
     autoplaySpeed: 4000,
     pauseOnHover: false,
-    afterChange: (index: Number) => setFilmActived(films[Number(index)]),
+    afterChange: (index: Number) => setFilmActived(latestFilms[Number(index)]),
     responsive: [
       {
         breakpoint: 1400,
@@ -272,8 +281,8 @@ const HomePage = () => {
           <img className='banner-img' src={filmActived && filmActived.thumbnail_url} alt='' />
           <div className='slick-wrapper'>
             <Slider ref={slider} {...settings}>
-              {films && films.length > 0
-                ? films.map((item, index) => (
+              {latestFilms && latestFilms.length > 0
+                ? latestFilms.map((item, index) => (
                     <div className='img-wrapper' key={index}>
                       <img src={item.poster_url} alt='' />
                       <Link to={`/film-detail/${item.slug}`} className='movie-detail max-sm:hidden'>

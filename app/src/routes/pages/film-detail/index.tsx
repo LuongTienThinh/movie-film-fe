@@ -1,32 +1,52 @@
-import { useContext, useEffect, useState } from 'react';
+import { RefObject, useContext, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import { images } from 'images';
-import { Footer, Header } from 'layouts';
-import { IApiResponseData, IFilm } from 'interfaces';
-import { ThemeContext } from 'contexts/themeContext';
 import './index.scss';
 import Icons from 'assets/icons';
-import axios from 'axios';
+import { Footer, Header } from 'layouts';
+import { IFilm, IPopup, IPopupRef, IResponseData } from 'interfaces';
+import { ThemeContext } from 'contexts/themeContext';
+import { FilmService } from 'services';
+import { Popup } from 'components';
 
 const FilmDetail = () => {
   const themeMode = useContext(ThemeContext);
-  const [film, setFilm] = useState<IFilm>();
-  const [films, setFilms] = useState<Array<IFilm>>([]);
   const params = useParams();
+  const popupRef: RefObject<IPopupRef> = useRef(null);
+
+  const [film, setFilm] = useState<IFilm>();
+  const [popupData, setPopupData] = useState<IPopup>({});
 
   useEffect(() => {
-    const getApiLatest = async () => {
-      const { data }: IApiResponseData = await axios.get('http://animetop.id.vn/api/film/latest');
-      setFilms(data?.data);
+    const getApiDetail = async () => {
+      const response: IResponseData = await FilmService.getDetailFilm(params);
+      console.log(response?.data);
+      
+      setFilm(response?.data);
     };
 
-    getApiLatest();
-  }, []);
+    if (params) {
+      getApiDetail();
+    }
+  }, [params]);
 
   useEffect(() => {
-    setFilm(films.find((e) => e.slug === params.id));
-  }, [params, films]);
+    console.log(film);
+  }, [film]);
+
+  const handlePopup = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    if (!film?.episodes[0]) {
+      event.preventDefault();
+
+      setPopupData((prev) => ({
+        ...prev,
+        title: 'Thông báo',
+        message: "Phim chuẩn bị ra mắt, hãy chờ đón nhé!",
+      }));
+      
+      popupRef.current && popupRef.current.openModal();
+    }
+  }
 
   return (
     <>
@@ -41,7 +61,7 @@ const FilmDetail = () => {
                   <div className='poster w-[210px] space-y-p2 max-lg:self-center lg:overflow-hidden xl:h-[420px] xl:w-[300px]'>
                     <img className='h-full w-full rounded-p2 object-cover max-lg:aspect-auto max-lg:h-auto' src={film.poster_url} alt='' />
                     <div className='btn flex items-center justify-between lg:hidden'>
-                      <Link className='inline-block px-10' to={`/film-detail/${film.slug}/${film.episodes[0].slug}`}>
+                      <Link className='inline-block px-10' onClick={handlePopup} to={film.episodes[0] ? `/film-detail/${film.slug}/${film.episodes[0].slug}` : ''}>
                         Xem ngay
                       </Link>
                       <Link className='!m-0 inline-block !bg-none !p-0' to={''}>
@@ -50,7 +70,7 @@ const FilmDetail = () => {
                     </div>
                   </div>
                   <div className='description flex flex-col justify-between gap-y-p2 lg:w-[40%]'>
-                    <h1 className='title text-2xl font-bold xl:text-3xl'>{film.name}</h1>
+                    <h1 className='title text-2xl font-bold xl:text-3xl text-nowrap'>{film.name}</h1>
                     <ul>
                       <li>Tên gốc: {film.origin_name}</li>
                       <li>Tình trạng: {film.status == 'completed' ? 'Hoàn thành' : 'Đang ra'}</li>
@@ -64,7 +84,7 @@ const FilmDetail = () => {
                       <li>Chất lượng: {film.quality}</li>
                     </ul>
                     <div className='btn max-lg:hidden'>
-                      <Link className='inline-block px-10' to={`/film-detail/${film.slug}/${film.episodes[0].slug}`}>
+                      <Link className='inline-block px-10' onClick={handlePopup} to={film.episodes[0] ? `/film-detail/${film.slug}/${film.episodes[0].slug}` : ''}>
                         Xem ngay
                       </Link>
                       <Link className='ms-5 inline-block px-5' to={''}>
@@ -75,8 +95,8 @@ const FilmDetail = () => {
                   <div className='genres max-lg:space-y-p3 lg:flex lg:w-[35%] lg:items-end'>
                     <div className='genre-title text-lg font-bold lg:hidden'>Thể loại</div>
                     <ul className='genre-item flex w-full flex-wrap gap-2.5 lg:flex-wrap-reverse lg:justify-end'>
-                      {film.genres.map((genre) => (
-                        <li key={genre}>
+                      {film.genres.map((genre, index) => (
+                        <li key={genre + index}>
                           <a href=''>{genre.name}</a>
                         </li>
                       ))}
@@ -96,6 +116,8 @@ const FilmDetail = () => {
         )}
       </section>
       <Footer />
+
+      {popupData && <Popup {...popupData} ref={popupRef} />}
     </>
   );
 };
