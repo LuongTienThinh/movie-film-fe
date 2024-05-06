@@ -1,14 +1,16 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { IFilter, IListFilter } from 'interfaces';
 import Icons from 'assets/icons';
+import { IFilter, IListFilter, IResponseData } from 'interfaces';
 import { ThemeContext } from 'contexts/themeContext';
+import { GenreService } from 'services';
 
-const Filter = ({ title, options, data, ...props }: IFilter) => {
+const Filter = ({ title, options, ...props }: IFilter) => {
   const themeMode = useContext(ThemeContext);
-  const [newData, setNewData] = useState([...data]);
 
-  useEffect(() => {}, [newData]);
+  useEffect(() => {
+    console.log(title, options);
+  }, []);
 
   return (
     <>
@@ -16,10 +18,10 @@ const Filter = ({ title, options, data, ...props }: IFilter) => {
         <>
           {title && <div className='title'>{title}:</div>}
           <div className='filter-wrapper'>
-            <select onChange={() => setNewData((prev) => prev.filter((e) => e.label === title))} {...props}>
+            <select {...props}>
               {options.map((filterItem, index) => (
-                <option key={index} value={filterItem.value}>
-                  {filterItem.label}
+                <option key={index} value={filterItem.slug}>
+                  {filterItem.name}
                 </option>
               ))}
             </select>
@@ -31,16 +33,68 @@ const Filter = ({ title, options, data, ...props }: IFilter) => {
   );
 };
 
-const ListFilter = ({ data, listFilter, ...props }: IListFilter) => {
+const ListFilter = () => {
+  const [typeData, setTypeData] = useState<IFilter>({});
+  const [genreData, setGenreData] = useState<IFilter>({});
+  const [countryData, setCountryData] = useState<IFilter>({});
+  const [yearData, setYearData] = useState<IFilter>({});
+  const [numberEpisodeData, setNumberEpisodeData] = useState<IFilter>({});
+
+  const listFilter: IListFilter = {
+    type: {
+      title: 'Loại phim',
+      option: typeData,
+    },
+    genre: {
+      title: 'Thể loại',
+      option: genreData,
+    },
+    country: {
+      title: 'Quốc gia',
+      option: countryData,
+    },
+    year: {
+      title: 'Năm',
+      option: yearData,
+    },
+    numberEpisode: {
+      title: 'Số tập',
+      option: numberEpisodeData,
+    },
+  };
+
+  useEffect(() => {
+    const getTypes = async () => {
+      const response: IResponseData | null = await GenreService.getAllGenres();
+
+      if (response) {
+        console.log(response);
+        setTypeData(response.data);
+        setCountryData(response.data);
+        setGenreData(response.data);
+        setNumberEpisodeData(response.data);
+        setYearData(response.data);
+      }
+    };
+
+    getTypes();
+  }, []);
+
+  useEffect(() => {
+  }, [typeData]);
   return (
     <>
       {listFilter && (
-        <ul className={`list-filter flex max-lg:flex-wrap items-end justify-between`} {...props}>
-          {listFilter.map((filter, index) => (
-            <li key={index} className='filter-item w-[47.5%] sm:w-3/10 lg:w-1/5'>
-              <Filter title={filter.title} data={data} options={filter.options} />
-            </li>
-          ))}
+        <ul className={`list-filter flex items-end justify-between max-lg:flex-wrap`}>
+          {Object.keys(listFilter).map((key, index) => {
+            console.log(listFilter[key].options);
+            
+            return (
+              <li key={index} className='filter-item w-[47.5%] sm:w-3/10 lg:w-1/5'>
+                <Filter title={listFilter[key].title} options={listFilter[key].options} />
+              </li>
+            );
+          })}
         </ul>
       )}
     </>

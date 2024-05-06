@@ -93,15 +93,14 @@ export interface ITopFilm extends IFilm {
 }
 
 export interface IListFilter {
-  data: Array<IFilm>;
-  listFilter: Array<IFilter>;
+  [key: string]: IFilter;
 }
 
 export interface IFilter {
-  data: Array<IFilm>;
-  options: Array<{
-    label: string;
-    value: string;
+  options?: Array<{
+    name: string;
+    slug: string;
+    [key: string]: any;
   }>;
   title?: string;
   [key: string]: any;
@@ -146,10 +145,8 @@ export interface IPagination {
 export interface IDataHook {
   title?: string | undefined;
   subHeader?: IHeader | undefined;
-  filters?: IListFilter | undefined;
+  filters?: boolean | undefined;
   sideBar?: ISideBar | undefined;
-  data: Array<IFilm>;
-  setData: () => void | undefined;
   pagination?: ReactElement<any, any> | undefined;
 }
 
@@ -208,8 +205,8 @@ export interface IApiResponseData {
 }
 
 export interface IPageContent {
-  title: string | undefined;
-  getData: () => Promise<IResponseData>;
+  title?: string | undefined;
+  getData?: (params?: Object, slug?: string) => Promise<IResponseData>;
 }
 
 export interface IPage {
@@ -236,4 +233,16 @@ export interface IMenuBar {
   open?: boolean;
   onMenuClick?: () => void;
   [key: string]: any;
+}
+
+export interface IGenre {
+  id?: number;
+  name?: string;
+  slug?: string;
+}
+
+export interface ICountry {
+  id?: number;
+  name?: string;
+  slug?: string;
 }
