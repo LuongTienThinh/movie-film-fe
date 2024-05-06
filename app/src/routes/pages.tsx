@@ -8,19 +8,14 @@ export const pages = [
     title: 'Home page',
   },
   {
-    path: routerLink('SeriesPage'),
-    component: lazy(() => import('./pages/anime-series')),
-    title: 'Series page',
-  },
-  {
-    path: routerLink('GenresPage'),
-    component: lazy(() => import('./pages/genre')),
-    title: 'Genres page',
+    path: routerLink('GenrePage'),
+    component: lazy(() => import('./pages/search-page')),
+    title: 'Genre page',
   },
   {
     path: routerLink('SearchPage'),
     component: lazy(() => import('./pages/search-page')),
-    title: 'Genres page',
+    title: 'Search page',
   },
   {
     path: routerLink('FilmDetail'),

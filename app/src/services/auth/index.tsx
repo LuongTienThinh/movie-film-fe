@@ -55,6 +55,10 @@ const AuthService = {
         },
       });
 
+      if (data?.data?.status == 200) {
+        localStorage.removeItem('access-token');
+      }
+
       return data?.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
