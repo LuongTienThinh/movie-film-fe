@@ -43,14 +43,9 @@ const Episode = () => {
     };
 
     if (params) {
-      console.log(params);
       getApiDetail();
     }
   }, [params]);
-
-  useEffect(() => {
-    console.log(film);
-  }, [film]);
 
   return (
     <>

@@ -272,7 +272,7 @@ const HomePage = () => {
   };
 
   return (
-    <Loading isLoading={isLoading} timingRender={pageLoadTime}>
+    <>
       <Header />
 
       {/* Banner */}
@@ -324,7 +324,7 @@ const HomePage = () => {
       )}
 
       <Footer />
-    </Loading>
+    </>
   );
 };
 

@@ -49,7 +49,7 @@ const Ranking = ({ listFilm }: IRanking) => {
                               <div className='flex h-12 w-4/5 items-center justify-between'>
                                 <img className='h-full w-12 rounded-p1 object-cover object-center' src={e.poster_url} alt='' />
                                 <div className='flex h-full w-[75%] flex-col justify-between'>
-                                  <span className='text-[13px] font-extrabold max-sm:leading-none'>{e.name}</span>
+                                  <span className='text-[13px] font-extrabold max-sm:leading-none' title={e.name}>{e.name.slice(0, 50)}</span>
                                   <div className='common-flex-box'>
                                     <span className='text-[10px] font-semibold'>{e.year}</span>
                                     <div className='flex min-w-[25%] items-center text-[8px] italic'>

@@ -41,8 +41,6 @@ const Login = () => {
   });
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    console.log(formData);
-
     let checkSubmit = true;
 
     Object.keys(formData).forEach((field) => {
@@ -63,8 +61,6 @@ const Login = () => {
         password: formData.password.value,
         remember: formData.remember.value,
       });
-
-      console.log(response);
 
       if (response) {
         const { data, status, message } = response;

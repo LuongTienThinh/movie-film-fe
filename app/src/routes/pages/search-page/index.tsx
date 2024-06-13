@@ -53,8 +53,6 @@ const SearchPage = () => {
           const response: IResponseData | null = await (params.page === 'genres' ? GenreService.getDetailGenre(params.slug) : CountryService.getDetailCountry(params.slug));
 
           if (response) {
-            console.log(response);
-
             setPageData({
               ...PAGE[params.page],
               title: response.data.name,

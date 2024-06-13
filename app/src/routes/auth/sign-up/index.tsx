@@ -52,8 +52,6 @@ const SignUp = () => {
         password: formData.password.value,
       });
 
-      console.log(response);
-
       if (response) {
         const { status, message } = response;
 

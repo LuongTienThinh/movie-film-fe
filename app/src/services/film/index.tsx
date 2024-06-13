@@ -6,9 +6,6 @@ const FilmService = {
   nameLink: 'Film',
 
   getData: async (url: string, params?: Object) => {
-    console.log('url =>', url);
-    console.log('params =>', params);
-    
     try {
       let data: IApiResponseData = {
         data: null,

@@ -10,7 +10,6 @@ interface ILoading {
 }
 
 const Loading = ({ isLoading, timingData = 0, timingRender = 0, children }: ILoading) => {
-  // console.log(timingData, timingRender, isLoading);
   
   return (
     <>
