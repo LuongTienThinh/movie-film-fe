@@ -22,6 +22,7 @@ const Header = () => {
   const [genres, setGenres] = useState<Array<IGenre>>([]);
   const [countries, setCountries] = useState<Array<ICountry>>([]);
   const [searchFilmText, setSearchFilmText] = useState<string>('');
+  const [debouncedSearchText, setDebouncedSearchText] = useState<string>('');
   const [filteredFilm, setFilteredFilm] = useState<IFilm[]>([]);
 
   const navigate = useNavigate();
@@ -48,13 +49,23 @@ const Header = () => {
   }, []);
   
   useEffect(() => {
+    const queueSearch = setTimeout(() => {
+      setDebouncedSearchText(searchFilmText);
+    }, 800);
+
+    return () => {
+      clearTimeout(queueSearch);
+    }
+  }, [searchFilmText]);
+
+  useEffect(() => {
     const handleSearchFilm = async () => {
       const response: IResponseData = await FilmService.getFilmBySearch({ search: searchFilmText});
       setFilteredFilm(response?.data);
     };
 
     handleSearchFilm();
-  }, [searchFilmText]);
+  }, [debouncedSearchText]);
 
   const handleSearch = (isOpen: boolean) => {
     setComboboxSearchOpen(isOpen);
