@@ -25,7 +25,7 @@ const TopFilm = ({ name, poster_url, thumbnail_url, slug, year, rank }: ITopFilm
           }}
         ></div>
         <div className='sticker absolute left-0 top-0 -translate-y-1/2'>
-          <img className='h-p12 w-p12' src={poster_url} alt='' />
+          <img className='h-p12 w-p12' src={`/uploads/posters/${poster_url.split('/').pop()}`} alt='' />
         </div>
         <div className='relative z-10 flex h-full w-full items-center gap-4'>
           <div className='w-1/5 text-center text-8xl font-extrabold'>{rank}</div>

@@ -278,13 +278,13 @@ const HomePage = () => {
       {/* Banner */}
       <section className='m-auto'>
         <div className='banner relative'>
-          <img className='banner-img' src={filmActived && filmActived.thumbnail_url} alt='' />
+          <img className='banner-img' src={`/uploads/thumbnails/${filmActived && filmActived.thumbnail_url.split('/').pop()}`} alt='' />
           <div className='slick-wrapper'>
             <Slider ref={slider} {...settings}>
               {latestFilms && latestFilms.length > 0
                 ? latestFilms.map((item, index) => (
                     <div className='img-wrapper' key={index}>
-                      <img src={item.poster_url} alt='' />
+                      <img src={`/uploads/posters/${item.poster_url.split('/').pop()}`} alt='' />
                       <Link to={`/film-detail/${item.slug}`} className='movie-detail max-sm:hidden'>
                         Xem ngay
                       </Link>

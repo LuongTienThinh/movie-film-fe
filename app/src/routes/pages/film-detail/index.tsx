@@ -54,12 +54,12 @@ const FilmDetail = () => {
       <section className='m-auto '>
         {film && (
           <div className={`film-detail film-detail-${themeMode.theme} relative`}>
-            <img className='h-[min(400px,100vh-150px)] w-full object-cover brightness-50 lg:h-[min(700px,100vh-150px)]' src={film.thumbnail_url} alt='' />
+            <img className='h-[min(400px,100vh-150px)] w-full object-cover brightness-50 lg:h-[min(700px,100vh-150px)]' src={`/uploads/thumbnails/${film.thumbnail_url.split('/').pop()}`} alt='' />
             <div className='container'>
               <div className='wrapper relative z-40 -mt-[380px] lg:-mt-[260px] xl:-mt-[360px]'>
                 <div className='flex justify-between gap-5 max-lg:flex-col xl:gap-10'>
                   <div className='poster w-[210px] space-y-p2 max-lg:self-center lg:overflow-hidden xl:h-[420px] xl:w-[300px]'>
-                    <img className='h-full w-full rounded-p2 object-cover max-lg:aspect-auto max-lg:h-auto' src={film.poster_url} alt='' />
+                    <img className='h-full w-full rounded-p2 object-cover max-lg:aspect-auto max-lg:h-auto' src={`/uploads/posters/${film.poster_url.split('/').pop()}`} alt='' />
                     <div className='btn flex items-center justify-between lg:hidden'>
                       <Link className='inline-block px-10' onClick={handlePopup} to={film.episodes[0] ? `/film-detail/${film.slug}/${film.episodes[0].slug}` : ''}>
                         Xem ngay
