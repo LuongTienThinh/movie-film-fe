@@ -132,7 +132,7 @@ const Header = () => {
                                       <Combobox.Option value={item.slug} key={index}>
                                         <Link className='common-flex-box !h-[50px]' to={`/film-detail/${item.slug}`}>
                                           <div className='h-full w-1/4'>
-                                            <img className='h-full w-[40px] rounded-p1' src={item.poster_url} alt='' />
+                                            <img className='h-full w-[40px] rounded-p1' src={`/uploads/posters/${item.poster_url.split('/').pop()}`} alt='' />
                                           </div>
                                           <div className='flex h-full w-3/4 flex-col justify-between'>
                                             <p className='overflow-hidden text-ellipsis text-nowrap text-sm font-semibold'>{item.name}</p>
@@ -290,7 +290,7 @@ const Header = () => {
                                   <Combobox.Option value={item.slug} key={index}>
                                     <Link className='common-flex-box !h-[50px]' to={`/film-detail/${item.slug}`}>
                                       <div className='h-full w-1/4'>
-                                        <img className='h-full w-[40px] rounded-p1' src={item.poster_url} alt='' />
+                                        <img className='h-full w-[40px] rounded-p1' src={`/uploads/posters/${item.poster_url.split('/').pop()}`} alt='' />
                                       </div>
                                       <div className='flex h-full w-3/4 flex-col justify-between'>
                                         <p className='overflow-hidden text-ellipsis text-nowrap text-sm font-semibold'>{item.name}</p>
