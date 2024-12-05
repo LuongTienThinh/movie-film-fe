@@ -7,11 +7,12 @@ import { ThemeContext } from 'contexts/themeContext';
 import { Footer, Header } from 'layouts';
 import { images } from 'images';
 import Input from 'components/elements/input';
-import { ITabSetting } from 'interfaces';
+import { IResponseData, ITabSetting } from 'interfaces';
 import Button from 'components/elements/button';
 import { AuthContext } from 'contexts/authContext';
 import './index.scss';
 import { useViewport } from 'hooks';
+import { AuthService } from 'services';
 
 const TabSettingPanel = ({ title, content }: ITabSetting) => {
   const { width: viewWidth, breakPoint } = useViewport();
@@ -179,9 +180,17 @@ const Profile = () => {
     {
       iconName: 'logout',
       title: 'Đăng xuất',
-      onClick: () => {
-        auth.setIsAuth(false);
-        navigate('/login');
+      onClick: async () => {
+        const response: IResponseData = await AuthService.logout();
+    
+        if (response) {
+          const { data, status, message } = response;
+
+          if (status === 200) {
+            auth.setIsAuth(false);
+            navigate('/login');
+          }
+        }
       },
     },
   ];

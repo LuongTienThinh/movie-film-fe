@@ -97,7 +97,7 @@ const FilmDetail = () => {
                     <ul className='genre-item flex w-full flex-wrap gap-2.5 lg:flex-wrap-reverse lg:justify-end'>
                       {film.genres.map((genre, index) => (
                         <li key={genre + index}>
-                          <a href=''>{genre.name}</a>
+                          <Link to={`/pages/genres/${genre.slug}`}>{genre.name}</Link>
                         </li>
                       ))}
                     </ul>
