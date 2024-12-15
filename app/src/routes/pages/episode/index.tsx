@@ -8,16 +8,17 @@ import { ThemeContext } from 'contexts/themeContext';
 import { FilmService } from 'services';
 
 interface IEpisodeBtn {
+  filmId: Number | undefined;
   ep: string | undefined;
   slug: string | undefined;
   filmSlug: string | undefined;
 }
 
-const EpisodeBtn = ({ ep, filmSlug, slug }: IEpisodeBtn) => {
+const EpisodeBtn = ({ filmId, ep, filmSlug, slug }: IEpisodeBtn) => {
   return (
     <li className='w-[23%] text-center sm:w-[13%] md:w-[9%]'>
       <Link
-        to={`/film-detail/${filmSlug}/${slug}`}
+        to={`/film-detail/${filmId}/${filmSlug}/${slug}`}
         className='block rounded-p2 bg-[#03AE00] py-1.5 font-medium !leading-none text-[#ffffff] max-lg:text-xs lg:text-sm xl:text-base'
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       >
@@ -65,7 +66,7 @@ const Episode = () => {
                 <ul className='flex flex-wrap gap-x-[2%] gap-y-2.5 sm:gap-x-[1%]'>
                   {film.episodes &&
                     film.episodes.length > 0 &&
-                    film.episodes.map((episode, index) => <EpisodeBtn key={index} ep={episode.name} slug={episode.slug} filmSlug={film.slug} />)}
+                    film.episodes.map((episode, index) => <EpisodeBtn key={index} filmId={film.id} ep={episode.name} slug={episode.slug} filmSlug={film.slug} />)}
                 </ul>
               </div>
             </div>

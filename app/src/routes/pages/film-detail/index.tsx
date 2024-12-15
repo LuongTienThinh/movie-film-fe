@@ -7,10 +7,12 @@ import { Footer, Header } from 'layouts';
 import { IFilm, IPopup, IPopupRef, IResponseData } from 'interfaces';
 import { ThemeContext } from 'contexts/themeContext';
 import { FilmService } from 'services';
-import { Popup } from 'components';
+import { Button, Popup } from 'components';
+import { AuthContext } from 'contexts/authContext';
 
 const FilmDetail = () => {
   const themeMode = useContext(ThemeContext);
+  const auth = useContext(AuthContext);
   const params = useParams();
   const popupRef: RefObject<IPopupRef> = useRef(null);
 
@@ -42,6 +44,12 @@ const FilmDetail = () => {
     }
   }
 
+  const handleClickFollow = async () => {
+    if (auth.user.id && film?.id) {
+      const response: IResponseData = await FilmService.putWishlist({ followed: true, }, '', auth.user.id, film.id);
+    }
+  }
+
   return (
     <>
       <Header />
@@ -55,7 +63,7 @@ const FilmDetail = () => {
                   <div className='poster w-[210px] space-y-p2 max-lg:self-center lg:overflow-hidden xl:h-[420px] xl:w-[300px]'>
                     <img className='h-full w-full rounded-p2 object-cover max-lg:aspect-auto max-lg:h-auto' src={film.poster_url} alt='' />
                     <div className='btn flex items-center justify-between lg:hidden'>
-                      <Link className='inline-block px-10' onClick={handlePopup} to={film.episodes[0] ? `/film-detail/${film.slug}/${film.episodes[0].slug}` : ''}>
+                      <Link className='inline-block px-10' onClick={handlePopup} to={film.episodes[0] ? `/film-detail/${film.id}/${film.slug}/${film.episodes[0].slug}` : ''}>
                         Xem ngay
                       </Link>
                       <Link className='!m-0 inline-block !bg-none !p-0' to={''}>
@@ -78,12 +86,10 @@ const FilmDetail = () => {
                       <li>Chất lượng: {film.quality}</li>
                     </ul>
                     <div className='btn max-lg:hidden'>
-                      <Link className='inline-block px-10' onClick={handlePopup} to={film.episodes[0] ? `/film-detail/${film.slug}/${film.episodes[0].slug}` : ''}>
+                      <Link className='inline-block px-10' onClick={handlePopup} to={film.episodes[0] ? `/film-detail/${film.id}/${film.slug}/${film.episodes[0].slug}` : ''}>
                         Xem ngay
                       </Link>
-                      <Link className='ms-5 inline-block px-5' to={''}>
-                        Theo dõi
-                      </Link>
+                      <Button btnName='Theo dõi' className='ms-5 inline-block px-5' onClick={handleClickFollow} />
                     </div>
                   </div>
                   <div className='genres max-lg:space-y-p3 lg:flex lg:w-[35%] lg:items-end'>

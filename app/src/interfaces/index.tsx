@@ -50,6 +50,7 @@ export interface IThemeContext {
 
 export interface IAuthContext {
   user: {
+    id?: Number | undefined;
     email?: string | undefined;
     name?: string | undefined;
     avatar?: string | undefined;
@@ -206,7 +207,7 @@ export interface IApiResponseData {
 
 export interface IPageContent {
   title?: string | undefined;
-  getData?: (params?: Object, slug?: string) => Promise<IResponseData>;
+  getData?: (params?: Object, slug?: string, userId?: Number) => Promise<IResponseData>;
   subData?: Array<IPageContent>
 }
 

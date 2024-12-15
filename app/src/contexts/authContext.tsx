@@ -35,6 +35,7 @@ export const AuthContextProvider: React.FC<IComponentProps> = ({ children }) => 
           Authorization: `Bearer ${accessToken}`,
         },
       });
+      setUser(data.data);
     };
 
     if (accessToken) {

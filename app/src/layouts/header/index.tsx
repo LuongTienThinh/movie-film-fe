@@ -130,7 +130,7 @@ const Header = () => {
                                   <Combobox.Options className='custom-scroll'>
                                     {filteredFilm.map((item, index) => (
                                       <Combobox.Option value={item.slug} key={index}>
-                                        <Link className='common-flex-box !h-[50px]' to={`/film-detail/${item.slug}`}>
+                                        <Link className='common-flex-box !h-[50px]' to={`/film-detail/${item.id}/${item.slug}`}>
                                           <div className='h-full w-1/4'>
                                             <img className='h-full w-[40px] rounded-p1' src={item.poster_url} alt='' />
                                           </div>
@@ -288,7 +288,7 @@ const Header = () => {
                               <Combobox.Options className='custom-scroll'>
                                 {filteredFilm.map((item, index) => (
                                   <Combobox.Option value={item.slug} key={index}>
-                                    <Link className='common-flex-box !h-[50px]' to={`/film-detail/${item.slug}`}>
+                                    <Link className='common-flex-box !h-[50px]' to={`/film-detail/${item.id}/${item.slug}`}>
                                       <div className='h-full w-1/4'>
                                         <img className='h-full w-[40px] rounded-p1' src={item.poster_url} alt='' />
                                       </div>
@@ -350,7 +350,7 @@ const Header = () => {
                             {films.map((item, index) => (
                               <Menu.Item as='li' key={index} className={!item.seen ? 'unseen' : ''}>
                                 {({ active }) => (
-                                  <Link className='common-flex-box relative !h-[50px]' to={`/film-detail/${item.slug}`}>
+                                  <Link className='common-flex-box relative !h-[50px]' to={`/film-detail/${item.id}/${item.slug}`}>
                                     <div className='h-full w-1/4'>
                                       <img className='h-full w-[40px] rounded-p1' src={images[`./${item.slug}.jpg`]} alt='' />
                                     </div>

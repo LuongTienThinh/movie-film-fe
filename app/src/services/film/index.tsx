@@ -31,6 +31,30 @@ const FilmService = {
     }
   },
 
+  putData: async (url: string, params?: Object) => {
+    try {
+      let data: IApiResponseData = {
+        data: null,
+      };
+
+      if (params) {
+        data = await axios.put(`${routerApisLink(FilmService.nameLink)}${url}`, {
+          params: params,
+        });
+      }
+
+      return data?.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return error?.response?.data || null;
+      }
+
+      console.log('An error occurred:', error);
+
+      return null;
+    }
+  },
+
   getLatest: async (params?: Object) => await FilmService.getData('/latest', params),
 
   getSeries: async (params?: Object) => await FilmService.getData('/series', params),
@@ -44,6 +68,11 @@ const FilmService = {
   getFilmByGenre: async (params?: Object, slug?: string) => await FilmService.getData(`/genre/${slug}`, params),
 
   getFilmByCountry: async (params?: Object, slug?: string) => await FilmService.getData(`/country/${slug}`, params),
+
+  getFilmByWishList: async (params?: Object, slug?:string, userId?: Number) => await FilmService.getData(`/wishlist/${userId}`, params),
+
+
+  putWishlist: async (params?: Object, slug?: string, userId?: Number, filmId?: Number) => await FilmService.putData(`/wishlist/${userId}-${filmId}`, params),
 };
 
 export default FilmService;

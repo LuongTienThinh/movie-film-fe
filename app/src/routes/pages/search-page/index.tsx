@@ -91,7 +91,7 @@ const SearchPage = () => {
     <>
       <Header />
 
-      <section className={`series-page sub-content m-auto  sub-content-${themeMode.theme}`}>
+      <section className={`search-page sub-content m-auto  sub-content-${themeMode.theme}`}>
         <div className='container'>{pageDataHook.renderData()}</div>
       </section>
 

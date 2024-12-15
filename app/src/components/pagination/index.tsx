@@ -84,7 +84,7 @@ const Pagination = ({ pageIndex, perPage, totalItem, sibling = 1, showGoToFirst,
   };
 
   const showPagination = () => {
-    return totalItem && perPage && lastPage > firstPage;
+    return !!totalItem && !!perPage && !!(lastPage > firstPage);
   };
 
   return (
