@@ -47,4 +47,9 @@ export const pages = [
     component: lazy(() => import('./pages/profile')),
     title: 'Profile page',
   },
+  {
+    path: routerLink('Wishlist'),
+    component: lazy(() => import('./pages/wishlist')),
+    title: 'Wishlist page',
+  },
 ];

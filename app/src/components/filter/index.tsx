@@ -3,14 +3,10 @@ import { useContext, useEffect, useState } from 'react';
 import Icons from 'assets/icons';
 import { IFilter, IListFilter, IResponseData } from 'interfaces';
 import { ThemeContext } from 'contexts/themeContext';
-import { GenreService } from 'services';
+import { CategoryService } from 'services';
 
 const Filter = ({ title, options, ...props }: IFilter) => {
   const themeMode = useContext(ThemeContext);
-
-  useEffect(() => {
-    console.log(title, options);
-  }, []);
 
   return (
     <>
@@ -65,10 +61,9 @@ const ListFilter = () => {
 
   useEffect(() => {
     const getTypes = async () => {
-      const response: IResponseData | null = await GenreService.getAllGenres();
+      const response: IResponseData | null = await CategoryService.getAllCategories('genres');
 
       if (response) {
-        console.log(response);
         setTypeData(response.data);
         setCountryData(response.data);
         setGenreData(response.data);
@@ -87,8 +82,6 @@ const ListFilter = () => {
       {listFilter && (
         <ul className={`list-filter flex items-end justify-between max-lg:flex-wrap`}>
           {Object.keys(listFilter).map((key, index) => {
-            console.log(listFilter[key].options);
-            
             return (
               <li key={index} className='filter-item w-[47.5%] sm:w-3/10 lg:w-1/5'>
                 <Filter title={listFilter[key].title} options={listFilter[key].options} />

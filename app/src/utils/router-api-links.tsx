@@ -6,6 +6,7 @@ const RouterApisLink = (name: string): string | undefined => {
     Film: 'film',
     Genre: 'genre',
     Country: 'country',
+    Category: 'category',
   };
 
   return `api/${apisLink[name]}`;

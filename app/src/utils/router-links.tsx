@@ -11,6 +11,7 @@ const RouterLinks = (name: string): string | undefined => {
     SignUp: '/sign-up',
     ForgotPassword: '/forgot-password',
     Profile: '/profile',
+    Wishlist: '/wishlist',
   };
 
   return links[name];

@@ -48,10 +48,6 @@ const Profile = () => {
   const navigate = useNavigate();
   const { width: viewWidth, breakPoint } = useViewport();
 
-  useEffect(() => {
-    console.log(viewWidth);
-  }, [viewWidth]);
-
   const menuSettings: ITabSetting[] = [
     {
       iconName: 'profile',

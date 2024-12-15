@@ -20,8 +20,6 @@ const FilmDetail = () => {
   useEffect(() => {
     const getApiDetail = async () => {
       const response: IResponseData = await FilmService.getDetailFilm(params);
-      console.log(response?.data);
-      
       setFilm(response?.data);
     };
 
@@ -29,10 +27,6 @@ const FilmDetail = () => {
       getApiDetail();
     }
   }, [params]);
-
-  useEffect(() => {
-    console.log(film);
-  }, [film]);
 
   const handlePopup = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     if (!film?.episodes[0]) {

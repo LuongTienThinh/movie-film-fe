@@ -2,16 +2,16 @@ import axios from 'axios';
 import { routerApisLink } from 'utils';
 import { IApiResponseData } from 'interfaces';
 
-const GenreService = {
-  nameLink: 'Genre',
+const CategoryService = {
+  nameLink: 'Category',
 
-  getAllGenres: async () => {
+  getAllCategories: async (category: string) => {
     try {
       let data: IApiResponseData = {
         data: null,
       };
 
-      data = await axios.get(`${routerApisLink(GenreService.nameLink)}`);
+      data = await axios.get(`${routerApisLink(CategoryService.nameLink)}/${category}`);
 
       return data?.data;
     } catch (error) {
@@ -25,13 +25,13 @@ const GenreService = {
     }
   },
 
-  getDetailGenre: async (slug: string) => {
+  getDetailCategory: async (category: string, slug: string) => {
     try {
       let data: IApiResponseData = {
         data: null,
       };
 
-      data = await axios.get(`${routerApisLink(GenreService.nameLink)}/${slug}`);
+      data = await axios.get(`${routerApisLink(CategoryService.nameLink)}/${category}/${slug}`);
 
       return data?.data;
     } catch (error) {
@@ -46,4 +46,4 @@ const GenreService = {
   },
 };
 
-export default GenreService;
+export default CategoryService;

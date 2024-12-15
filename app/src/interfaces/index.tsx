@@ -207,6 +207,7 @@ export interface IApiResponseData {
 export interface IPageContent {
   title?: string | undefined;
   getData?: (params?: Object, slug?: string) => Promise<IResponseData>;
+  subData?: Array<IPageContent>
 }
 
 export interface IPage {

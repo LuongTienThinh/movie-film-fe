@@ -23,6 +23,19 @@ const PAGE: IPage = {
 
   countries: {
     getData: FilmService.getFilmByCountry,
+  },
+
+  wishlist: {
+    subData: [
+      {
+        title: 'Đang theo dõi',
+        getData: FilmService.getSeries,
+      },
+      {
+        title: 'Đã xem',
+        getData: FilmService.getLatest,
+      }
+    ]
   }
 };
 

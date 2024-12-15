@@ -10,7 +10,7 @@ import { ICountry, IFilm, IGenre, IResponseData } from 'interfaces';
 import { AuthContext } from 'contexts/authContext';
 import { useViewport } from 'hooks';
 import { MenuBar } from 'components';
-import { AuthService, CountryService, FilmService, GenreService } from 'services';
+import { AuthService, FilmService, CategoryService } from 'services';
 
 const Header = () => {
   const themeMode = useContext(ThemeContext);
@@ -34,12 +34,12 @@ const Header = () => {
     };
     
     const getApiGenres = async () => {
-      const response: IResponseData = await GenreService.getAllGenres();
+      const response: IResponseData = await CategoryService.getAllCategories('genres');
       setGenres(response?.data);
     };
     
     const getApiCountries = async () => {
-      const response: IResponseData = await CountryService.getAllCountries();
+      const response: IResponseData = await CategoryService.getAllCategories('countries');
       setCountries(response?.data);
     };
 
@@ -406,7 +406,7 @@ const Header = () => {
                               </Link>
                             </Menu.Item>
                             <Menu.Item as='li'>
-                              <Link to={'#'} className='common-flex-box'>
+                              <Link to={'/wishlist'} className='common-flex-box'>
                                 <Icons themeMode={themeMode.theme} iconName='collection' className='header-icon' />
                                 <span>Bộ sưu tập</span>
                               </Link>
@@ -568,7 +568,7 @@ const Header = () => {
                                             </Link>
                                           </li>
                                           <li>
-                                            <Link to={''} className={''}>
+                                            <Link to={'/wishlist'} className={''}>
                                               <span className=''>Bộ sưu tập</span>
                                             </Link>
                                           </li>

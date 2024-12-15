@@ -5,10 +5,7 @@ import { IApiResponseData } from 'interfaces';
 const FilmService = {
   nameLink: 'Film',
 
-  getData: async (url: string, params?: Object) => {
-    console.log('url =>', url);
-    console.log('params =>', params);
-    
+  getData: async (url: string, params?: Object) => {    
     try {
       let data: IApiResponseData = {
         data: null,

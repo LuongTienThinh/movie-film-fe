@@ -8,10 +8,6 @@ const useDataHook = ({ title, subHeader, filters, sideBar, pagination: Paginatio
 
   };
 
-  useEffect(() => {
-    console.log(filters);
-  }, []);
-
   const renderData = () => {
     return (
       <>
