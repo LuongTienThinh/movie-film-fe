@@ -51,7 +51,7 @@ const Header = () => {
   useEffect(() => {
     const queueSearch = setTimeout(() => {
       setDebouncedSearchText(searchFilmText);
-    }, 800);
+    }, 500);
 
     return () => {
       clearTimeout(queueSearch);
