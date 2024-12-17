@@ -82,6 +82,8 @@ export interface IFilm {
   genres: Array<any>;
   countries: Array<any>;
   episodes: Array<IEpisode>;
+  is_view?: Boolean;
+  is_follow?: Boolean;
   [key: string]: any;
 }
 

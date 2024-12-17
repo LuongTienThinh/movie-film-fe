@@ -29,13 +29,12 @@ const PAGE: IPage = {
     subData: [
       {
         title: 'Đang theo dõi',
-        getData: FilmService.getFilmByWishList,
       },
       {
         title: 'Đã xem',
-        getData: FilmService.getFilmByWishList,
       }
-    ]
+    ],
+    getData: FilmService.getUserFilm,
   }
 };
 

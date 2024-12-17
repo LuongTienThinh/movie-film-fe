@@ -81,7 +81,7 @@ const SearchPage = () => {
         ),
       },
     },
-    filters: true,
+    filters: false,
     pagination: films && pageManage && (
       <Pagination onChange={(page) => paginationChange({ page: page })} totalItem={films.length} showPrev sibling={1} showNext {...pageManage} />
     ),

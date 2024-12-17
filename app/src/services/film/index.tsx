@@ -5,7 +5,7 @@ import { IApiResponseData } from 'interfaces';
 const FilmService = {
   nameLink: 'Film',
 
-  getData: async (url: string, params?: Object) => {    
+  getDataFilms: async (url: string, params?: Object) => {    
     try {
       let data: IApiResponseData = {
         data: null,
@@ -31,16 +31,14 @@ const FilmService = {
     }
   },
 
-  putData: async (url: string, params?: Object) => {
+  putDataUserFilm: async (url: string, params?: Object) => {
     try {
       let data: IApiResponseData = {
         data: null,
       };
 
       if (params) {
-        data = await axios.put(`${routerApisLink(FilmService.nameLink)}${url}`, {
-          params: params,
-        });
+        data = await axios.put(`${routerApisLink(FilmService.nameLink)}${url}`, params);
       }
 
       return data?.data;
@@ -55,24 +53,49 @@ const FilmService = {
     }
   },
 
-  getLatest: async (params?: Object) => await FilmService.getData('/latest', params),
+  getDataUserFilm: async (url: string, params?: Object) => {    
+    try {
+      let data: IApiResponseData = {
+        data: null,
+      };
 
-  getSeries: async (params?: Object) => await FilmService.getData('/series', params),
+      if (params) {
+        data = await axios.get(`${routerApisLink(FilmService.nameLink)}${url}`, {
+          params: params,
+        });
+      } else {
+        data = await axios.get(`${routerApisLink(FilmService.nameLink)}${url}`);
+      }
 
-  getMovies: async (params?: Object) => await FilmService.getData('/movies', params),
+      return data?.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return error?.response?.data || null;
+      }
 
-  getDetailFilm: async (params?: Object) => await FilmService.getData('/detail', params),
+      console.log('An error occurred:', error);
 
-  getFilmBySearch: async (params?: Object) => await FilmService.getData('/search', params),
+      return null;
+    }
+  },
 
-  getFilmByGenre: async (params?: Object, slug?: string) => await FilmService.getData(`/genre/${slug}`, params),
+  getLatest: async (params?: Object) => await FilmService.getDataFilms('/latest', params),
+  getSeries: async (params?: Object) => await FilmService.getDataFilms('/series', params),
+  getMovies: async (params?: Object) => await FilmService.getDataFilms('/movies', params),
 
-  getFilmByCountry: async (params?: Object, slug?: string) => await FilmService.getData(`/country/${slug}`, params),
+  getDetailFilm: async (params?: Object) => await FilmService.getDataFilms('/detail', params),
 
-  getFilmByWishList: async (params?: Object, slug?:string, userId?: Number) => await FilmService.getData(`/wishlist/${userId}`, params),
+  getFilmBySearch: async (params?: Object) => await FilmService.getDataFilms('/search', params),
+  getFilmByGenre: async (params?: Object, slug?: string) => await FilmService.getDataFilms(`/genre/${slug}`, params),
+  getFilmByCountry: async (params?: Object, slug?: string) => await FilmService.getDataFilms(`/country/${slug}`, params),
 
+  getFilmFollow: async (params?: Object, slug?:string, userId?: Number) => await FilmService.getDataUserFilm(`/wishlist/${userId}/follow`, params),
+  getFilmViewed: async (params?: Object, slug?:string, userId?: Number) => await FilmService.getDataUserFilm(`/wishlist/${userId}/viewed`, params),
 
-  putWishlist: async (params?: Object, slug?: string, userId?: Number, filmId?: Number) => await FilmService.putData(`/wishlist/${userId}-${filmId}`, params),
+  getUserFilm: async (params?: Object, slug?:string, userId?: Number) => await FilmService.getDataUserFilm(`/wishlist/${userId}`, params),
+  getUserFilmDetail: async (params?: Object, slug?:string, userId?: Number, filmId?: Number) => await FilmService.getDataUserFilm(`/wishlist/${userId}/${filmId}`, params),
+
+  putWishlist: async (params?: Object, slug?: string, userId?: Number, filmId?: Number) => await FilmService.putDataUserFilm(`/wishlist/${userId}/${filmId}`, params),
 };
 
 export default FilmService;

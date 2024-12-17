@@ -21,16 +21,19 @@ const FilmDetail = () => {
 
   useEffect(() => {
     const getApiDetail = async () => {
-      const response: IResponseData = await FilmService.getDetailFilm(params);
+      const response: IResponseData = auth.user.id
+        ? await FilmService.getUserFilmDetail(params, '', auth.user.id, Number(params.id))
+        : await FilmService.getDetailFilm(params);
+        
       setFilm(response?.data);
     };
 
     if (params) {
       getApiDetail();
     }
-  }, [params]);
+  }, [params, auth.user]);
 
-  const handlePopup = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  const handlePopup = async (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     if (!film?.episodes[0]) {
       event.preventDefault();
 
@@ -41,12 +44,16 @@ const FilmDetail = () => {
       }));
       
       popupRef.current && popupRef.current.openModal();
+    } else {
+      if (auth.user.id && film?.id) {
+        const response: IResponseData = await FilmService.putWishlist({ viewed: true, }, '', auth.user.id, film.id);
+      }
     }
   }
-
-  const handleClickFollow = async () => {
+  
+  const updateFollowState = async () => {
     if (auth.user.id && film?.id) {
-      const response: IResponseData = await FilmService.putWishlist({ followed: true, }, '', auth.user.id, film.id);
+      const response: IResponseData = await FilmService.putWishlist({ followed: !film.is_follow, }, '', auth.user.id, film.id);
     }
   }
 
@@ -66,7 +73,7 @@ const FilmDetail = () => {
                       <Link className='inline-block px-10' onClick={handlePopup} to={film.episodes[0] ? `/film-detail/${film.id}/${film.slug}/${film.episodes[0].slug}` : ''}>
                         Xem ngay
                       </Link>
-                      <Link className='!m-0 inline-block !bg-none !p-0' to={''}>
+                      <Link className='!m-0 inline-block !bg-none !p-0' to={'#'} onClick={updateFollowState}>
                         <Icons themeMode={themeMode.theme} iconName={'follow'} className='icon h-p6 w-p6' />
                       </Link>
                     </div>
@@ -89,7 +96,9 @@ const FilmDetail = () => {
                       <Link className='inline-block px-10' onClick={handlePopup} to={film.episodes[0] ? `/film-detail/${film.id}/${film.slug}/${film.episodes[0].slug}` : ''}>
                         Xem ngay
                       </Link>
-                      <Button btnName='Theo dõi' className='ms-5 inline-block px-5' onClick={handleClickFollow} />
+                      <Link to={'#'} className='ms-5 inline-block px-5' onClick={updateFollowState}>
+                        {film.is_follow ? 'Huỷ theo dõi' : 'Theo dõi'}
+                      </Link>
                     </div>
                   </div>
                   <div className='genres max-lg:space-y-p3 lg:flex lg:w-[35%] lg:items-end'>

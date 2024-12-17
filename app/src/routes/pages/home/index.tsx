@@ -285,7 +285,7 @@ const HomePage = () => {
                 ? latestFilms.map((item, index) => (
                     <div className='img-wrapper' key={index}>
                       <img src={item.poster_url} alt='' />
-                      <Link to={`/film-detail/${item.id}/${item.slug}-${item.id}`} className='movie-detail max-sm:hidden'>
+                      <Link to={`/film-detail/${item.id}/${item.slug}`} className='movie-detail max-sm:hidden'>
                         Xem ngay
                       </Link>
                     </div>
