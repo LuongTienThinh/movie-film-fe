@@ -46,14 +46,14 @@ const FilmDetail = () => {
       popupRef.current && popupRef.current.openModal();
     } else {
       if (auth.user.id && film?.id) {
-        const response: IResponseData = await FilmService.putWishlist({ viewed: true, }, '', auth.user.id, film.id);
+        const response: IResponseData = await FilmService.putWishlist({ viewed: true, followed: film.is_follow }, '', auth.user.id, film.id);
       }
     }
   }
   
   const updateFollowState = async () => {
     if (auth.user.id && film?.id) {
-      const response: IResponseData = await FilmService.putWishlist({ followed: !film.is_follow, }, '', auth.user.id, film.id);
+      const response: IResponseData = await FilmService.putWishlist({ viewed: film.is_view, followed: !film.is_follow }, '', auth.user.id, film.id);
     }
   }
 
